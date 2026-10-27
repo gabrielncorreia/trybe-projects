@@ -1,37 +1,40 @@
-### Sobre o Projeto
-Fazendo o uso de Metologias Ágeis, esse terceiro projeto em grupo da Trybe, tinha como objetivo criar um jogo de perguntas e respostas utilizando nossos conhecimentos sobre React e Redux.
+# Trivia
 
----
+A timed quiz game: answer each question before the 30-second clock runs out, score more points for harder questions and faster answers, and compare results on a ranking.
 
-#### Habilidades colocadas em prática.
-  - Criar um store Redux em aplicações React
+**Live demo:** https://gabrielncorreia.github.io/trivia/
 
-  - Criar reducers no Redux em aplicações React
+| Start screen | Answering a question |
+| --- | --- |
+| ![Start screen](docs/start.png) | ![Question](docs/question.png) |
 
-  - Criar actions no Redux em aplicações React
+<img src="docs/result-mobile.png" alt="Results on a phone" width="260">
 
-  - Criar dispatchers no Redux em aplicações React
+## Features
 
-  - Conectar Redux aos componentes React
+- Choose the number of questions, the difficulty and the category before playing
+- 30-second timer per question, with the right and wrong answers highlighted afterwards
+- Score based on difficulty and time left
+- Results screen and a ranking sorted by score, saved in the browser
+- Player avatar from [Gravatar](https://gravatar.com/)
 
-  - Criar actions assíncronas na sua aplicação React que faz uso de Redux.
+## Stack
 
+React, Redux with Redux Thunk, React Router, and the [Open Trivia Database](https://opentdb.com/) API.
 
-#### Funcionalidades do App:
-  - Logar no jogo e, se o email tiver cadastro no site [Gravatar](https://pt.gravatar.com/), ter sua foto associada ao perfil de usuária.
-  - Acessar a página referente ao jogo, onde se deverá escolher uma das respostas disponíveis para cada uma das perguntas apresentadas. A resposta deve ser marcada antes do contador de tempo chegar a zero, caso contrário a resposta deverá ser considerada errada.
-  - Ser redirecionado, após 5 perguntas respondidas, para a tela de score, onde o texto mostrado depende do número de acertos.
-  - Visualizar a página de ranking, se quiser, ao final de cada jogo.
-  - Configurar algumas opções para o jogo em uma tela de configuração acessível a partir do cabeçalho do app (a ser implementado).
+## About the project
 
-#### Preview
-![](./trivia-preview.png)
-![](./trivia-preview-2.png)
+Built as a group project at [Trybe](https://www.betrybe.com/), working in agile sprints.
 
----
-#### Para roda-lo localmente:
-Clone o repositório e depois rode os seguintes comandos:
+In 2026 I redesigned the interface and fixed bugs: the timer sped up on every new question, the settings page did nothing, the ranking showed no names and was not sorted, and the results screen had a broken avatar. I also handled changes in the trivia API: its rate limit, expired session tokens and HTML-encoded question text.
 
-1. `npm install`
+## Running locally
 
-2. `npm start`
+Requires Node.js. From the project folder:
+
+```sh
+npm install
+npm start
+```
+
+The app opens at http://localhost:3000.
