@@ -2,50 +2,83 @@ import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import AppContext from './AppContext';
 
-export default function Provider({ children }) {
-  const [planets, setPlanets] = useState([]);
-  const [planetsBackup, setPlanetsBackup] = useState([]);
-  const [name, setName] = useState('');
-  const [newColumn, setNewColumn] = useState('population');
-  const [newComparison, setNewComparison] = useState('maior que');
-  const [newValue, setNewValue] = useState('0');
-  const [numericValues, setFilterByNumericValues] = useState({
-    filterByNumericValues: [],
+// swapi-trybe.herokuapp.com is gone; swapi.info serves the same data as a plain array.
+const url = 'https://swapi.info/api/planets';
+
+export const NUMERIC_COLUMNS = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+];
+
+const COMPARE = {
+  'maior que': (a, b) => a > b,
+  'menor que': (a, b) => a < b,
+  'igual a': (a, b) => a === b,
+};
+
+// "unknown" values become NaN: they fail every numeric filter and always sort last.
+// Ties (including two unknowns) fall back to alphabetical order.
+function sortPlanets(planets, { column, sort }) {
+  const byName = (a, b) => a.name.localeCompare(b.name);
+  if (column === 'name') return [...planets].sort(byName);
+  const direction = sort === 'DESC' ? -1 : 1;
+  return [...planets].sort((a, b) => {
+    const x = Number(a[column]);
+    const y = Number(b[column]);
+    if (Number.isNaN(x) || Number.isNaN(y)) {
+      return (Number.isNaN(x) - Number.isNaN(y)) || byName(a, b);
+    }
+    return ((x - y) * direction) || byName(a, b);
   });
-  const [columnFilter, setColumFilter] = useState([
-    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  ]);
-  // swapi-trybe.herokuapp.com is gone; swapi.info serves the same data as a plain array.
-  const url = 'https://swapi.info/api/planets';
+}
+
+export default function Provider({ children }) {
+  const [allPlanets, setAllPlanets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [name, setName] = useState('');
+  const [filters, setFilters] = useState([]);
+  const [order, setOrder] = useState({ column: 'name', sort: 'ASC' });
 
   useEffect(() => {
     async function fetchData() {
-      const data = await fetch(url).then((response) => response.json());
-      const results = Array.isArray(data) ? data : data.results;
-      setPlanets(results);
-      setPlanetsBackup(results);
+      try {
+        const data = await fetch(url).then((response) => response.json());
+        setAllPlanets(Array.isArray(data) ? data : data.results);
+      } catch {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchData();
   }, []);
 
+  const search = name.trim().toLowerCase();
+  const planets = sortPlanets(
+    allPlanets
+      .filter((planet) => planet.name.toLowerCase().includes(search))
+      .filter((planet) => filters.every(({ column, comparison, value }) => (
+        COMPARE[comparison](Number(planet[column]), Number(value))
+      ))),
+    order,
+  );
+
   const contextValue = {
     planets,
-    planetsBackup,
-    setPlanets,
-    filterByName: {
-      name,
-    },
-    numericValues,
-    setFilterByNumericValues,
+    total: allPlanets.length,
+    loading,
+    error,
+    name,
     setName,
-    setNewColumn,
-    setNewComparison,
-    setNewValue,
-    newColumn,
-    newComparison,
-    newValue,
-    columnFilter,
-    setColumFilter,
+    filters,
+    addFilter: (filter) => setFilters((current) => [...current, filter]),
+    removeFilter: (column) => setFilters((current) => current
+      .filter((filter) => filter.column !== column)),
+    clearFilters: () => setFilters([]),
+    availableColumns: NUMERIC_COLUMNS
+      .filter((column) => !filters.some((filter) => filter.column === column)),
+    order,
+    setOrder,
   };
 
   return (
@@ -54,5 +87,5 @@ export default function Provider({ children }) {
 }
 
 Provider.propTypes = {
-  children: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };

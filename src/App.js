@@ -8,12 +8,11 @@ import Table from './components/Table';
 function App() {
   return (
     <Provider>
-      <div>
+      <main className="app">
         <Header />
         <Filter />
-        <hr />
         <Table />
-      </div>
+      </main>
     </Provider>
   );
 }
