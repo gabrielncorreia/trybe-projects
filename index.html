@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trybe projects · Gabriel N. Correia</title>
+  <meta name="description" content="Projects Gabriel N. Correia built while learning to program at the Trybe bootcamp, all playable in the browser.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400..700&display=swap">
+  <style>
+    :root {
+      --night: #0a1724;
+      --panel: rgba(13, 31, 48, 0.9);
+      --frame: #7e4343;
+      --dusk: #e3906f;
+      --glow: #8ccfff;
+      --paper: #e8eef2;
+      --muted: #93a7b8;
+      --font-code: 'Fira Code', ui-monospace, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 32px 16px 48px;
+      background: var(--night);
+      color: var(--paper);
+      font-family: var(--font-code);
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.1;
+      text-shadow: 2px 2px 0 var(--frame);
+    }
+
+    .intro { max-width: 68ch; }
+
+    a { color: var(--glow); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+      gap: 12px;
+      margin-top: 28px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      border: 2px solid var(--frame);
+      background: var(--panel);
+    }
+
+    .card-title {
+      padding: 2px 10px;
+      background: var(--frame);
+      font-size: 13px;
+    }
+
+    .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 16px 20px 18px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 1.375rem;
+      font-weight: 500;
+    }
+
+    .card p {
+      flex: 1;
+      margin: 8px 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 0 0 14px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tags li {
+      padding: 0 6px;
+      border: 1px solid var(--dusk);
+      color: var(--dusk);
+      font-size: 12px;
+    }
+
+    .links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .links a {
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+    }
+
+    .links a:hover,
+    .links a:focus-visible { border-bottom-color: var(--glow); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Trybe projects</h1>
+    <p class="intro">
+      Projects I built while learning to program at the Trybe bootcamp, in the order I made them.
+      Each one runs in the browser, and the code for all of them is in
+      <a href="https://github.com/gabrielncorreia/trybe-projects">this repository</a>.
+      My current work is on my <a href="https://gabrielncorreia.github.io/">portfolio</a>.
+    </p>
+
+    <ul class="grid">
+      <li class="card">
+        <div class="card-title">trybewarts</div>
+        <div class="card-body">
+          <h2>Trybewarts</h2>
+          <p>Group project: a Hogwarts-style school admission form with a login header, a character counter and a summary of the answers, in HTML, CSS and plain JavaScript.</p>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+          <div class="links">
+            <a href="trybewarts/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/trybewarts">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">movie-cards-library</div>
+        <div class="card-body">
+          <h2>Movie Cards Library</h2>
+          <p>My first React project: a library of movie cards rendered from a JSON file, built from small components.</p>
+          <ul class="tags"><li>React</li></ul>
+          <div class="links">
+            <a href="movie-cards-library/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/movie-cards-library">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">tryunfo</div>
+        <div class="card-body">
+          <h2>Tryunfo: Magic Edition</h2>
+          <p>A card-game deck builder with a live preview, validation and filters, restyled as Magic: The Gathering cards.</p>
+          <ul class="tags"><li>React</li><li>Forms</li></ul>
+          <div class="links">
+            <a href="tryunfo/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/tryunfo">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">trybetunes</div>
+        <div class="card-body">
+          <h2>TrybeTunes</h2>
+          <p>Album and song search with audio previews and a favorites list.</p>
+          <ul class="tags"><li>React</li><li>React Router</li></ul>
+          <div class="links">
+            <a href="trybetunes/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/trybetunes">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">trybewallet</div>
+        <div class="card-body">
+          <h2>TrybeWallet</h2>
+          <p>Expense wallet with live currency conversion from an exchange-rate API.</p>
+          <ul class="tags"><li>React</li><li>Redux</li></ul>
+          <div class="links">
+            <a href="trybewallet/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/trybewallet">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">trivia</div>
+        <div class="card-body">
+          <h2>Trivia</h2>
+          <p>Group project: a quiz game with a timer, score and player ranking, using an external trivia API.</p>
+          <ul class="tags"><li>React</li><li>Redux</li></ul>
+          <div class="links">
+            <a href="trivia/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/trivia">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">starwars-planets</div>
+        <div class="card-body">
+          <h2>Star Wars Planets</h2>
+          <p>Star Wars planets table with combinable filters and sorting, with state managed through Context API.</p>
+          <ul class="tags"><li>React</li><li>Hooks</li><li>Context API</li></ul>
+          <div class="links">
+            <a href="starwars-planets/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/starwars-planets">Code</a>
+          </div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-title">recipe-app</div>
+        <div class="card-body">
+          <h2>Recipes App</h2>
+          <p>Group project: a food and drink recipes app with search, favorites and step-by-step cooking progress.</p>
+          <ul class="tags"><li>React</li><li>Hooks</li><li>Context API</li></ul>
+          <div class="links">
+            <a href="recipe-app/">Open it</a>
+            <a href="https://github.com/gabrielncorreia/trybe-projects/tree/main/recipe-app">Code</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </main>
+</body>
+</html>

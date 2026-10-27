@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      # The apps use webpack 4, which needs the legacy OpenSSL provider on Node 17+.
+      NODE_OPTIONS: --openssl-legacy-provider
+      # Create React App fails the build on lint warnings when CI is true.
+      CI: false
+      # Cypress is only for the original Trybe tests; the build does not need its binary.
+      CYPRESS_INSTALL_BINARY: 0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build the React apps
+        run: |
+          for app in movie-cards-library recipe-app starwars-planets trivia trybetunes trybewallet tryunfo; do
+            (cd "$app" && npm ci --no-audit --no-fund && npm run build)
+            mkdir -p "_site/$app"
+            cp -r "$app/build/." "_site/$app/"
+          done
+      - name: Add the static project and the index page
+        run: |
+          mkdir -p _site/trybewarts
+          cp -r trybewarts/index.html trybewarts/style.css trybewarts/script.js trybewarts/css trybewarts/images _site/trybewarts/
+          cp index.html _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
