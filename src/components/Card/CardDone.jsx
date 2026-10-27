@@ -62,7 +62,7 @@ function CardDone({ index, recipe, apiType }) {
           type="button"
           onClick={ () => {
             setClicked((teste) => !teste);
-            navigator.clipboard.writeText(`http://localhost:3000/comidas/${recipe.id}`);
+            navigator.clipboard.writeText(`${window.location.href.split('#')[0]}#/${translated}/${recipe.id}`);
           } }
         >
           <img

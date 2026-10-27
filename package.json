@@ -1,5 +1,5 @@
 {
-  "homepage": "http://gncorreia.github.io/recipe-app",
+  "homepage": "https://gabrielncorreia.github.io/recipe-app",
   "name": "recipes-app-test",
   "version": "0.1.0",
   "private": true,
@@ -28,8 +28,8 @@
     "deploy": "gh-pages -d build",
     "cy": "cypress run",
     "cy:open": "cypress open",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
