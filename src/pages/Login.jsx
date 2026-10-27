@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { createUser } from '../services/userAPI';
-import Loading from '../components/Loading';
 
 export default class Login extends Component {
   constructor(props) {
@@ -27,24 +26,18 @@ export default class Login extends Component {
     const { name } = this.state;
     const minValue = 3;
 
-    if (name.length >= minValue) {
-      this.setState({
-        isButtonDisabled: false,
-      });
-    } else {
-      this.setState({
-        isButtonDisabled: true,
-      });
-    }
+    this.setState({ isButtonDisabled: name.trim().length < minValue });
   }
 
-  enterButton = async () => {
-    const { name } = this.state;
+  enterButton = async (event) => {
+    event.preventDefault();
+    const { name, isButtonDisabled, loading } = this.state;
+    if (isButtonDisabled || loading) return;
 
     this.setState({
       loading: true,
     }, async () => {
-      await createUser({ name });
+      await createUser({ name: name.trim() });
 
       this.setState({
         loading: false,
@@ -56,41 +49,34 @@ export default class Login extends Component {
   render() {
     const { isButtonDisabled, loading, isUserAuthenticated } = this.state;
     return (
-      <div data-testid="page-login" className="page-div">
-        {/* <h3>Esse é o container do Login</h3> */}
-
-        <form action="">
-          <fieldset>
-            <legend>Login</legend>
-            <label htmlFor="login-submit-button">
-              Name:
-              <input
-                type="text"
-                name="name"
-                onChange={ this.onChangeHandler }
-                data-testid="login-name-input"
-                id="login-submit-button"
-              />
-            </label>
-
-            <div>
-              <button
-                type="button"
-                data-testid="login-submit-button"
-                disabled={ isButtonDisabled }
-                onClick={ this.enterButton }
-              >
-                Entrar
-              </button>
-            </div>
-
-            <div>
-              { loading ? <Loading /> : <p/> }
-            </div>
-
-            { isUserAuthenticated ? <Redirect to="/search" /> : <p /> }
-          </fieldset>
+      <div data-testid="page-login" className="login">
+        <form className="login-card" onSubmit={ this.enterButton }>
+          <p className="brand">TrybeTunes</p>
+          <h1>Ouça prévias e guarde suas músicas favoritas</h1>
+          <p className="muted">Busque qualquer artista do catálogo do iTunes.</p>
+          <label htmlFor="login-name" className="field">
+            Como podemos te chamar?
+            <input
+              type="text"
+              id="login-name"
+              name="name"
+              placeholder="Seu nome"
+              autoComplete="name"
+              onChange={ this.onChangeHandler }
+              data-testid="login-name-input"
+            />
+          </label>
+          <button
+            type="submit"
+            className="button-primary"
+            data-testid="login-submit-button"
+            disabled={ isButtonDisabled || loading }
+          >
+            { loading ? 'Entrando...' : 'Entrar' }
+          </button>
+          <p className="muted small">Use pelo menos 3 letras.</p>
         </form>
+        { isUserAuthenticated && <Redirect to="/search" /> }
       </div>
     );
   }

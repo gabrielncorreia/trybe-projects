@@ -8,10 +8,10 @@ class App extends React.Component {
   render() {
     return (
       <HashRouter>
-        <div>
+        <>
           <Header />
           <Content />
-        </div>
+        </>
       </HashRouter>
     );
   }
