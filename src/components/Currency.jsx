@@ -38,7 +38,7 @@ class Currency extends Component {
     // console.log(currencies);
     return (
       <label htmlFor="currency">
-        Moeda:
+        Moeda
         <select
           id="currency"
           data-testid="currency-input"

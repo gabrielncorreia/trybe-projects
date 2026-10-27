@@ -6,7 +6,7 @@ export default class Tags extends Component {
     const { handleChange } = this.props;
     return (
       <label htmlFor="tag">
-        Tag:
+        Categoria
         <select
           id="tag"
           data-testid="tag-input"

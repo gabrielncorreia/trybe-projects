@@ -14,6 +14,11 @@ export const addExpense = (expenses) => ({
   expenses,
 });
 
+export const removeExpense = (id) => ({
+  type: 'REMOVE_EXPENSE',
+  id,
+});
+
 export const addCurrencies = (currencies) => ({
   type: 'ADD_CURRENCIES',
   currencies,

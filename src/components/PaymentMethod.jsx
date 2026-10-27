@@ -6,7 +6,7 @@ export default class PaymentMethod extends Component {
     const { handleChange } = this.props;
     return (
       <label htmlFor="method">
-        Método de Pagamento:
+        Pagamento
         <select
           id="method"
           data-testid="method-input"

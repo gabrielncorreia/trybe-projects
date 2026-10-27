@@ -3,17 +3,18 @@ import React, { Component } from 'react';
 export default class ExpensesTableHeader extends Component {
   render() {
     return (
-      <tr id="expenses-header-div">
-        <th>Descrição</th>
-        <th>Tag</th>
-        <th>Método de pagamento</th>
-        <th>Valor</th>
-        <th>Moeda</th>
-        <th>Câmbio utilizado</th>
-        <th>Valor convertido</th>
-        <th>Moeda de conversão</th>
-        <th>Editar/Excluir</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Descrição</th>
+          <th>Categoria</th>
+          <th>Pagamento</th>
+          <th className="num">Valor</th>
+          <th>Moeda</th>
+          <th className="num">Câmbio</th>
+          <th className="num">Em reais</th>
+          <th><span className="visually-hidden">Ações</span></th>
+        </tr>
+      </thead>
     );
   }
 }

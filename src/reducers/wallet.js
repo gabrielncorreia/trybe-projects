@@ -26,8 +26,14 @@ function walletReducer(state = initialState, action) {
       ...state,
       expenses: [
         ...state.expenses,
-        { id: state.expenses.length, ...action.expenses },
+        // Next id after the highest one, so ids stay unique after deletions.
+        { id: state.expenses.reduce((max, { id }) => Math.max(max, id + 1), 0), ...action.expenses },
       ],
+    };
+  case 'REMOVE_EXPENSE':
+    return {
+      ...state,
+      expenses: state.expenses.filter(({ id }) => id !== action.id),
     };
   default:
     return state;

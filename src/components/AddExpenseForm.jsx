@@ -8,7 +8,7 @@ import Currency from './Currency';
 import '../App.css';
 
 const initialState = {
-  value: 0,
+  value: '',
   description: '',
   currency: 'USD',
   method: 'Dinheiro',
@@ -22,16 +22,11 @@ class AddExpenseForm extends Component {
 
     this.state = {
       ...initialState,
+      saving: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.saveExpenses = this.saveExpenses.bind(this);
-  }
-
-  async componentDidMount() {
-    // await currencyAPI();
-
-    // console.log('chamou 1');
   }
 
   handleChange(event) {
@@ -42,57 +37,60 @@ class AddExpenseForm extends Component {
     });
   }
 
-  async saveExpenses() {
+  async saveExpenses(event) {
+    event.preventDefault();
     const { saveExpense } = this.props;
+    const { saving, ...expenseFields } = this.state;
+    if (saving) return;
+    this.setState({ saving: true });
     const exchangeRates = await currencyAPI();
-    const expense = {
-      ...this.state,
-      exchangeRates,
-    };
-
-    saveExpense(expense);
-
-    // console.log('chamou 2');
-    this.setState({ ...initialState });
+    saveExpense({ ...expenseFields, exchangeRates });
+    // Keep currency, method and tag: people often log several similar expenses in a row.
+    this.setState({ value: '', description: '', saving: false });
   }
 
   render() {
-    // this.saveExpenses();
-    const { value, description } = this.state;
+    const { value, description, saving } = this.state;
     return (
-      <div className="add-expense-div">
-        <label htmlFor="value">
-          Valor:
-          <input
-            type="number"
-            name="value"
-            value={ value }
-            data-testid="value-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <Currency handleChange={ this.handleChange } />
-        <PaymentMethod handleChange={ this.handleChange } />
-        <Tags handleChange={ this.handleChange } />
-        <label htmlFor="description">
-          Descrição:
-          <input
-            type="text"
-            name="description"
-            value={ description }
-            data-testid="description-input"
-            onChange={ this.handleChange }
-          />
-        </label>
-        <button
-          type="button"
-          onClick={ () => {
-            this.saveExpenses();
-          } }
-        >
-          Adicionar Despesa
+      <form className="card expense-form" onSubmit={ this.saveExpenses }>
+        <h2>Nova despesa</h2>
+        <div className="expense-fields">
+          <label htmlFor="value">
+            Valor
+            <input
+              type="number"
+              id="value"
+              name="value"
+              min="0"
+              step="0.01"
+              inputMode="decimal"
+              placeholder="0,00"
+              required
+              value={ value }
+              data-testid="value-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <Currency handleChange={ this.handleChange } />
+          <PaymentMethod handleChange={ this.handleChange } />
+          <Tags handleChange={ this.handleChange } />
+          <label htmlFor="description" className="wide">
+            Descrição
+            <input
+              type="text"
+              id="description"
+              name="description"
+              placeholder="Ex.: almoço com clientes"
+              value={ description }
+              data-testid="description-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+        </div>
+        <button type="submit" className="button-primary" disabled={ saving }>
+          { saving ? 'Buscando cotação...' : 'Adicionar despesa' }
         </button>
-      </div>
+      </form>
     );
   }
 }

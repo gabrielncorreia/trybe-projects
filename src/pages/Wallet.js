@@ -5,24 +5,15 @@ import '../App.css';
 import AddExpenseForm from '../components/AddExpenseForm';
 import ExpensesTable from '../components/ExpensesTable';
 
+const brl = (value) => Number(value)
+  .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
 class Wallet extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.state = {
-    //   totalExpenses: 0,
-    // };
-
     this.sumExpenses = this.sumExpenses.bind(this);
   }
-
-  componentDidMount() {
-    this.sumExpenses();
-  }
-
-  // componentDidUpdate() {
-  //   this.sumExpenses();
-  // }
 
   sumExpenses() {
     const { userExpenses } = this.props;
@@ -36,29 +27,31 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { userEmail } = this.props;
-    // const { totalExpenses } = this.state;
-    // console.log(currencyAPI());
+    const { userEmail, userExpenses } = this.props;
     return (
-      <div>
-        <header className="header">
-          <h2>Trybe Wallet</h2>
-
-          <div className="email-expenses-div">
-            <h3 data-testid="email-field">
-              Email:
-              { ` ${userEmail}` }
-            </h3>
-            <h3>Despesa Total:</h3>
-            <h3 data-testid="total-field">
-              {` ${this.sumExpenses()} `}
-            </h3>
-            <h3 data-testid="header-currency-field">BRL</h3>
-          </div>
+      <div className="wallet">
+        <header className="topbar">
+          <p className="brand">TrybeWallet</p>
+          <p className="muted" data-testid="email-field">{ userEmail }</p>
         </header>
 
-        <AddExpenseForm />
-        <ExpensesTable />
+        <main className="wallet-main">
+          <section className="summary">
+            <p className="muted">Total gasto</p>
+            <p className="total">
+              <span data-testid="header-currency-field">BRL</span>
+              <span data-testid="total-field">{ brl(this.sumExpenses()) }</span>
+            </p>
+            <p className="muted">
+              { userExpenses.length === 1
+                ? '1 despesa registrada'
+                : `${userExpenses.length} despesas registradas` }
+            </p>
+          </section>
+
+          <AddExpenseForm />
+          <ExpensesTable />
+        </main>
       </div>
     );
   }
@@ -73,5 +66,5 @@ export default connect(mapStateToProps, null)(Wallet);
 
 Wallet.propTypes = {
   userEmail: PropTypes.string.isRequired,
-  userExpenses: PropTypes.number.isRequired,
+  userExpenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

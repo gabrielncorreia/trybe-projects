@@ -17,7 +17,6 @@ class Login extends React.Component {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.validatingLogin = this.validatingLogin(this);
   }
 
   handleChange(event) {
@@ -42,45 +41,52 @@ class Login extends React.Component {
     const { isButtonDisabled, redirect, email } = this.state;
     const { dispatchUserEmail } = this.props;
     return (
-      <div className="login-div">
-        <div className="login-fieldset">
-          <h1>Login page</h1>
-          <form className="form-div">
-            <label htmlFor="email">
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                data-testid="email-input"
-                onChange={ this.handleChange }
-              />
-            </label>
-            <label htmlFor="password">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Password"
-                data-testid="password-input"
-                onChange={ this.handleChange }
-              />
-            </label>
-
-            <button
-              type="button"
-              disabled={ isButtonDisabled }
-              onClick={ () => {
-                dispatchUserEmail(email);
-                this.setState({ redirect: true });
-              } }
-            >
-              Entrar
-            </button>
-          </form>
-        </div>
+      <main className="login">
+        <form
+          className="card login-card"
+          onSubmit={ (event) => {
+            event.preventDefault();
+            if (isButtonDisabled) return;
+            dispatchUserEmail(email);
+            this.setState({ redirect: true });
+          } }
+        >
+          <p className="brand">TrybeWallet</p>
+          <h1>Controle seus gastos em qualquer moeda</h1>
+          <p className="muted">
+            Registre despesas em dólar, euro ou bitcoin e veja o total em reais,
+            com a cotação do momento.
+          </p>
+          <label htmlFor="email" className="field">
+            Email
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="voce@email.com"
+              autoComplete="email"
+              data-testid="email-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <label htmlFor="password" className="field">
+            Senha
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Mínimo de 6 caracteres"
+              autoComplete="current-password"
+              data-testid="password-input"
+              onChange={ this.handleChange }
+            />
+          </label>
+          <button type="submit" className="button-primary" disabled={ isButtonDisabled }>
+            Entrar
+          </button>
+        </form>
         { redirect ? <Redirect to="/carteira" /> : null}
-      </div>
+      </main>
     );
   }
 }
