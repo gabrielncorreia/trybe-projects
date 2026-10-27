@@ -1,0 +1,7 @@
+const actypes = {
+  SET_GAME_OPTIONS: 'SET_GAME_OPTIONS',
+  SAVE_QUESTIONS_ON_STORE: 'SAVE_QUESTIONS_ON_STORE',
+  ADD_TIMER: 'ADD_TIMER',
+};
+
+export default actypes;
