@@ -2,14 +2,16 @@ import actypes from '../actions/actionTypes';
 
 const initialState = {
   numberOfQuestions: 5,
+  category: '',
+  difficulty: '',
 };
 
 function configReducer(state = initialState, action) {
   switch (action.type) {
-  case actypes.SET_NUMBER_OF_QUESTION:
+  case actypes.SET_GAME_OPTIONS:
     return {
       ...state,
-      numberOfQuestions: action.numberOfQuestions,
+      ...action.options,
     };
   default:
     return state;

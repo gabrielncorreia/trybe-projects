@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const LETTERS = 'ABCD';
+
 export default class Button extends Component {
   render() {
-    const { index, answerType, handleAnswer, isDisabled, element } = this.props;
-    const cor = 'correct-answer';
+    const { index, isCorrect, status, handleAnswer, isDisabled, element } = this.props;
     return (
       <button
         type="button"
-        data-testid={ answerType === cor ? answerType : `${answerType}-${index}` }
-        className={ answerType }
+        data-testid={ isCorrect ? 'correct-answer' : `wrong-answer-${index}` }
+        className={ `answer is-${status}` }
         onClick={ handleAnswer }
         disabled={ isDisabled }
       >
-        {element}
+        <span className="answer-letter" aria-hidden="true">{ LETTERS[index] }</span>
+        <span>{ element }</span>
       </button>
     );
   }
@@ -21,7 +23,8 @@ export default class Button extends Component {
 
 Button.propTypes = {
   index: PropTypes.number.isRequired,
-  answerType: PropTypes.string.isRequired,
+  isCorrect: PropTypes.bool.isRequired,
+  status: PropTypes.oneOf(['idle', 'correct', 'wrong', 'dim']).isRequired,
   handleAnswer: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool.isRequired,
   element: PropTypes.string.isRequired,

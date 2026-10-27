@@ -1,33 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { unescape } from 'underscore';
 import Counter from './Counter';
 import AnswerButtons from './AnswerButtons';
+
+const DIFFICULTY_LABEL = { easy: 'Fácil', medium: 'Média', hard: 'Difícil' };
 
 class Question extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isButtonDisabled: false,
       answers: [],
-      isCounterRunning: true,
-      counter: 0,
+      answered: false,
+      selected: null,
     };
     this.showResults = this.showResults.bind(this);
-    this.disableButton = this.disableButton.bind(this);
-    this.enableButton = this.enableButton.bind(this);
-    this.resetColor = this.resetColor.bind(this);
-    this.setAnswers = this.setAnswers.bind(this);
-    this.disableCounter = this.disableCounter.bind(this);
-    this.enableCounter = this.enableCounter.bind(this);
     this.nextButton = this.nextButton.bind(this);
-    this.setCounter = this.setCounter.bind(this);
   }
 
   componentDidMount() {
     this.setAnswers();
-    // this.hideNextBtn();
   }
 
   componentDidUpdate(prevProps) {
@@ -37,140 +28,68 @@ class Question extends Component {
     }
   }
 
-  setCounter(number) {
-    this.setState({ counter: number });
-  }
-
   setAnswers() {
     const { correctAnswer, incorrectAnswers } = this.props;
-    const answers = [...incorrectAnswers, correctAnswer].some((el) => el === 'True') ? (
-      ['True', 'False']
-    ) : (
-      this.shuffleArray([...incorrectAnswers, correctAnswer])
-    );
-    this.setState((prevState) => ({
-      ...prevState,
-      answers,
-    }));
+    const all = [...incorrectAnswers, correctAnswer];
+    const answers = all.includes('True') ? ['True', 'False'] : this.shuffleArray(all);
+    this.setState({ answers });
   }
 
   shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
   }
 
-  disableButton() {
-    this.setState({
-      isButtonDisabled: true,
-    });
-  }
-
-  enableButton() {
-    this.setState({
-      isButtonDisabled: false,
-    });
-  }
-
-  disableCounter() {
-    this.setState((prevState) => ({
-      ...prevState,
-      isCounterRunning: false,
-    }));
-  }
-
-  enableCounter() {
-    this.setState((prevState) => ({
-      ...prevState,
-      isCounterRunning: true,
-    }));
-  }
-
-  showResults() {
-    const { isCounterRunning } = this.state;
-    const wrongAnswers = document.querySelectorAll('.wrong-answer');
-    const correctAnswer = document.querySelector('.correct-answer');
-    correctAnswer.style.border = ('3px solid rgb(6, 240, 15)');
-    for (let i = 0; i < wrongAnswers.length; i += 1) {
-      wrongAnswers[i].style.border = ('3px solid rgb(255, 0, 0)');
-    }
-    this.disableButton();
-    this.showButton();
-    if (isCounterRunning) this.disableCounter();
-  }
-
-  showButton() {
-    document.getElementById('next').style.display = 'block';
-  }
-
-  hideButton() {
-    document.getElementById('next').style.display = 'none';
+  // Called with the chosen answer's index, or with nothing when time runs out.
+  showResults(selected = null) {
+    const { answered } = this.state;
+    const { onAnswered } = this.props;
+    if (answered) return;
+    this.setState({ answered: true, selected });
+    onAnswered();
   }
 
   nextButton() {
     const { nextQuestion } = this.props;
-    this.hideButton();
-    this.resetColor();
+    this.setState({ answered: false, selected: null });
     nextQuestion();
-    this.setAnswers();
-    this.enableButton();
-    this.enableCounter();
-  }
-
-  resetColor() {
-    const wrongAnswers = document.querySelectorAll('.wrong-answer');
-    const correctAnswer = document.querySelector('.correct-answer');
-
-    correctAnswer.style.border = ('1px solid grey');
-    for (let i = 0; i < wrongAnswers.length; i += 1) {
-      wrongAnswers[i].style.border = ('1px solid grey');
-    }
   }
 
   render() {
-    const { answers, isCounterRunning, isButtonDisabled } = this.state;
-    const { question, correctAnswer, category, difficulty } = this.props;
+    const { answers, answered, selected } = this.state;
+    const { question, correctAnswer, category, difficulty, isLast } = this.props;
+    const timedOut = answered && selected === null;
     return (
-      <main className="question-all-div">
-        <p
-          className="category-div"
-          data-testid="question-category"
-        >
-          {`Categoria: ${category}`}
-        </p>
-        <div className="question-answers-div">
-          <h3
-            className="question-div"
-            data-testid="question-text"
-          >
-            {unescape(question)}
-          </h3>
-          <AnswerButtons
-            answers={ answers }
-            correctAnswer={ correctAnswer }
-            disabled={ isButtonDisabled }
-            showResults={ this.showResults }
-            difficulty={ difficulty }
-          />
-          <button
-            type="button"
-            onClick={ this.nextButton }
-            data-testid="btn-next"
-            style={ { display: 'none' } }
-            id="next"
-          >
-            Próxima
-          </button>
+      <section className="panel question-panel">
+        <div className="question-meta">
+          <p data-testid="question-category">{ category }</p>
+          <span className={ `difficulty is-${difficulty}` }>{ DIFFICULTY_LABEL[difficulty] }</span>
         </div>
-        <Counter
+        <Counter showResults={ this.showResults } isRunning={ !answered } />
+        <h1 className="question-text" data-testid="question-text">{ question }</h1>
+        <AnswerButtons
+          answers={ answers }
+          correctAnswer={ correctAnswer }
+          answered={ answered }
+          selected={ selected }
           showResults={ this.showResults }
-          isRunning={ isCounterRunning }
+          difficulty={ difficulty }
         />
-      </main>
+        { answered && (
+          <div className="next-row">
+            <p className="muted" role="status">
+              { timedOut ? 'O tempo acabou.' : '' }
+            </p>
+            {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
+            <button type="button" className="button-primary" onClick={ this.nextButton } data-testid="btn-next" autoFocus>
+              { isLast ? 'Ver resultado' : 'Próxima pergunta' }
+            </button>
+          </div>
+        ) }
+      </section>
     );
   }
 }
@@ -181,11 +100,9 @@ Question.propTypes = {
   question: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   nextQuestion: PropTypes.func.isRequired,
+  onAnswered: PropTypes.func.isRequired,
   difficulty: PropTypes.string.isRequired,
+  isLast: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currentTimer: state.userScoreReducer.timer,
-});
-
-export default connect(mapStateToProps)(Question);
+export default Question;

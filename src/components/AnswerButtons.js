@@ -3,63 +3,47 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from './Button';
 
+const BASE_POINTS = 10;
+const DIFFICULTY_WEIGHT = { hard: 3, medium: 2, easy: 1 };
+
 class AnswerButtons extends Component {
-  checkAnswer(event) {
-    const { showResults } = this.props;
-    // console.log(event.target);
-    const { className } = event.target;
-    console.log(className);
-    const n = 10;
-    if (className === 'correct-answer') {
+  checkAnswer(index, isCorrect) {
+    const { showResults, difficulty, currentTimer } = this.props;
+    if (isCorrect) {
       const pontuacao = JSON.parse(localStorage.getItem('state')).player;
       const assertions = pontuacao.assertions + 1;
-      let scoreUpdate = Number(pontuacao.score);
-      const { difficulty, currentTimer } = this.props;
-      scoreUpdate += n + (currentTimer * this.checkDif(difficulty));
-      const player = { ...pontuacao, score: scoreUpdate, assertions };
-      localStorage
-        .setItem('state', JSON.stringify({ player }));
+      const score = Number(pontuacao.score)
+        + BASE_POINTS + currentTimer * (DIFFICULTY_WEIGHT[difficulty] || 1);
+      localStorage.setItem('state', JSON.stringify({ player: { ...pontuacao, score, assertions } }));
     }
-    showResults();
+    showResults(index);
   }
 
-  checkDif(dif) {
-    const magic3 = 3;
-    if (dif === 'hard') {
-      return magic3;
-    }
-    if (dif === 'medium') {
-      return 2;
-    }
-    return 1;
+  statusOf(index, isCorrect) {
+    const { answered, selected } = this.props;
+    if (!answered) return 'idle';
+    if (isCorrect) return 'correct';
+    return index === selected ? 'wrong' : 'dim';
   }
 
   render() {
-    const { answers, disabled, correctAnswer } = this.props;
+    const { answers, answered, correctAnswer } = this.props;
     return (
-      <div className="answers-div">
-        {answers.map((el, index) => {
-          const answer = el === correctAnswer ? (
+      <div className="answers">
+        { answers.map((answer, index) => {
+          const isCorrect = answer === correctAnswer;
+          return (
             <Button
-              key={ index }
+              key={ answer }
               index={ index }
-              answerType="correct-answer"
-              handleAnswer={ (e) => this.checkAnswer(e) }
-              isDisabled={ disabled }
-              element={ el }
-            />
-          ) : (
-            <Button
-              key={ index }
-              index={ index }
-              answerType="wrong-answer"
-              handleAnswer={ (e) => this.checkAnswer(e) }
-              isDisabled={ disabled }
-              element={ el }
+              isCorrect={ isCorrect }
+              status={ this.statusOf(index, isCorrect) }
+              handleAnswer={ () => this.checkAnswer(index, isCorrect) }
+              isDisabled={ answered }
+              element={ answer }
             />
           );
-          return answer;
-        })}
+        }) }
       </div>
     );
   }
@@ -68,10 +52,15 @@ class AnswerButtons extends Component {
 AnswerButtons.propTypes = {
   answers: PropTypes.arrayOf(PropTypes.string).isRequired,
   correctAnswer: PropTypes.string.isRequired,
-  disabled: PropTypes.bool.isRequired,
+  answered: PropTypes.bool.isRequired,
+  selected: PropTypes.number,
   showResults: PropTypes.func.isRequired,
   currentTimer: PropTypes.number.isRequired,
   difficulty: PropTypes.string.isRequired,
+};
+
+AnswerButtons.defaultProps = {
+  selected: null,
 };
 
 const mapStateToProps = (state) => ({

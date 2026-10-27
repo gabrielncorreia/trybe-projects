@@ -1,51 +1,56 @@
 import React, { Component } from 'react';
-import PlayAgainButton from '../components/PlayAgainButton';
-import Header from '../components/Header';
-import RankingButton from '../components/RankingButton';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { gravatarUrl } from '../components/Header';
 
-export default class Feedback extends Component {
-  constructor(props) {
-    super(props);
-    this.feedbackMessage = this.feedbackMessage.bind(this);
-  }
-
-  feedbackMessage(assertions) {
-    const minValue = 3;
-    if (assertions < minValue) return 'Podia ser melhor...';
-    if (assertions >= minValue) return 'Mandou bem!';
+class Feedback extends Component {
+  feedbackMessage(assertions, total) {
+    // Half or more right counts as a good round; 3 is the old fixed bar for 5 questions.
+    const goal = total ? Math.ceil(total / 2) : 3;
+    return assertions >= goal ? 'Mandou bem!' : 'Podia ser melhor...';
   }
 
   render() {
-    const { player: { name, gravatarEmail, assertions, score } } = JSON.parse(localStorage
-      .getItem('state'));
-    const gravatar = `https://www.gravatar.com/avatar/${gravatarEmail}`;
+    const { total } = this.props;
+    const { player } = JSON.parse(localStorage.getItem('state')) || {};
+    if (!player) return <Redirect to="/" />;
+    const { name, gravatarEmail, assertions, score } = player;
     return (
-      <main className="main-feedback-div">
-        <Header img={ gravatar } playerName={ name } score={ score } />
-        <div className="feedback-div">
-          <header className="feedback-header">
-            <PlayAgainButton />
-            <RankingButton />
-            <h4 data-testid="header-player-name">{ name }</h4>
-            <img
-              src={ gravatar }
-              alt="user avatar"
-              data-testid="header-profile-picture"
-            />
-          </header>
-          <div className="login-title">
-            <span>Pontuação total</span>
-            <h2 data-testid="feedback-total-score">{ score }</h2>
+      <main className="stage result">
+        <section className="panel result-panel">
+          <img className="avatar-large" src={ gravatarUrl(gravatarEmail) } alt="" data-testid="header-profile-picture" />
+          <p className="muted" data-testid="header-player-name">{ name }</p>
+          <h1 data-testid="feedback-text">{ this.feedbackMessage(assertions, total) }</h1>
+          <div className="stats">
+            <div>
+              <p className="stat" data-testid="feedback-total-score">{ score }</p>
+              <p className="muted">pontos</p>
+            </div>
+            <div>
+              <p className="stat">
+                <span data-testid="feedback-total-question">{ assertions }</span>
+                { total ? <span className="stat-of">{ ` de ${total}` }</span> : null }
+              </p>
+              <p className="muted">acertos</p>
+            </div>
           </div>
-          <div className="login-title">
-            <span>Questões corretas</span>
-            <h2 data-testid="feedback-total-question">{ assertions }</h2>
+          <div className="result-actions">
+            <Link to="/" className="button-primary" data-testid="btn-play-again">Jogar de novo</Link>
+            <Link to="/ranking" className="button-secondary" data-testid="btn-ranking">Ver ranking</Link>
           </div>
-          <div data-testid="feedback-text">
-            <h3>{ this.feedbackMessage(assertions) }</h3>
-          </div>
-        </div>
+        </section>
       </main>
     );
   }
 }
+
+Feedback.propTypes = {
+  total: PropTypes.number.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  total: state.questionsReducer.triviaQuestions.length,
+});
+
+export default connect(mapStateToProps)(Feedback);

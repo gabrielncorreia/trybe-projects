@@ -1,36 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import md5 from 'crypto-js/md5';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Question from '../components/Question';
 
+const readPlayer = () => (JSON.parse(localStorage.getItem('state')) || {}).player;
+
 class Trivia extends Component {
   constructor() {
     super();
     this.state = {
-      imagemGravatar: '',
-      name: '',
       idQuestion: 0,
     };
-    this.handleEmail = this.handleEmail.bind(this);
-    this.addQuestionsToState = this.handleEmail.bind(this);
     this.nextQuestion = this.nextQuestion.bind(this);
-  }
-
-  componentDidMount() {
-    this.handleEmail();
-  }
-
-  handleEmail() {
-    const { player } = JSON.parse(localStorage.getItem('state'));
-    const email = md5(player.gravatarEmail).toString();
-    const { name } = player;
-    this.setState({
-      imagemGravatar: `https://www.gravatar.com/avatar/${email}`,
-      name,
-    });
   }
 
   nextQuestion() {
@@ -41,57 +24,47 @@ class Trivia extends Component {
 
   render() {
     const { questions } = this.props;
-    const { player: { score } } = JSON.parse(localStorage.getItem('state'));
-    const { imagemGravatar, name, idQuestion } = this.state;
+    const { idQuestion } = this.state;
+    const player = readPlayer();
+    if (questions.length === 0 || !player) return <Redirect to="/" />;
     const currentQuestion = questions[idQuestion];
-    if (questions.length === 0) return <Redirect to="/" />;
     if (currentQuestion === undefined) {
-      const { player } = JSON.parse(localStorage.getItem('state'));
-      const ranking = JSON.parse(localStorage.getItem('ranking'));
-      const d = ranking ? (
-        localStorage.setItem('ranking', JSON.stringify([...ranking, player]))
-      ) : localStorage.setItem('ranking', JSON.stringify([player]));
-      console.log(d);
+      const ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+      localStorage.setItem('ranking', JSON.stringify([...ranking, player]));
       return <Redirect to="/feedback" />;
     }
     const {
       question,
-      correct_answer: correctAnswers,
+      correct_answer: correctAnswer,
       incorrect_answers: incorrectAnswers,
       category,
       difficulty,
     } = currentQuestion;
-    // console.log(currentQuestion);
     return (
-      <main>
-        <Header img={ imagemGravatar } playerName={ name } score={ score } />
+      <main className="stage game">
+        <Header
+          email={ player.gravatarEmail }
+          playerName={ player.name }
+          score={ player.score }
+          progress={ `Pergunta ${idQuestion + 1} de ${questions.length}` }
+        />
         <Question
           question={ question }
-          correctAnswer={ correctAnswers }
+          correctAnswer={ correctAnswer }
           incorrectAnswers={ incorrectAnswers }
           category={ category }
           difficulty={ difficulty }
-          nextQuestion={ () => this.nextQuestion() }
+          isLast={ idQuestion === questions.length - 1 }
+          nextQuestion={ this.nextQuestion }
+          // The score lives in localStorage; re-render so the header shows it right away.
+          onAnswered={ () => this.forceUpdate() }
         />
-        <div
-          className="next-button-div"
-        >
-          {/* <button
-            type="button"
-            onClick={ this.nextQuestion }
-            data-testid="btn-next"
-            display={ buttonDisplay }
-          >
-            Próxima
-          </button> */}
-        </div>
       </main>
     );
   }
 }
 
 Trivia.propTypes = {
-  // score: PropTypes.number.isRequired,
   questions: PropTypes.arrayOf(PropTypes.any),
 };
 
@@ -100,7 +73,6 @@ Trivia.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  // score: state.userScoreReducer.score,
   questions: state.questionsReducer.triviaQuestions,
 });
 

@@ -3,18 +3,16 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from '../redux/actions';
 
-const initialState = {
-  count: 30,
-};
-let timer;
+const TIME_LIMIT = 30;
+const INTERVAL = 1000;
+const LOW_TIME = 5;
+
 class Counter extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      ...initialState,
-    };
+    this.state = { count: TIME_LIMIT };
     this.startTimer = this.startTimer.bind(this);
-    this.resetCount = this.resetCount.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
   }
 
   componentDidMount() {
@@ -22,51 +20,47 @@ class Counter extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { showResults, isRunning } = this.props;
-    const MIN_SECONDS = 0;
-    const { count } = this.state;
-    if (count === MIN_SECONDS) {
-      clearInterval(timer);
-      this.resetCount();
-      showResults();
-    } else if (prevProps.isRunning !== isRunning) {
-      if (isRunning) {
-        clearInterval(timer);
-        // counter(count);
-        this.resetCount();
-      } else {
-        // counter(count);
-        this.startTimer();
-      }
-    }
+    const { isRunning } = this.props;
+    if (prevProps.isRunning === isRunning) return;
+    // Exactly one interval at a time: stop on answer, restart fresh on the next question.
+    this.stopTimer();
+    if (isRunning) this.setState({ count: TIME_LIMIT }, this.startTimer);
   }
 
   componentWillUnmount() {
-    clearInterval(timer);
+    this.stopTimer();
   }
 
   startTimer() {
-    const { counter } = this.props;
-    const INTERVAL = 1000;
-    timer = setInterval(() => {
+    const { counter, showResults } = this.props;
+    counter(TIME_LIMIT);
+    this.timer = setInterval(() => {
       const { count } = this.state;
       const countUpdate = count - 1;
       counter(countUpdate);
-      this.setState(() => ({
-        count: countUpdate,
-      }));
+      this.setState({ count: countUpdate });
+      if (countUpdate <= 0) {
+        this.stopTimer();
+        showResults();
+      }
     }, INTERVAL);
   }
 
-  resetCount() {
-    this.setState({ count: initialState.count });
+  stopTimer() {
+    clearInterval(this.timer);
   }
 
   render() {
     const { count } = this.state;
-    const { isRunning } = this.props;
     return (
-      isRunning && <h1>{ count }</h1>
+      <div className={ `timer${count <= LOW_TIME ? ' is-low' : ''}` }>
+        <div className="timer-track" aria-hidden="true">
+          <span className="timer-fill" style={ { transform: `scaleX(${count / TIME_LIMIT})` } } />
+        </div>
+        <span className="timer-count" role="timer" aria-label={ `${count} segundos restantes` }>
+          { `${count}s` }
+        </span>
+      </div>
     );
   }
 }

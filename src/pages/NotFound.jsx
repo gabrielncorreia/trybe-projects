@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class NotFound extends Component {
   render() {
     return (
-      <span>
-        404 NOT FOUND
-      </span>
+      <main className="stage result">
+        <section className="panel ranking-panel">
+          <h1>Página não encontrada</h1>
+          <p className="muted">Esse endereço não existe.</p>
+          <Link to="/" className="button-primary">Voltar ao início</Link>
+        </section>
+      </main>
     );
   }
 }

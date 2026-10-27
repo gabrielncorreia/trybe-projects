@@ -1,5 +1,7 @@
+const BASE_URL = 'https://opentdb.com';
+
 export async function requestToken() {
-  const TOKEN_ENDPOINT = 'https://opentdb.com/api_token.php?command=request';
+  const TOKEN_ENDPOINT = `${BASE_URL}/api_token.php?command=request`;
   try {
     const request = await fetch(TOKEN_ENDPOINT);
     const resolvedToken = await request.json();
@@ -10,15 +12,14 @@ export async function requestToken() {
   }
 }
 
-export async function getCategoryID(whichCategory) {
-  const CATEGORIES_ENDPOINT = 'https://opentdb.com/api_category.php';
+export async function getCategories() {
   try {
-    const categoriesData = await fetch(CATEGORIES_ENDPOINT);
+    const categoriesData = await fetch(`${BASE_URL}/api_category.php`);
     const { trivia_categories: categories } = await categoriesData.json();
-    const filtered = categories.find((category) => category.name.includes(whichCategory));
-    return filtered.id;
+    return categories;
   } catch (e) {
     console.log(e);
+    return [];
   }
 }
 
@@ -42,20 +43,23 @@ const decodeQuestion = (question) => ({
   incorrect_answers: question.incorrect_answers.map(decodeEntities),
 });
 
-export async function getQuestions(nQuestions, cat = '', token, retries = 1) {
-  const catID = await getCategoryID(cat);
-  const definedCategory = cat ? `&category=${catID}` : '';
-  const TRIVIA_ENDPOINT = `https://opentdb.com/api.php?amount=${nQuestions}${definedCategory}&token=${token}`;
+// options: { amount, category, difficulty, token }; empty category/difficulty means "any".
+export async function getQuestions(options, retries = 1) {
+  const { amount, category, difficulty, token } = options;
+  const params = new URLSearchParams({ amount, token });
+  if (category) params.set('category', category);
+  if (difficulty) params.set('difficulty', difficulty);
   try {
-    const data = await fetch(TRIVIA_ENDPOINT);
+    const data = await fetch(`${BASE_URL}/api.php?${params}`);
     const json = await data.json();
     if (json.response_code === RATE_LIMITED && retries > 0) {
       await wait(RATE_LIMIT_MS);
-      return getQuestions(nQuestions, cat, token, retries - 1);
+      return getQuestions(options, retries - 1);
     }
     if (json.results) json.results = json.results.map(decodeQuestion);
     return json;
   } catch (error) {
     console.log(error);
+    return { response_code: -1, results: [] };
   }
 }

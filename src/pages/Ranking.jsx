@@ -4,24 +4,30 @@ import Rank from '../components/Rank';
 
 class Ranking extends Component {
   render() {
-    const ranking = JSON.parse(localStorage.getItem('ranking'));
+    const ranking = (JSON.parse(localStorage.getItem('ranking')) || [])
+      .sort((a, b) => b.score - a.score);
     return (
-      <div>
-        <h3 data-testid="ranking-title">Ranking</h3>
-        {ranking.map((el, index) => (<Rank
-          key={ `k${index}` }
-          nome={ el.name }
-          gravatar={ el.gravatarEmail }
-          score={ el.score }
-          index={ index }
-        />
-        ))}
-        <Link to="/">
-          <button data-testid="btn-go-home" type="button">
-            Inicio
-          </button>
-        </Link>
-      </div>
+      <main className="stage result">
+        <section className="panel ranking-panel">
+          <h1 data-testid="ranking-title">Ranking</h1>
+          { ranking.length === 0 ? (
+            <p className="muted">Nenhuma partida ainda. Jogue uma para aparecer aqui.</p>
+          ) : (
+            <ol className="ranking">
+              { ranking.map((player, index) => (
+                <Rank
+                  key={ `${player.name}-${index}` }
+                  name={ player.name }
+                  email={ player.gravatarEmail }
+                  score={ Number(player.score) }
+                  index={ index }
+                />
+              )) }
+            </ol>
+          ) }
+          <Link to="/" className="button-primary" data-testid="btn-go-home">Jogar</Link>
+        </section>
+      </main>
     );
   }
 }
