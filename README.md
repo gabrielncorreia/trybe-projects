@@ -1,20 +1,38 @@
-### Sobre o Projeto
-No projeto Trybe Wallet o objetivo era criar uma carteira de controle de gastos, com conversor de moedas, usando React e Redux.
+# TrybeWallet
 
----
+An expense tracker for spending in several currencies: log each expense in dollars, euros, bitcoin or another currency, and see everything converted to Brazilian reais at the current exchange rate.
 
-#### Habilidades colocadas em prática
-  * Criar um store Redux em aplicações React
+**Live demo:** https://gabrielncorreia.github.io/trybewallet/ (any email and a password of 6 or more characters logs you in; nothing is sent anywhere)
 
-  * Criar reducers no Redux em aplicações React
+![Wallet](docs/wallet.png)
 
-  * Criar actions no Redux em aplicações React
+<img src="docs/wallet-mobile.png" alt="Wallet on a phone" width="260">
 
-  * Criar dispatchers no Redux em aplicações React
+## Features
 
-  * Conectar Redux aos componentes React
+- Add expenses with an amount, currency, payment method, category and description
+- Exchange rate fetched when each expense is saved, so its value in reais stays fixed afterwards
+- Running total in reais
+- Delete expenses
+- Expense table that turns into cards on small screens
 
-  * Criar actions assíncronas na sua aplicação React que faz uso de Redux.
+## Stack
 
-### Preview
-![Alt text](images/trybewallet-preview.png)
+React, Redux with Redux Thunk, React Router, and the [AwesomeAPI](https://docs.awesomeapi.com.br/api-de-moedas) currency API.
+
+## About the project
+
+Built individually at [Trybe](https://www.betrybe.com/).
+
+In 2026 I redesigned the interface, added expense deletion, and fixed blank currency names and repeated expense IDs.
+
+## Running locally
+
+Requires Node.js. From the project folder:
+
+```sh
+npm install
+npm start
+```
+
+The app opens at http://localhost:3000.
