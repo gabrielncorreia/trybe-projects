@@ -29,11 +29,13 @@ class Login extends Component {
   async handleLogin() {
     const { numQuestions, saveQuestions, history } = this.props;
     const { email, name } = this.state;
-    const FAILED_RESPONSE_CODE = 3;
+    // 3: token expired/unknown, 4: token has already served every question.
+    const TOKEN_NOT_FOUND = 3;
+    const TOKEN_EMPTY = 4;
     let userToken = this.getTokenFromLocalStorage();
     if (!userToken) userToken = await requestToken();
     let questions = await getQuestions(numQuestions, '', userToken);
-    if (questions.response_code === FAILED_RESPONSE_CODE) {
+    if ([TOKEN_NOT_FOUND, TOKEN_EMPTY].includes(questions.response_code)) {
       questions = await this.handleNewToken(numQuestions);
     }
     // console.log(questions.results);

@@ -1,5 +1,5 @@
 {
-  "homepage": "http://gncorreia.github.io/trivia",
+  "homepage": "https://gabrielncorreia.github.io/trivia",
   "name": "trivia-test",
   "version": "0.1.0",
   "private": true,
@@ -23,8 +23,8 @@
     "deploy": "gh-pages -d build",
     "cy": "cypress run",
     "cy:open": "cypress open",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "test:watch": "react-scripts test --watchAll",
     "eject": "react-scripts eject",
