@@ -3,62 +3,51 @@ import React, { useContext, useState } from 'react';
 import FiltersContext from '../../context/FiltersContext';
 import RecipesContext from '../../context/RecipesContext';
 import fetchRecipe from '../../services/api';
-import './style.css';
+import { KINDS } from '../../services/recipes';
+
+const RECIPE_NUM = 12;
 
 function FilterByCategory({ apiType, originalData }) {
-  const CAT_NUM = 5;
-  const RECIPE_NUM = 12;
-  const key = apiType === 'cocktail' ? 'drinks' : 'meals';
+  const { key } = KINDS[apiType];
   const [filters] = useContext(FiltersContext);
-  const { categories } = filters;
   const { setFetchedRecipes } = useContext(RecipesContext);
-  const [clickedBtn, setClickedBtn] = useState('');
+  const [active, setActive] = useState('');
+  const categories = (filters.categories[key] || []).map((e) => e.strCategory);
 
-  const firstN = categories[key]
-    .map((e) => e.strCategory)
-    .slice(0, CAT_NUM);
-
-  const getRecipesByCategory = async (keyword) => {
-    const recipesByCategory = await fetchRecipe(apiType, 'category', keyword);
-    return recipesByCategory[key].slice(0, RECIPE_NUM);
-  };
-
-  const handleClick = ({ target: { name } }) => {
-    if (clickedBtn === name || name === 'All') {
+  const select = async (category) => {
+    // Clicking the active chip again (or "Todas") goes back to the full list.
+    if (!category || category === active) {
       setFetchedRecipes(originalData);
-      setClickedBtn('');
-    } else {
-      getRecipesByCategory(name).then((response) => {
-        setFetchedRecipes(response);
-        setClickedBtn(name);
-      });
+      setActive('');
+      return;
     }
+    setActive(category);
+    const response = await fetchRecipe(apiType, 'category', category);
+    setFetchedRecipes(((response && response[key]) || []).slice(0, RECIPE_NUM));
   };
 
   return (
-    <section className="button-container">
+    <div className="chips" aria-label="Categorias">
       <button
         type="button"
         data-testid="All-category-filter"
-        name="All"
-        onClick={ handleClick }
+        aria-pressed={ active === '' }
+        onClick={ () => select('') }
       >
-        All
+        Todas
       </button>
-      {!categories ? <span>Loading filters...</span> : (
-        firstN.map((category, index) => (
-          <button
-            key={ index }
-            type="button"
-            name={ category }
-            data-testid={ `${category}-category-filter` }
-            onClick={ handleClick }
-          >
-            {category}
-          </button>
-        ))
-      )}
-    </section>
+      { categories.map((category) => (
+        <button
+          key={ category }
+          type="button"
+          data-testid={ `${category}-category-filter` }
+          aria-pressed={ active === category }
+          onClick={ () => select(category) }
+        >
+          { category }
+        </button>
+      )) }
+    </div>
   );
 }
 

@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Footer from '../Footer';
-import Header from '../Header';
+import Page from '../Page';
 import FilterByOrigin from '../Filter/FilterByOrigin';
 import RecipesContext from '../../context/RecipesContext';
 import Card from '../Card';
-import fetchRecipe from '../../services/api';
-import './style.css';
+import { fetchDefaultList } from '../../services/recipes';
 
 const apiType = 'meal';
 
@@ -14,42 +12,25 @@ function ExploreByOrigin() {
   const [isLoading, setIsLoading] = useState(true);
   const [originalData, setOriginalData] = useState([]);
 
-  const getFirstList = async () => {
-    const LIST_SIZE = 12;
-    const firstList = await fetchRecipe(apiType);
-    return firstList.meals.slice(0, LIST_SIZE);
-  };
-
   useEffect(() => {
-    getFirstList().then((response) => {
-      setFetchedRecipes(response);
-      setOriginalData(response);
+    fetchDefaultList(apiType).then((list) => {
+      setFetchedRecipes(list);
+      setOriginalData(list);
     }).finally(() => setIsLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <>
-      <Header name="Explorar Origem" apiType={ apiType } search />
-      <FilterByOrigin
-        apiType={ apiType }
-        originalData={ originalData }
-        className="origin-dropdown"
-      />
-      {isLoading ? <span>Loading...</span> : (
-        <main className="recipes-container">
-          {fetchedRecipes && fetchedRecipes.map((recipe, index) => (
-            <Card
-              key={ index }
-              recipe={ recipe }
-              apiType={ apiType }
-              index={ index }
-            />
-          ))}
-        </main>
-      )}
-      <Footer apiType={ apiType } />
-    </>
+    <Page title="Por cozinha" apiType={ apiType }>
+      <FilterByOrigin apiType={ apiType } originalData={ originalData } />
+      { isLoading ? <p className="status">Carregando receitas...</p> : (
+        <section className="recipe-grid">
+          { (fetchedRecipes || []).map((recipe, index) => (
+            <Card key={ recipe.idMeal } recipe={ recipe } apiType={ apiType } index={ index } />
+          )) }
+        </section>
+      ) }
+    </Page>
   );
 }
 

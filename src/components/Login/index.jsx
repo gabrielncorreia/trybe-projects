@@ -1,67 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import './style.css';
-import teamLogo from '../../images/team_logo.png';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import loginImage from '../../images/login_bg.jpg';
+
+const MIN_PASSWORD = 7;
+const VALID_EMAIL = /\S+@\S+\.\S+/;
 
 export default function Login() {
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isDisabled, setIsDisabled] = useState(true);
+  const history = useHistory();
+  const passwordOk = password.length >= MIN_PASSWORD;
+  const isValid = VALID_EMAIL.test(email) && passwordOk;
 
-  const handleChange = ({ target }) => {
-    const { id, value } = target;
-    if (id === 'user') {
-      setLogin(value);
-    } else {
-      setPassword(value);
-    }
-  };
-
-  const handleClick = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!isValid) return;
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
-    localStorage.setItem('user', JSON.stringify({ email: login }));
+    localStorage.setItem('user', JSON.stringify({ email }));
+    history.push('/comidas');
   };
 
-  useEffect(() => {
-    const testeLogin = /\S+@\S+\.\S+/;
-    const magic = 7;
-    const teste = testeLogin.test(login) && password.length >= magic;
-    setIsDisabled(!teste);
-  }, [login, password]);
-
   return (
-    <main className="login">
-      <label htmlFor="user">
-        Usuário
-        <input id="user" data-testid="email-input" onChange={ handleChange } />
-      </label>
-      <label htmlFor="password">
-        Senha
-        <input
-          id="password"
-          type="password"
-          data-testid="password-input"
-          onChange={ handleChange }
-        />
-      </label>
-      <Link to="/comidas">
+    <main className="login theme-meal">
+      <div className="login-photo" style={ { backgroundImage: `url(${loginImage})` } } />
+      <form className="login-form" onSubmit={ handleSubmit }>
+        <p className="brand">Recipes App</p>
+        <h1>Receitas de comidas e drinks para o dia a dia</h1>
+        <p className="muted">
+          Busque por nome, ingrediente ou cozinha, siga o passo a passo e guarde suas favoritas.
+        </p>
+        <label htmlFor="user" className="field">
+          Email
+          <input
+            id="user"
+            type="email"
+            autoComplete="email"
+            placeholder="voce@email.com"
+            data-testid="email-input"
+            value={ email }
+            onChange={ ({ target }) => setEmail(target.value) }
+          />
+        </label>
+        <label htmlFor="password" className="field">
+          Senha
+          <input
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Sua senha"
+            data-testid="password-input"
+            value={ password }
+            onChange={ ({ target }) => setPassword(target.value) }
+          />
+          <span className={ `hint${passwordOk ? ' is-met' : ''}` }>
+            { `${passwordOk ? '✓ ' : ''}Mínimo de ${MIN_PASSWORD} caracteres` }
+          </span>
+        </label>
         <button
-          type="button"
+          type="submit"
+          className="button-primary"
           data-testid="login-submit-btn"
-          disabled={ isDisabled }
-          onClick={ handleClick }
+          disabled={ !isValid }
         >
           Entrar
         </button>
-      </Link>
-      <div className="login-footer">
-        <span>
-          <a href="https://linktr.ee/testbreakers">Por TestBreakers </a>
-          <img className="teamLogo" src={ teamLogo } alt="" />
-        </span>
-
-      </div>
+        <p className="muted small credits">
+          Projeto em grupo da Trybe, por
+          { ' ' }
+          <a href="https://linktr.ee/testbreakers" target="_blank" rel="noopener noreferrer">TestBreakers</a>
+        </p>
+      </form>
     </main>
   );
 }

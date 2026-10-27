@@ -1,3 +1,10 @@
+// CocktailDB now answers some empty searches with a string ("no data found")
+// instead of null; callers only understand an array or null.
+const listsOrNull = (response) => Object.fromEntries(
+  Object.entries(response || {})
+    .map(([key, value]) => [key, Array.isArray(value) ? value : null]),
+);
+
 export default async function fetchRecipe(type = 'meal', searchby = '', keyword = '') {
   // retorna um OBJETO com uma CHAVE meals/drinks com um ARRAY de objetos(comidas/bebidas)
   const API_LINK = type === 'cocktail'
@@ -34,7 +41,7 @@ export default async function fetchRecipe(type = 'meal', searchby = '', keyword 
   try {
     const request = await fetch(API_ENDPOINT);
     const fetchedRecipe = await request.json();
-    return fetchedRecipe;
+    return listsOrNull(fetchedRecipe);
   } catch (error) {
     console.log('the following error has occoured while fetching recipe:', error);
   }
@@ -61,7 +68,7 @@ export async function fetchLists(type = 'meal', listtype = 'category') {
     // console.log('usedApi:', API_ENDPOINT);
     const request = await fetch(API_ENDPOINT);
     const fetchedList = await request.json();
-    return fetchedList;
+    return listsOrNull(fetchedList);
   } catch (error) {
     console.log('the following error has occoured while fetching list:', error);
   }

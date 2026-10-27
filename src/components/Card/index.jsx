@@ -1,30 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './style.css';
+import { KINDS } from '../../services/recipes';
 
 function Card({ index, recipe, apiType }) {
-  const varType = apiType === 'cocktail' ? 'Drink' : 'Meal';
-  const vars = [`str${varType}Thumb`, `str${varType}`, `id${varType}`];
-  const translated = apiType === 'cocktail' ? 'bebidas' : 'comidas';
+  const { field, path } = KINDS[apiType];
+  const name = recipe[`str${field}`];
   return (
-    <Link to={ `/${translated}/${recipe[vars[2]]}` } className="card-container">
-      <article data-testid={ `${index}-recipe-card` } className="recommend-thumb">
+    <Link to={ `/${path}/${recipe[`id${field}`]}` } className="recipe-card">
+      <article data-testid={ `${index}-recipe-card` }>
         <img
           data-testid={ `${index}-card-img` }
-          src={ recipe[vars[0]] }
-          alt={ `Imagem de ${recipe[vars[1]]}` }
+          src={ `${recipe[`str${field}Thumb`]}/preview` }
+          alt=""
+          loading="lazy"
         />
-        <section className="recipe-info">
-          <span className="recipe-category">{recipe.strCategory}</span>
-          <span
-            className={ `recipe-name ${apiType}-name` }
-            data-testid={ `${index}-card-name` }
-          >
-            {recipe[vars[1]]}
-
-          </span>
-        </section>
+        <p className="recipe-card-name" data-testid={ `${index}-card-name` }>{ name }</p>
+        { recipe.strCategory && <p className="muted small">{ recipe.strCategory }</p> }
       </article>
     </Link>
   );

@@ -1,47 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../Footer';
-import Header from '../Header';
-import './profile.css';
+import Page from '../Page';
+import { getDone, getFavorites } from '../../services/recipes';
 
-export default function index() {
-  let email = 'undefined';
-  if (JSON.parse(localStorage.getItem('user')) !== null) {
-    email = JSON.parse(localStorage.getItem('user')).email;
-  }
+export default function Profile() {
+  const { email = '' } = JSON.parse(localStorage.getItem('user')) || {};
+  const done = getDone().length;
+  const favorites = getFavorites().length;
 
   return (
-    <div className="profile-container">
-      <Header name="Perfil" search={ false } apiType="generic" />
-      <h3 data-testid="profile-email">{`User: ${email}`}</h3>
-      <div className="profile-header">
-        <Link to="/receitas-feitas">
-          <button
-            type="button"
-            data-testid="profile-done-btn"
-          >
-            Receitas Feitas
-          </button>
-        </Link>
-        <Link to="/receitas-favoritas">
-          <button
-            type="button"
-            data-testid="profile-favorite-btn"
-          >
-            Receitas Favoritas
-          </button>
-        </Link>
-        <Link to="/">
-          <button
-            type="button"
-            data-testid="profile-logout-btn"
-            onClick={ () => localStorage.clear() }
-          >
+    <Page title="Perfil">
+      <div className="profile">
+        <span className="avatar" aria-hidden="true">{ email.charAt(0) || '?' }</span>
+        <p data-testid="profile-email" className="profile-email">{ email || 'Visitante' }</p>
+        <nav className="menu-list">
+          <Link to="/receitas-feitas" data-testid="profile-done-btn">
+            Receitas feitas
+            <span className="muted">{ done }</span>
+          </Link>
+          <Link to="/receitas-favoritas" data-testid="profile-favorite-btn">
+            Receitas favoritas
+            <span className="muted">{ favorites }</span>
+          </Link>
+          <Link to="/" data-testid="profile-logout-btn" onClick={ () => localStorage.clear() }>
             Sair
-          </button>
-        </Link>
+          </Link>
+        </nav>
       </div>
-      <Footer apiType="generic" />
-    </div>
+    </Page>
   );
 }

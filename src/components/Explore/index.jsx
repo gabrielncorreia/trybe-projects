@@ -1,35 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../Header';
-import Footer from '../Footer';
-import './style.css';
+import Page from '../Page';
 import searchFoodImg from '../../images/icons/search_food.png';
 import searchDrinkImg from '../../images/icons/search_drink.png';
 
 function Explore() {
   return (
-    <div className="explore-wrap">
-      <Header name="Explorar" search={ false } apiType="generic" />
-      <div className="explore-main">
-        <Link to="/explorar/comidas" title="Icons made by Freepik">
-          <img
-            src={ searchFoodImg }
-            alt="Ícone de uma lupa e um hamburger"
-            className="icon"
-          />
-          <button type="button" data-testid="explore-food">Explorar Comidas</button>
+    <Page title="Explorar">
+      <div className="tile-grid">
+        <Link to="/explorar/comidas" className="tile theme-meal" data-testid="explore-food">
+          <img src={ searchFoodImg } alt="" />
+          <span className="tile-title">Comidas</span>
+          <span className="muted small">Por ingrediente, cozinha ou uma surpresa</span>
         </Link>
-        <Link to="/explorar/bebidas" title="Icons made by Freepik">
-          <img
-            src={ searchDrinkImg }
-            alt="Ícone de uma lupa e um café"
-            className="icon"
-          />
-          <button type="button" data-testid="explore-drinks">Explorar Bebidas</button>
+        <Link to="/explorar/bebidas" className="tile theme-cocktail" data-testid="explore-drinks">
+          <img src={ searchDrinkImg } alt="" />
+          <span className="tile-title">Bebidas</span>
+          <span className="muted small">Por ingrediente ou uma surpresa</span>
         </Link>
       </div>
-      <Footer apiType="generic" />
-    </div>
+    </Page>
   );
 }
 

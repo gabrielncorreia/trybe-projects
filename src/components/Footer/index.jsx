@@ -1,43 +1,30 @@
 import React from 'react';
-import PropType from 'prop-types';
-import { Link } from 'react-router-dom';
-import '../../App.css';
+import { NavLink } from 'react-router-dom';
 import DrinkIcon from '../../images/drinkIcon.svg';
 import ExploreIcon from '../../images/exploreIcon.svg';
 import MealIcon from '../../images/mealIcon.svg';
 
-function Footer({ apiType }) {
+const startsWith = (prefix) => (match, { pathname }) => pathname.startsWith(prefix);
+
+function Footer() {
   return (
-    <footer data-testid="footer" className={ `${apiType}-colors` }>
-      <div className="foot-config">
-        <Link to="/bebidas">
-          <img
-            src={ DrinkIcon }
-            alt="drinks"
-            data-testid="drinks-bottom-btn"
-          />
-        </Link>
-        <Link to="/explorar">
-          <img
-            src={ ExploreIcon }
-            alt="explore"
-            data-testid="explore-bottom-btn"
-          />
-        </Link>
-        <Link to="/comidas">
-          <img
-            src={ MealIcon }
-            alt="meals"
-            data-testid="food-bottom-btn"
-          />
-        </Link>
-      </div>
+    <footer data-testid="footer" className="tabbar">
+      <nav aria-label="Seções">
+        <NavLink to="/comidas" isActive={ startsWith('/comidas') }>
+          <img src={ MealIcon } alt="" data-testid="food-bottom-btn" />
+          Comidas
+        </NavLink>
+        <NavLink to="/bebidas" isActive={ startsWith('/bebidas') }>
+          <img src={ DrinkIcon } alt="" data-testid="drinks-bottom-btn" />
+          Bebidas
+        </NavLink>
+        <NavLink to="/explorar" isActive={ startsWith('/explorar') }>
+          <img src={ ExploreIcon } alt="" data-testid="explore-bottom-btn" />
+          Explorar
+        </NavLink>
+      </nav>
     </footer>
   );
 }
-
-Footer.propTypes = {
-  apiType: PropType.string.isRequired,
-};
 
 export default Footer;

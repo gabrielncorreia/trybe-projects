@@ -1,105 +1,78 @@
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../../context/RecipesContext';
 import fetchRecipe from '../../services/api';
+import { KINDS } from '../../services/recipes';
+
+const MODES = [
+  { id: 'name', label: 'Nome', testid: 'name-search-radio' },
+  { id: 'ingredient', label: 'Ingrediente', testid: 'ingredient-search-radio' },
+  { id: 'letter', label: 'Primeira letra', testid: 'first-letter-search-radio' },
+];
 
 function SearchBar({ apiType }) {
   const [searchInput, setSearchInput] = useState('');
-  const [ratioContent, setRatioContent] = useState('name');
-  const [ratioValue, setRatioValue] = useState(false);
+  const [mode, setMode] = useState('name');
+  const [message, setMessage] = useState('');
   const { setFetchedRecipes } = useContext(RecipesContext);
   const history = useHistory();
+  const { key, path, field } = KINDS[apiType];
 
-  useEffect(() => {
-    setRatioValue(true);
-  }, []);
-
-  const handleChangeBar = ({ target }) => {
-    const { value } = target;
-    setSearchInput(value);
-  };
-
-  const handleChangeRatio = ({ target }) => {
-    const { id, checked } = target;
-    if (checked) {
-      setRatioContent(id);
-      return id !== 'name' ? setRatioValue(false) : setRatioValue(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const term = searchInput.trim();
+    if (!term) return;
+    if (mode === 'letter' && term.length !== 1) {
+      setMessage('Na busca por primeira letra, use só uma letra.');
+      return;
     }
-  };
-
-  const handleClick = async () => {
-    const recipes = await fetchRecipe(apiType, ratioContent, searchInput);
-    const translate = apiType === 'meal' ? 'comidas' : 'bebidas';
-    const trans = apiType === 'meal' ? 'meals' : 'drinks';
-    const trans1 = apiType === 'meal' ? 'idMeal' : 'idDrink';
-    if (!recipes[trans]) {
-      global.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-    } else if (recipes[trans].length === 1) {
-      history.push(`/${translate}/${recipes[trans][0][trans1]}`);
+    const recipes = await fetchRecipe(apiType, mode, term);
+    const list = recipes && recipes[key];
+    if (!list) {
+      setMessage(`Nenhuma receita encontrada para "${term}".`);
+    } else if (list.length === 1) {
+      history.push(`/${path}/${list[0][`id${field}`]}`);
     } else {
-      const LIST_SIZE = 12;
-      setFetchedRecipes(recipes[trans].slice(0, LIST_SIZE));
+      setMessage('');
+      setFetchedRecipes(list.slice(0, 12));
     }
   };
 
   return (
-    <div className="searchBar-container">
-
-      <div className="searchBar">
+    <form className="searchbar" onSubmit={ handleSubmit } role="search">
+      <div className="searchbar-row">
+        <label htmlFor="search-input" className="visually-hidden">Buscar</label>
         <input
-          type="text"
+          id="search-input"
+          type="search"
           name="barra"
           data-testid="search-input"
+          placeholder={ mode === 'ingredient' ? 'Ex.: chicken' : 'O que você quer preparar?' }
+          maxLength={ mode === 'letter' ? 1 : undefined }
           value={ searchInput }
-          onChange={ handleChangeBar }
+          onChange={ ({ target }) => setSearchInput(target.value) }
         />
-        <button
-          type="button"
-          className="searchBar-btn"
-          data-testid="exec-search-btn"
-          onClick={ handleClick }
-        >
+        <button type="submit" className="button-primary" data-testid="exec-search-btn">
           Buscar
         </button>
       </div>
-      <ul className="searchBar-radios">
-        <li data-testid="name-search-radio">
-          <label htmlFor="name">
-            Nome
+      <div className="segmented" role="radiogroup" aria-label="Buscar por">
+        { MODES.map(({ id, label, testid }) => (
+          <label key={ id } htmlFor={ id } data-testid={ testid }>
             <input
               type="radio"
               name="selection"
-              id="name"
-              checked={ ratioValue }
-              onChange={ handleChangeRatio }
+              id={ id }
+              checked={ mode === id }
+              onChange={ () => { setMode(id); setMessage(''); } }
             />
+            <span>{ label }</span>
           </label>
-        </li>
-        <li data-testid="ingredient-search-radio">
-          <label className="radio-selection" htmlFor="ingredient">
-            Ingrediente
-            <input
-              type="radio"
-              name="selection"
-              id="ingredient"
-              onChange={ handleChangeRatio }
-            />
-          </label>
-        </li>
-        <li data-testid="first-letter-search-radio">
-          <label htmlFor="letter">
-            Primeira letra
-            <input
-              type="radio"
-              name="selection"
-              id="letter"
-              onChange={ handleChangeRatio }
-            />
-          </label>
-        </li>
-      </ul>
-    </div>
+        )) }
+      </div>
+      { message && <p className="search-message" role="status">{ message }</p> }
+    </form>
   );
 }
 

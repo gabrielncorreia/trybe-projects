@@ -21,11 +21,9 @@ function RecipesProvider({ children }) {
     setIngredientsFetch,
   };
   return (
-    <main>
-      <RecipesContext.Provider value={ valores }>
-        { children }
-      </RecipesContext.Provider>
-    </main>
+    <RecipesContext.Provider value={ valores }>
+      { children }
+    </RecipesContext.Provider>
   );
 }
 

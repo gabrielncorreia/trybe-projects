@@ -1,88 +1,49 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Footer from '../Footer';
-import Header from '../Header';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import Page from '../Page';
 import fetchRecipe from '../../services/api';
-import './style.css';
+import { KINDS } from '../../services/recipes';
 import searchIngredient from '../../images/icons/search_ingredients.png';
 import searchLocation from '../../images/icons/search_location.png';
 import searchSurprise from '../../images/icons/search_surprise.png';
 
 function ExploreRecipes({ recipeof }) {
-  const [id, setId] = useState(0);
-
-  const path = recipeof === 'meal'
-    ? 'comidas'
-    : 'bebidas';
   const apiType = recipeof === 'meal' ? 'meal' : 'cocktail';
+  const { path, key, field, title } = KINDS[apiType];
+  const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
-  async function fetchRandom(type) {
-    if (type === 'comidas') {
-      const result = await fetchRecipe('meal', 'random');
-      // console.log(result);
-      setId(result.meals[0].idMeal);
-    } else {
-      const result = await fetchRecipe('cocktail', 'random');
-      // console.log(result.drinks[0].idDrink);
-      setId(result.drinks[0].idDrink);
-    }
-  }
-
-  useEffect(() => {
-    fetchRandom(path);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const surprise = async () => {
+    setLoading(true);
+    const result = await fetchRecipe(apiType, 'random');
+    const recipe = result && result[key] && result[key][0];
+    if (recipe) history.push(`/${path}/${recipe[`id${field}`]}`);
+    else setLoading(false);
+  };
 
   return (
-    <div className="explore-wrap">
-      {/* Source: https://www.digitalocean.com/community/tutorials/js-capitalizing-strings */}
-      <Header
-        name={ `Explorar ${path.replace(/^\w/, (l) => l.toUpperCase())}` }
-        search={ false }
-        apiType={ apiType }
-      />
-      <section className="explore-main">
-        <Link to={ `/explorar/${path}/ingredientes` } title="Icons made by Freepik">
-          <img src={ searchIngredient } alt="Ícone de ingredientes" className="icon" />
-          <button
-            type="button"
-            data-testid="explore-by-ingredient"
-          >
-            Por Ingredientes
-          </button>
+    <Page title={ `Explorar ${title.toLowerCase()}` } apiType={ apiType }>
+      <div className="tile-grid">
+        <Link to={ `/explorar/${path}/ingredientes` } className="tile" data-testid="explore-by-ingredient">
+          <img src={ searchIngredient } alt="" />
+          <span className="tile-title">Por ingrediente</span>
+          <span className="muted small">Escolha o que você tem em casa</span>
         </Link>
-        {
-          recipeof === 'meal'
-          && (
-            <Link to={ `/explorar/${path}/area` } title="Icons made by Freepik">
-              <img src={ searchLocation } alt="Ícone de localização" className="icon" />
-              <button
-                type="button"
-                data-testid="explore-by-area"
-              >
-                Por Local de Origem
-              </button>
-            </Link>)
-        }
-        <Link
-          to={ {
-            pathname: `/${path}/${id}`,
-            state: { path },
-          } }
-        >
-          <img src={ searchSurprise } alt="Ícone de supresea" className="icon" />
-          <button
-            type="button"
-            data-testid="explore-surprise"
-            onClick={ () => console.log(id) }
-          >
-            Me Surpreenda!
-          </button>
-        </Link>
-      </section>
-      <Footer apiType={ apiType } />
-    </div>
+        { apiType === 'meal' && (
+          <Link to={ `/explorar/${path}/area` } className="tile" data-testid="explore-by-area">
+            <img src={ searchLocation } alt="" />
+            <span className="tile-title">Por cozinha</span>
+            <span className="muted small">Italiana, japonesa, mexicana...</span>
+          </Link>
+        ) }
+        <button type="button" className="tile" data-testid="explore-surprise" onClick={ surprise } disabled={ loading }>
+          <img src={ searchSurprise } alt="" />
+          <span className="tile-title">{ loading ? 'Sorteando...' : 'Me surpreenda' }</span>
+          <span className="muted small">Uma receita aleatória</span>
+        </button>
+      </div>
+    </Page>
   );
 }
 

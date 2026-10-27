@@ -4,34 +4,34 @@ import { Link } from 'react-router-dom';
 import ProfileIcon from '../../images/profileIcon.svg';
 import SearchIcon from '../../images/searchIcon.svg';
 import RecipesContext from '../../context/RecipesContext';
-import './style.css';
+import SearchBar from './SearchBar';
 
 export default function Header({ name, search, apiType }) {
-  const { setRenderBar } = useContext(RecipesContext);
+  const { renderBar, setRenderBar } = useContext(RecipesContext);
 
-  const handleClick = () => {
-    setRenderBar((re) => !re);
-  };
   return (
-    <header className={ `${apiType}-colors` }>
-      <Link to="/perfil">
-        <img
-          data-testid="profile-top-btn"
-          src={ ProfileIcon }
-          alt="profile"
-        />
-      </Link>
-      <h2 data-testid="page-title">{ name }</h2>
-      {search ? (
-        <button type="button" onClick={ handleClick } className="search-btn">
-          <img
-            data-testid="search-top-btn"
-            src={ SearchIcon }
-            alt="search"
-          />
-        </button>
-      ) : <div className="ghost-div" />}
-    </header>
+    <>
+      <header className="topbar">
+        <h1 data-testid="page-title">{ name }</h1>
+        <div className="topbar-actions">
+          { search && (
+            <button
+              type="button"
+              className={ `icon-button${renderBar ? ' is-active' : ''}` }
+              aria-expanded={ renderBar }
+              aria-label="Buscar receitas"
+              onClick={ () => setRenderBar((open) => !open) }
+            >
+              <img data-testid="search-top-btn" src={ SearchIcon } alt="" />
+            </button>
+          ) }
+          <Link to="/perfil" className="icon-button" aria-label="Perfil">
+            <img data-testid="profile-top-btn" src={ ProfileIcon } alt="" />
+          </Link>
+        </div>
+      </header>
+      { search && renderBar && <SearchBar apiType={ apiType } /> }
+    </>
   );
 }
 

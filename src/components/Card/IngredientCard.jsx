@@ -3,54 +3,37 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesContext from '../../context/RecipesContext';
 import fetchRecipe, { getIngredientImg } from '../../services/api';
-import './style.css';
+import { KINDS } from '../../services/recipes';
 
 function IngredientCard({ index, ingredient, apiType }) {
-  const key = apiType === 'cocktail' ? 'strIngredient1' : 'strIngredient';
-  const ingredientImg = getIngredientImg(apiType, ingredient[key]);
-  const pluralized = apiType === 'cocktail' ? 'drinks' : 'meals';
-  const translated = apiType === 'cocktail' ? 'bebidas' : 'comidas';
-  const apiFix = apiType === 'cocktail' ? 'strIngredient1' : 'strIngredient';
+  const nameKey = apiType === 'cocktail' ? 'strIngredient1' : 'strIngredient';
+  const name = ingredient[nameKey];
+  const { key, path } = KINDS[apiType];
   const history = useHistory();
   const { setIngredientsFetch, setFetchedRecipes } = useContext(RecipesContext);
 
-  const fetchByIngredient = async () => {
-    const LIST_SIZE = 12;
-    const firstList = await fetchRecipe(apiType, 'ingredient', ingredient[apiFix]);
-    return firstList[pluralized].slice(0, LIST_SIZE);
-  };
-
-  const handleClick = () => {
-    fetchByIngredient().then((response) => {
-      setFetchedRecipes(response);
-      setIngredientsFetch(true);
-    }).finally(() => {
-      history.push(`/${translated}/`);
-      setIngredientsFetch(false);
-    });
+  // Show the recipes that use this ingredient on the main list page.
+  const handleClick = async () => {
+    const response = await fetchRecipe(apiType, 'ingredient', name);
+    setFetchedRecipes(((response && response[key]) || []).slice(0, 12));
+    setIngredientsFetch(true);
+    history.push(`/${path}`);
   };
 
   return (
     <button
       data-testid={ `${index}-ingredient-card` }
-      className="recommend-thumb"
+      className="ingredient-card"
       type="button"
       onClick={ handleClick }
     >
       <img
         data-testid={ `${index}-card-img` }
-        src={ ingredientImg }
-        alt={ `Imagem de ${ingredient[key]}` }
-        width="100"
-        heigth="100"
+        src={ getIngredientImg(apiType, name) }
+        alt=""
+        loading="lazy"
       />
-      <span
-        data-testid={ `${index}-card-name` }
-        className={ `recipe-name ${apiType}-name` }
-      >
-        {ingredient[key]}
-
-      </span>
+      <span data-testid={ `${index}-card-name` }>{ name }</span>
     </button>
   );
 }
