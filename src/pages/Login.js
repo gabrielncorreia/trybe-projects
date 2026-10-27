@@ -5,6 +5,8 @@ import { Redirect } from 'react-router';
 import { addUserEmail } from '../actions';
 import '../App.css';
 
+const MIN_PASSWORD = 6;
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -27,18 +29,18 @@ class Login extends React.Component {
     }, () => {
       // Login validation:
       const { email, password } = this.state;
-      const minValue = 6;
       // Source: https://www.w3resource.com/javascript/form/email-validation.php
       const validEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 
       this.setState({
-        isButtonDisabled: !(validEmail.test(email) && password.length >= minValue), // Se as duas condições forem verdadeiras, a negação dela será igual a false, habilitando, assim, o botão.
+        isButtonDisabled: !(validEmail.test(email) && password.length >= MIN_PASSWORD), // Se as duas condições forem verdadeiras, a negação dela será igual a false, habilitando, assim, o botão.
       });
     });
   }
 
   render() {
-    const { isButtonDisabled, redirect, email } = this.state;
+    const { isButtonDisabled, redirect, email, password } = this.state;
+    const passwordOk = password.length >= MIN_PASSWORD;
     const { dispatchUserEmail } = this.props;
     return (
       <main className="login">
@@ -75,11 +77,14 @@ class Login extends React.Component {
               type="password"
               id="password"
               name="password"
-              placeholder="Mínimo de 6 caracteres"
+              placeholder="Sua senha"
               autoComplete="current-password"
               data-testid="password-input"
               onChange={ this.handleChange }
             />
+            <span className={ `hint${passwordOk ? ' is-met' : ''}` }>
+              { `${passwordOk ? '✓ ' : ''}Mínimo de ${MIN_PASSWORD} caracteres` }
+            </span>
           </label>
           <button type="submit" className="button-primary" disabled={ isButtonDisabled }>
             Entrar

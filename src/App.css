@@ -94,6 +94,17 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(28, 124, 84, 0.18);
 }
 
+.hint {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.hint.is-met {
+  color: var(--green);
+  font-weight: 500;
+}
+
 .button-primary {
   min-height: 44px;
   padding: 0 20px;
