@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/project-react-tryunfo-magic-edition/static/css/main.cdea6df8.chunk.css",
+    "main.js": "/project-react-tryunfo-magic-edition/static/js/main.20ff3827.chunk.js",
+    "main.js.map": "/project-react-tryunfo-magic-edition/static/js/main.20ff3827.chunk.js.map",
+    "runtime-main.js": "/project-react-tryunfo-magic-edition/static/js/runtime-main.7d130caf.js",
+    "runtime-main.js.map": "/project-react-tryunfo-magic-edition/static/js/runtime-main.7d130caf.js.map",
+    "static/js/2.3be5f0a0.chunk.js": "/project-react-tryunfo-magic-edition/static/js/2.3be5f0a0.chunk.js",
+    "static/js/2.3be5f0a0.chunk.js.map": "/project-react-tryunfo-magic-edition/static/js/2.3be5f0a0.chunk.js.map",
+    "index.html": "/project-react-tryunfo-magic-edition/index.html",
+    "static/css/main.cdea6df8.chunk.css.map": "/project-react-tryunfo-magic-edition/static/css/main.cdea6df8.chunk.css.map",
+    "static/js/2.3be5f0a0.chunk.js.LICENSE.txt": "/project-react-tryunfo-magic-edition/static/js/2.3be5f0a0.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/project-react-tryunfo-magic-edition/static/media/pngkit_magic-the-gathering-png_1458847.b288fdc5.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7d130caf.js",
+    "static/js/2.3be5f0a0.chunk.js",
+    "static/css/main.cdea6df8.chunk.css",
+    "static/js/main.20ff3827.chunk.js"
+  ]
+}

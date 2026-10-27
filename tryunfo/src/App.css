@@ -1,0 +1,279 @@
+@font-face {
+  font-family: 'Beleren';
+  src: url(./fonts/typeface-beleren-bold-master/Beleren2016-Bold.ttf);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, input, textarea, button, .select-list {
+  font-size: 1.12rem;
+  font-family: Beleren;
+}
+
+fieldset {
+  border: 2px solid #CDCFD1;
+}
+
+h1, h2, h3 {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+input, textarea, select {
+  background: white;
+  border: 2.3px solid #D8301E;
+  border-radius: 0.2rem;
+  margin-bottom: 14px;
+  padding: 0.8rem;
+  transition: 0.2s;
+  resize: vertical;
+}
+
+.main-container h1 {
+  margin-top: 30px;
+  margin-bottom: 70px;
+}
+
+.image-input {
+  margin-top: 7px;
+}
+
+form span {
+  font-weight: 600;
+  display: block;
+}
+
+input, textarea, select {
+  width: 450px;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+button {
+  background: #D8301E;
+  border: none;
+  border-radius: 0.2rem;
+  color: whitesmoke;
+  cursor: pointer;
+  padding: 10px;
+  transition: 0.1s;
+}
+
+button:hover, button:focus {
+  background: #DEC17C;
+  color: black;
+  box-shadow: 0 0 0 1px #C3E2EE , 0 0 0 1px #C3E2EE;
+  outline: none;
+}
+
+button:active {
+  box-shadow: 0 0 0 3px #C3E2EE , 0 0 0 3px #C3E2EE;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-div {
+  display: flex;
+  justify-content: space-evenly;
+  /* border: 1px solid blue; */
+}
+
+.card-div {
+  /* border: 1px solid red; */
+}
+
+.aside-container {
+  /* border: 1px solid green; */
+}
+
+.fieldset-div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.preview-card-div {
+  background-image: url("img/Magic-Cards-PNGs/pngkit_magic-the-gathering-png_1458847.png");
+  width: 500px;
+  height: 700px;
+  /* border: 1px solid purple; */
+}
+
+.fieldset-card-div {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.name-and-mana-div {
+  /* border: 1px solid green; */
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  height: 80px;
+}
+
+.name-div {
+  margin-top: 8px;
+  margin-left: 47px;
+  font-size: 20px;
+  /* border: 1px solid white; */
+}
+
+.mana-div {
+  /* border: 1px solid red; */
+  text-align: end;
+  margin-top: 6px;
+  margin-right: 45px;
+}
+
+.mana-div h4 {
+  background-color: #CFCBCD;
+  border-radius: 50px;
+  box-shadow: 0px 1px 0px 1px black;
+  padding-top: 3px;
+  padding-right: 5px;
+  padding-left: 5px;
+  font-size: 20px;
+  height: 25px;
+}
+
+.img-div {
+  /* border: 1px solid yellow; */
+  margin-left: 44px;
+  width: 400px;
+  max-width: 600px;
+  height: 310px;
+}
+
+.img-div img {
+  width: 413px;
+  height: 307px;
+  max-width: 500px;
+}
+
+.rarity-div {
+  display: flex;
+  justify-content: flex-end;
+  /* border: 1px solid green; */
+  /* height: 45px; */
+}
+
+.rarity-field {
+  /* border: 1px solid blue; */
+  margin-right: 50px;
+}
+
+.rarity-field h5 {
+  /* border: 1px solid red; */
+  margin-top: 14px;
+  margin-bottom: 10px;
+}
+
+.description-div {
+  /* border: 1px solid white; */
+  width: 400px;
+  height: 170px;
+  margin-top: 10px;
+  margin-left: 47px;
+  max-width: 400px;
+  max-height: 400px;
+}
+
+.power-toughness-div {
+  /* border: 1px solid green; */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.power-toughness-div-2 {
+  /* border: 1px solid white; */
+  display: flex;
+  margin-right: 62px;
+  margin-top: 0px;
+}
+
+.power-toughness-div-2 h4 {
+  /* border: 1px solid white; */
+  margin-top: 9px;
+  margin-bottom: 10px;
+  font-size: 25px;
+}
+
+.power-div {
+  /* border: 1px solid blue; */
+}
+
+.toughness-div {
+  /* border: 1px solid white; */
+}
+
+.deck-div {
+  border-top: 2px solid black;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.filters-div {
+  /* border: 1px solid red; */
+}
+
+.deck-cards {
+  /* border: 5px solid greenyellow; */
+  display: flex;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.delete-button {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+ .flip-card {
+  background-color: transparent;
+  width: 500px;
+  height: 700px;
+  /* perspective: 1000px; */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {  
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {  
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  color: black;
+}
+
+.flip-card-back {
+  margin-top: 12px;
+  background-image: url(img/Magic-Cards-PNGs/Cardback.webp);
+  background-size: cover;
+  transform: rotateY(180deg);
+} 
