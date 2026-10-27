@@ -1,0 +1,227 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  display: flex;
+  background-color: rgb(50, 167, 145);
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.header h1 {
+  color: whitesmoke;
+  font-size: 30px;
+}
+
+img {
+  width: 50px;
+}
+
+.trybewarts-header-logo {
+  order: 0;
+}
+
+.trybewarts-header-title {
+  order: 1;
+}
+
+.trybewarts-login {
+  display: flex;
+  align-items: center;
+  order: 2;
+}
+
+#password-login {
+  margin-left: 10px;
+}
+
+#button-login {
+  margin-left: 20px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 105px;
+}
+
+#evaluation-form {
+  display: flex;
+  flex-direction: column;
+  width: 675px;
+  margin: 20px;
+  align-items: center;
+}
+
+#input-name {
+  margin-bottom: 10px;
+}
+
+#input-lastname {
+  margin-bottom: 10px;
+}
+
+#radio-checkbox-container {
+  display: flex;
+  width: 100%;
+  height: 170px;
+  justify-content: space-between;
+}
+
+#frontend , #backend , #fullstack {
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+#label-family-style {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  margin: 10px;
+  width: 50%;
+}
+
+#label-family-style input {
+  float: left;
+  margin-bottom: 10px;
+}
+
+#label-content-style {
+  display: block;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+#checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  margin-top: 30px;
+}
+
+#checkbox-container input {
+  margin-top: 4.5px;
+  margin-right: 5px;
+  float: left;
+}
+
+#checkbox-container div {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+#checkbox-container label {
+  margin-right: 5px;
+}
+
+#label-rate-style {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+#label-rate {
+  margin-right: 20px;
+}
+
+aside {
+  display: flex;
+  margin-top: 100px;
+  margin-left: 100px;
+}
+
+#trybewarts-forms-logo {
+  height: 500px;
+  width: 500px;
+}
+
+hr {
+  width: 90%;
+}
+
+#house {
+  width: 100%;
+}
+
+#house-label {
+  margin-right: 5px;
+}
+
+#name-etc-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
+  width: 100%;
+}
+
+#name-email-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-right: 10px;
+}
+
+#lastname-house-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+#div-house {
+  display: flex;
+  align-items: center;
+}
+
+#div-comments {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#div-comments span {
+  text-align: right;
+}
+
+#comments {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid rgb(128, 127, 127);
+}
+
+#textarea {
+  resize: none;
+  height: 100px;
+}
+
+#label-rate-style input {
+  width: 12px;
+  margin: auto;
+}
+
+#accept {
+  margin-bottom: 2px;
+}
+
+#submit-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 3px;
+}
+
+footer {
+  height: 77px;
+}
+
+#footer-div h5 {
+  color: whitesmoke;
+}
+
+#counter {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
