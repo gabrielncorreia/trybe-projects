@@ -1,5 +1,5 @@
 {
-  "homepage": "http://gncorreia.github.io/starwars-planets",
+  "homepage": "https://gabrielncorreia.github.io/starwars-planets",
   "name": "sd-0x-project-react-context-hooks-starwars-datatable-filters",
   "version": "0.1.0",
   "private": true,
@@ -19,8 +19,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",

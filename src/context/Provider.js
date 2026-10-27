@@ -15,11 +15,13 @@ export default function Provider({ children }) {
   const [columnFilter, setColumFilter] = useState([
     'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
   ]);
-  const url = 'https://swapi-trybe.herokuapp.com/api/planets/';
+  // swapi-trybe.herokuapp.com is gone; swapi.info serves the same data as a plain array.
+  const url = 'https://swapi.info/api/planets';
 
   useEffect(() => {
     async function fetchData() {
-      const { results } = await fetch(url).then((response) => response.json());
+      const data = await fetch(url).then((response) => response.json());
+      const results = Array.isArray(data) ? data : data.results;
       setPlanets(results);
       setPlanetsBackup(results);
     }
