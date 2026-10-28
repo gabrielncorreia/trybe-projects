@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { t } from '../i18n';
+
+// Values stay in Portuguese: they are what the store keeps. Only the labels change.
+const METHODS = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 
 export default class PaymentMethod extends Component {
   render() {
     const { handleChange } = this.props;
     return (
       <label htmlFor="method">
-        Pagamento
+        { t('form.method') }
         <select
           id="method"
           data-testid="method-input"
           name="method"
+          defaultValue={ METHODS[0] }
           onChange={ handleChange }
         >
-          <option selected>Dinheiro</option>
-          <option>Cartão de crédito</option>
-          <option>Cartão de débito</option>
+          { METHODS.map((method) => (
+            <option key={ method } value={ method }>{ t(`methods.${method}`) }</option>
+          )) }
         </select>
       </label>
     );

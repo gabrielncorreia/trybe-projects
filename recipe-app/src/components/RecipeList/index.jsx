@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import RecipesContext from '../../context/RecipesContext';
@@ -26,9 +27,9 @@ function RecipeList({ apiType }) {
   }, [apiType]);
 
   return (
-    <Page title={ KINDS[apiType].title } apiType={ apiType } search>
+    <Page title={ t(`kinds.${apiType}`) } apiType={ apiType } search>
       <FilterByCategory apiType={ apiType } originalData={ originalData } />
-      { isLoading && <p className="status">Carregando receitas...</p> }
+      { isLoading && <p className="status">{ t('list.loading') }</p> }
       { !isLoading && (
         <section className="recipe-grid">
           { (fetchedRecipes || []).map((recipe, index) => (

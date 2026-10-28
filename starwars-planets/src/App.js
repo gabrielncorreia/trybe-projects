@@ -4,6 +4,7 @@ import Provider from './context/Provider';
 import Header from './components/Header';
 import Filter from './components/Filter';
 import Table from './components/Table';
+import ProjectBar from './components/ProjectBar';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Filter />
         <Table />
       </main>
+      <ProjectBar />
     </Provider>
   );
 }

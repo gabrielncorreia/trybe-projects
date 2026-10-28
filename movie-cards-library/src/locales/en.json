@@ -1,0 +1,16 @@
+{
+  "document": { "title": "Movie Cards Library" },
+  "header": {
+    "title": "Movie Cards Library",
+    "intro": "Five computer-animated science fiction films, each rated out of 5."
+  },
+  "rating": "Rated {rating} out of 5",
+  "movies": {
+    "kingsglaive": "King Regis, who oversees the land of Lucis, commands his army of soldiers to protect the kingdom from the Niflheim empire's plans to steal the sacred crystal.",
+    "spiritsWithin": "A scientist makes a last stand on Earth with the help of a ragtag team of soldiers against an invasion of alien phantoms.",
+    "ghostInTheShell": "A hacker known as the Puppet Master is hunted by a female cyborg cop and her partner. This film is a revised version of Ghost in the Shell (1995).",
+    "appleseedAlpha": "A young soldier, Deunan, and her cyborg partner Briareos survive in a New York ruined by World War III, searching for humanity's last hope: the legendary city of Olympus.",
+    "residentEvil": "Chris Redfield enlists Leon S. Kennedy and Rebecca Chambers to stop a vengeful death merchant from spreading a deadly virus in New York."
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

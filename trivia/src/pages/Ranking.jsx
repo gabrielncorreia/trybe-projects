@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Rank from '../components/Rank';
+import { t } from '../i18n';
 
 class Ranking extends Component {
   render() {
@@ -9,9 +10,9 @@ class Ranking extends Component {
     return (
       <main className="stage result">
         <section className="panel ranking-panel">
-          <h1 data-testid="ranking-title">Ranking</h1>
+          <h1 data-testid="ranking-title">{ t('ranking.title') }</h1>
           { ranking.length === 0 ? (
-            <p className="muted">Nenhuma partida ainda. Jogue uma para aparecer aqui.</p>
+            <p className="muted">{ t('ranking.empty') }</p>
           ) : (
             <ol className="ranking">
               { ranking.map((player, index) => (
@@ -25,7 +26,7 @@ class Ranking extends Component {
               )) }
             </ol>
           ) }
-          <Link to="/" className="button-primary" data-testid="btn-go-home">Jogar</Link>
+          <Link to="/" className="button-primary" data-testid="btn-go-home">{ t('ranking.play') }</Link>
         </section>
       </main>
     );

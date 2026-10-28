@@ -1,13 +1,29 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --mat: #231a1d;
+  --panel: #2f2427;
+  --line: #4d3c40;
+  --text: #f2e9df;
+  --muted: #bcaca5;
+  --red: #d8301e;
+  --gold: #dec17c;
+  --frost: #c3e2ee;
+  --font-title: 'Beleren', Georgia, serif;
+  --font-text: 'Crimson Pro', Georgia, serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(216, 48, 30, 0.16), transparent 60%),
+    var(--mat);
+  color: var(--text);
+  font-family: var(--font-text);
+  font-size: 18px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

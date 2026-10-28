@@ -1,0 +1,58 @@
+{
+  "document": { "title": "TrybeWallet" },
+  "login": {
+    "title": "Controle seus gastos em qualquer moeda",
+    "intro": "Registre despesas em dólar, euro ou bitcoin e veja o total em reais, com a cotação do momento.",
+    "email": "Email",
+    "emailPlaceholder": "voce@email.com",
+    "password": "Senha",
+    "passwordPlaceholder": "Sua senha",
+    "passwordRule": "Mínimo de {min} caracteres",
+    "submit": "Entrar"
+  },
+  "wallet": {
+    "total": "Total gasto",
+    "countOne": "1 despesa registrada",
+    "countOther": "{count} despesas registradas"
+  },
+  "form": {
+    "title": "Nova despesa",
+    "value": "Valor",
+    "valuePlaceholder": "0,00",
+    "currency": "Moeda",
+    "method": "Pagamento",
+    "tag": "Categoria",
+    "description": "Descrição",
+    "descriptionPlaceholder": "Ex.: almoço com clientes",
+    "submit": "Adicionar despesa",
+    "saving": "Buscando cotação…"
+  },
+  "methods": {
+    "Dinheiro": "Dinheiro",
+    "Cartão de crédito": "Cartão de crédito",
+    "Cartão de débito": "Cartão de débito"
+  },
+  "tags": {
+    "Alimentação": "Alimentação",
+    "Lazer": "Lazer",
+    "Trabalho": "Trabalho",
+    "Transporte": "Transporte",
+    "Saúde": "Saúde"
+  },
+  "table": {
+    "emptyTitle": "Nenhuma despesa ainda.",
+    "emptyText": "Adicione a primeira no formulário acima.",
+    "description": "Descrição",
+    "tag": "Categoria",
+    "method": "Pagamento",
+    "value": "Valor",
+    "currency": "Moeda",
+    "rate": "Câmbio",
+    "converted": "Em reais",
+    "actions": "Ações",
+    "delete": "Excluir",
+    "deleteLabel": "Excluir {name}",
+    "expense": "despesa"
+  },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

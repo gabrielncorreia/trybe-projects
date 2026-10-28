@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import { createUser } from '../services/userAPI';
+import { t } from '../i18n';
 
 export default class Login extends Component {
   constructor(props) {
@@ -52,15 +53,15 @@ export default class Login extends Component {
       <div data-testid="page-login" className="login">
         <form className="login-card" onSubmit={ this.enterButton }>
           <p className="brand">TrybeTunes</p>
-          <h1>Ouça prévias e guarde suas músicas favoritas</h1>
-          <p className="muted">Busque qualquer artista do catálogo do iTunes.</p>
+          <h1>{ t('login.title') }</h1>
+          <p className="muted">{ t('login.intro') }</p>
           <label htmlFor="login-name" className="field">
-            Como podemos te chamar?
+            { t('login.name') }
             <input
               type="text"
               id="login-name"
               name="name"
-              placeholder="Seu nome"
+              placeholder={ t('login.namePlaceholder') }
               autoComplete="name"
               onChange={ this.onChangeHandler }
               data-testid="login-name-input"
@@ -72,9 +73,9 @@ export default class Login extends Component {
             data-testid="login-submit-button"
             disabled={ isButtonDisabled || loading }
           >
-            { loading ? 'Entrando...' : 'Entrar' }
+            { loading ? t('login.submitting') : t('login.submit') }
           </button>
-          <p className="muted small">Use pelo menos 3 letras.</p>
+          <p className="muted small">{ t('login.rule') }</p>
         </form>
         { isUserAuthenticated && <Redirect to="/search" /> }
       </div>

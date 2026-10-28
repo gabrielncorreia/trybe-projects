@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../context/AppContext';
 import { NUMERIC_COLUMNS } from '../context/Provider';
-import LABELS from './labels';
+import label from './labels';
+import { t } from '../i18n';
 
 const COMPARISONS = ['maior que', 'menor que', 'igual a'];
 const SYMBOL = { 'maior que': '>', 'menor que': '<', 'igual a': '=' };
@@ -28,12 +29,12 @@ export default function Filter() {
   };
 
   return (
-    <section className="controls" aria-label="Filtros e ordenação">
+    <section className="controls" aria-label={ t('filter.region') }>
       <form className="panel" onSubmit={ handleFilter }>
-        <h2>Filtrar por número</h2>
+        <h2>{ t('filter.title') }</h2>
         <div className="row">
           <label htmlFor="column-filter" className="field">
-            Coluna
+            { t('filter.column') }
             <select
               id="column-filter"
               data-testid="column-filter"
@@ -42,12 +43,12 @@ export default function Filter() {
               onChange={ ({ target }) => setColumn(target.value) }
             >
               { availableColumns.map((key) => (
-                <option key={ key } value={ key } label={ LABELS[key] }>{key}</option>
+                <option key={ key } value={ key } label={ label(key) }>{key}</option>
               )) }
             </select>
           </label>
           <label htmlFor="comparison-filter" className="field">
-            Condição
+            { t('filter.comparison') }
             <select
               id="comparison-filter"
               data-testid="comparison-filter"
@@ -55,12 +56,14 @@ export default function Filter() {
               onChange={ ({ target }) => setComparison(target.value) }
             >
               { COMPARISONS.map((option) => (
-                <option key={ option } value={ option }>{option}</option>
+                <option key={ option } value={ option } label={ t(`filter.comparisons.${option}`) }>
+                  {option}
+                </option>
               )) }
             </select>
           </label>
           <label htmlFor="value-filter" className="field">
-            Valor
+            { t('filter.value') }
             <input
               id="value-filter"
               type="number"
@@ -75,7 +78,7 @@ export default function Filter() {
             data-testid="button-filter"
             disabled={ !availableColumns.length }
           >
-            Filtrar
+            { t('filter.submit') }
           </button>
         </div>
 
@@ -83,10 +86,10 @@ export default function Filter() {
           <div className="chips">
             { filters.map((filter) => (
               <span key={ filter.column } className="chip" data-testid="filter">
-                { `${LABELS[filter.column]} ${SYMBOL[filter.comparison]} ${filter.value}` }
+                { `${label(filter.column)} ${SYMBOL[filter.comparison]} ${filter.value}` }
                 <button
                   type="button"
-                  aria-label={ `Remover filtro de ${LABELS[filter.column]}` }
+                  aria-label={ t('filter.remove', { column: label(filter.column) }) }
                   onClick={ () => removeFilter(filter.column) }
                 >
                   ×
@@ -94,7 +97,7 @@ export default function Filter() {
               </span>
             )) }
             <button type="button" className="link-button" onClick={ clearFilters }>
-              Limpar filtros
+              { t('filter.clear') }
             </button>
           </div>
         ) }
@@ -107,10 +110,10 @@ export default function Filter() {
           setOrder({ column: sortColumn, sort: sortDirection });
         } }
       >
-        <h2>Ordenar</h2>
+        <h2>{ t('sort.title') }</h2>
         <div className="row">
           <label htmlFor="column-sort" className="field">
-            Coluna
+            { t('sort.column') }
             <select
               id="column-sort"
               data-testid="column-sort"
@@ -118,12 +121,12 @@ export default function Filter() {
               onChange={ ({ target }) => setSortColumn(target.value) }
             >
               { NUMERIC_COLUMNS.map((key) => (
-                <option key={ key } value={ key } label={ LABELS[key] }>{key}</option>
+                <option key={ key } value={ key } label={ label(key) }>{key}</option>
               )) }
             </select>
           </label>
           <fieldset className="segmented">
-            <legend className="visually-hidden">Direção</legend>
+            <legend className="visually-hidden">{ t('sort.direction') }</legend>
             <label htmlFor="sort-asc">
               <input
                 type="radio"
@@ -133,7 +136,7 @@ export default function Filter() {
                 checked={ sortDirection === 'ASC' }
                 onChange={ () => setSortDirection('ASC') }
               />
-              <span>Crescente</span>
+              <span>{ t('sort.asc') }</span>
             </label>
             <label htmlFor="sort-desc">
               <input
@@ -144,24 +147,27 @@ export default function Filter() {
                 checked={ sortDirection === 'DESC' }
                 onChange={ () => setSortDirection('DESC') }
               />
-              <span>Decrescente</span>
+              <span>{ t('sort.desc') }</span>
             </label>
           </fieldset>
           <button type="submit" className="button-secondary" data-testid="column-sort-button">
-            Ordenar
+            { t('sort.submit') }
           </button>
         </div>
         { order.column !== 'name' && (
           <div className="chips">
             <span className="chip chip-quiet">
-              { `${LABELS[order.column]}, ${order.sort === 'ASC' ? 'crescente' : 'decrescente'}` }
+              { t('sort.current', {
+                column: label(order.column),
+                direction: t(order.sort === 'ASC' ? 'sort.ascLower' : 'sort.descLower'),
+              }) }
             </span>
             <button
               type="button"
               className="link-button"
               onClick={ () => setOrder({ column: 'name', sort: 'ASC' }) }
             >
-              Voltar à ordem alfabética
+              { t('sort.reset') }
             </button>
           </div>
         ) }

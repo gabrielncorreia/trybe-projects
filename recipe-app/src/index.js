@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 // import './index.css';
 import { HashRouter } from 'react-router-dom';
 import App from './App';
+import { useLanguage } from './i18n';
 import * as serviceWorker from './serviceWorker';
+
+function Root() {
+  const language = useLanguage();
+  return <App key={ language } />;
+}
 
 ReactDOM.render(
   <HashRouter>
-    <App />
+    <Root />
   </HashRouter>,
   document.getElementById('root'),
 );

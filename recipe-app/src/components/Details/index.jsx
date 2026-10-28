@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,8 @@ export const recipeSubtitle = (recipe) => (
 export default function Details({ match: { params: { id } }, location: { pathname } }) {
   const apiType = apiTypeFromPath(pathname);
   const otherType = apiType === 'meal' ? 'cocktail' : 'meal';
-  const { path, title } = KINDS[apiType];
+  const { path } = KINDS[apiType];
+  const kind = t(`kinds.${apiType}Lower`);
   const [recipe, setRecipe] = useState(null);
   const [notFound, setNotFound] = useState(false);
   const [recommended, setRecommended] = useState([]);
@@ -36,8 +38,8 @@ export default function Details({ match: { params: { id } }, location: { pathnam
     return (
       <Page apiType={ apiType } footer={ false }>
         <div className="empty">
-          <h1>Receita não encontrada</h1>
-          <Link to={ `/${path}` }>{ `Ver ${title.toLowerCase()}` }</Link>
+          <h1>{ t('details.notFound') }</h1>
+          <Link to={ `/${path}` }>{ t('details.see', { kind }) }</Link>
         </div>
       </Page>
     );
@@ -46,7 +48,7 @@ export default function Details({ match: { params: { id } }, location: { pathnam
   if (!recipe) {
     return (
       <Page apiType={ apiType } footer={ false }>
-        <p className="status">Carregando receita...</p>
+        <p className="status">{ t('details.loading') }</p>
       </Page>
     );
   }
@@ -55,9 +57,9 @@ export default function Details({ match: { params: { id } }, location: { pathnam
   const started = getChecked(apiType, id).length > 0;
   const done = getDone().some((item) => item.id === id);
   const other = KINDS[otherType];
-  let cta = 'Começar receita';
-  if (started) cta = 'Continuar receita';
-  else if (done) cta = 'Fazer de novo';
+  let cta = t('details.start');
+  if (started) cta = t('details.continue');
+  else if (done) cta = t('details.again');
 
   return (
     <Page apiType={ apiType } footer={ false }>
@@ -66,13 +68,13 @@ export default function Details({ match: { params: { id } }, location: { pathnam
           <img data-testid="recipe-photo" src={ recipe.image } alt="" />
         </div>
         <div className="recipe-body">
-          <Link to={ `/${path}` } className="back-link">{ `Voltar para ${title.toLowerCase()}` }</Link>
+          <Link to={ `/${path}` } className="back-link">{ t('details.back', { kind }) }</Link>
           <h1 data-testid="recipe-title">{ recipe.name }</h1>
           <p className="muted" data-testid="recipe-category">{ recipeSubtitle(recipe) }</p>
           <RecipeActions recipe={ recipe } />
 
           <section>
-            <h2>{ `Ingredientes (${recipe.ingredients.length})` }</h2>
+            <h2>{ t('details.ingredients', { count: recipe.ingredients.length }) }</h2>
             <ul className="ingredient-list">
               { recipe.ingredients.map(({ name, measure }, i) => (
                 <li key={ `${name}-${i}` } data-testid={ `${i}-ingredient-name-and-measure` }>
@@ -84,7 +86,7 @@ export default function Details({ match: { params: { id } }, location: { pathnam
           </section>
 
           <section>
-            <h2>Modo de preparo</h2>
+            <h2>{ t('details.steps') }</h2>
             <div className="instructions" data-testid="instructions">
               { recipe.instructions.split(/\r?\n/).filter((line) => line.trim())
                 .map((line, i) => <p key={ i }>{ line }</p>) }
@@ -93,12 +95,12 @@ export default function Details({ match: { params: { id } }, location: { pathnam
 
           { embed && (
             <section>
-              <h2>Vídeo</h2>
+              <h2>{ t('details.video') }</h2>
               <div className="video">
                 <iframe
                   data-testid="video"
                   src={ embed }
-                  title={ `Vídeo: ${recipe.name}` }
+                  title={ t('details.videoTitle', { name: recipe.name }) }
                   loading="lazy"
                   allow="encrypted-media; picture-in-picture"
                   allowFullScreen
@@ -109,7 +111,7 @@ export default function Details({ match: { params: { id } }, location: { pathnam
 
           { recommended.length > 0 && (
             <section>
-              <h2>{ apiType === 'meal' ? 'Para beber junto' : 'Para comer junto' }</h2>
+              <h2>{ t(apiType === 'meal' ? 'details.pairMeal' : 'details.pairDrink') }</h2>
               <div className="recommend-row">
                 { recommended.map((item, i) => (
                   <Link

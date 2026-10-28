@@ -1,87 +1,110 @@
-body {
-  background-color: whitesmoke;
-  box-sizing: border-box;
-  font-size: 16px;
+.App {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 56px 24px 96px;
 }
 
 .movie-card-header {
-  align-items: center;
-  background-color: #343a40;
-  display: flex;
-  height: 100px;
-  justify-content: center;
+  max-width: 62ch;
+  margin-bottom: 40px;
 }
 
 .page-title {
-  color: #f8f9fa;
-  font-size: 28px;
-  font-weight: 500;
-  text-align: center;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+
+.page-intro {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 1.0625rem;
 }
 
 .movie-list {
-  display: flex;
-  flex-flow: row wrap;
-  padding: 48px 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 20px;
 }
 
 .movie-card {
-  background-color: white;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 3px;
   display: flex;
   flex-direction: column;
-  height: 450px;
-  justify-content: space-between;
-  margin: 5px;
   overflow: hidden;
-  width: 300px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--panel);
 }
 
-
 .movie-card-image {
+  display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-bottom: 1px solid var(--line);
 }
 
 .movie-card-body {
-  flex: 1 1 auto;
-  padding: 20px;
+  flex: 1;
+  padding: 18px 20px 4px;
 }
 
 .movie-card-title {
-  font-size: 24px;
-  font-weight: 500;
-  margin: 0 0 12px;
-  padding-left: 10px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.15;
 }
 
 .movie-card-subtitle {
-  color: #6c757d;
-  font-size: 16px;
+  margin: 4px 0 0;
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 1rem;
   font-weight: 500;
-  margin: 0 0 8px;
-  padding-left: 10px;
 }
 
 .movie-card-storyline {
-  font-size: 14px;
-  padding: 10px;
-  text-align: justify;
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+/* The one loud element: a segmented readout, filled to the exact rating. */
+.movie-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 20px;
+}
+
+.rating-meter {
+  display: flex;
+  flex: 1;
+  gap: 4px;
+}
+
+.rating-segment {
+  flex: 1;
+  height: 8px;
+  background: linear-gradient(
+    to right,
+    var(--signal) calc(var(--fill) * 100%),
+    var(--line) calc(var(--fill) * 100%)
+  );
+  transform: skewX(-20deg);
 }
 
 .rating {
-  background-color: #007bff;
-  border-radius: 25px;
-  color: white;
-  font-size: 16px;
+  min-width: 2.5ch;
+  color: var(--signal);
+  font-family: var(--font-display);
+  font-size: 1.375rem;
   font-weight: 700;
-  padding: 3px 9px;
-}
-
-.movie-card-rating {
-  background-color: rgba(0, 0, 0, 0.03);
-  border-top: 1px solid rgba(0, 0, 0, 0.125);
-  display: flex;
-  justify-content: flex-end;
-  padding: 12px 20px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }

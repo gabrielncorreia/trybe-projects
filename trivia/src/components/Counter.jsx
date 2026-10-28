@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import actions from '../redux/actions';
+import { t } from '../i18n';
 
 const TIME_LIMIT = 30;
 const INTERVAL = 1000;
@@ -57,7 +58,7 @@ class Counter extends Component {
         <div className="timer-track" aria-hidden="true">
           <span className="timer-fill" style={ { transform: `scaleX(${count / TIME_LIMIT})` } } />
         </div>
-        <span className="timer-count" role="timer" aria-label={ `${count} segundos restantes` }>
+        <span className="timer-count" role="timer" aria-label={ t('game.secondsLeft', { count }) }>
           { `${count}s` }
         </span>
       </div>

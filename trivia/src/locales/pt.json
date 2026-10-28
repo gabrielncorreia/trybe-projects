@@ -1,0 +1,48 @@
+{
+  "document": { "title": "Trivia" },
+  "difficulty": { "": "Qualquer", "easy": "Fácil", "medium": "Média", "hard": "Difícil" },
+  "start": {
+    "title": "Quantas você acerta em 30 segundos cada?",
+    "name": "Nome",
+    "namePlaceholder": "Como aparece no ranking",
+    "email": "Email do Gravatar",
+    "emailPlaceholder": "Usado só para a sua foto",
+    "options": "Partida",
+    "questions": "Perguntas",
+    "difficulty": "Dificuldade",
+    "category": "Categoria",
+    "allCategories": "Todas",
+    "noResults": "Não há perguntas suficientes com essas opções. Tente outra categoria ou menos perguntas.",
+    "loadError": "Não foi possível carregar as perguntas. Tente de novo em alguns segundos.",
+    "loading": "Carregando perguntas…",
+    "play": "Jogar"
+  },
+  "game": {
+    "progress": "Pergunta {current} de {total}",
+    "points": "{score} pts",
+    "timeUp": "O tempo acabou.",
+    "next": "Próxima pergunta",
+    "result": "Ver resultado",
+    "secondsLeft": "{count} segundos restantes"
+  },
+  "feedback": {
+    "good": "Mandou bem!",
+    "bad": "Podia ser melhor…",
+    "points": "pontos",
+    "correct": "acertos",
+    "of": " de {total}",
+    "again": "Jogar de novo",
+    "ranking": "Ver ranking"
+  },
+  "ranking": {
+    "title": "Ranking",
+    "empty": "Nenhuma partida ainda. Jogue uma para aparecer aqui.",
+    "play": "Jogar"
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "text": "Esse endereço não existe.",
+    "home": "Voltar ao início"
+  },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

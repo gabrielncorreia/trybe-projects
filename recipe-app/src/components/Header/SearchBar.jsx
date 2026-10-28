@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -6,9 +7,9 @@ import fetchRecipe from '../../services/api';
 import { KINDS } from '../../services/recipes';
 
 const MODES = [
-  { id: 'name', label: 'Nome', testid: 'name-search-radio' },
-  { id: 'ingredient', label: 'Ingrediente', testid: 'ingredient-search-radio' },
-  { id: 'letter', label: 'Primeira letra', testid: 'first-letter-search-radio' },
+  { id: 'name', label: 'search.name', testid: 'name-search-radio' },
+  { id: 'ingredient', label: 'search.ingredient', testid: 'ingredient-search-radio' },
+  { id: 'letter', label: 'search.letter', testid: 'first-letter-search-radio' },
 ];
 
 function SearchBar({ apiType }) {
@@ -24,13 +25,13 @@ function SearchBar({ apiType }) {
     const term = searchInput.trim();
     if (!term) return;
     if (mode === 'letter' && term.length !== 1) {
-      setMessage('Na busca por primeira letra, use só uma letra.');
+      setMessage(t('search.oneLetter'));
       return;
     }
     const recipes = await fetchRecipe(apiType, mode, term);
     const list = recipes && recipes[key];
     if (!list) {
-      setMessage(`Nenhuma receita encontrada para "${term}".`);
+      setMessage(t('search.notFound', { term }));
     } else if (list.length === 1) {
       history.push(`/${path}/${list[0][`id${field}`]}`);
     } else {
@@ -42,22 +43,22 @@ function SearchBar({ apiType }) {
   return (
     <form className="searchbar" onSubmit={ handleSubmit } role="search">
       <div className="searchbar-row">
-        <label htmlFor="search-input" className="visually-hidden">Buscar</label>
+        <label htmlFor="search-input" className="visually-hidden">{ t('search.label') }</label>
         <input
           id="search-input"
           type="search"
           name="barra"
           data-testid="search-input"
-          placeholder={ mode === 'ingredient' ? 'Ex.: chicken' : 'O que você quer preparar?' }
+          placeholder={ t(mode === 'ingredient' ? 'search.ingredientPlaceholder' : 'search.placeholder') }
           maxLength={ mode === 'letter' ? 1 : undefined }
           value={ searchInput }
           onChange={ ({ target }) => setSearchInput(target.value) }
         />
         <button type="submit" className="button-primary" data-testid="exec-search-btn">
-          Buscar
+          { t('search.submit') }
         </button>
       </div>
-      <div className="segmented" role="radiogroup" aria-label="Buscar por">
+      <div className="segmented" role="radiogroup" aria-label={ t('search.by') }>
         { MODES.map(({ id, label, testid }) => (
           <label key={ id } htmlFor={ id } data-testid={ testid }>
             <input
@@ -67,7 +68,7 @@ function SearchBar({ apiType }) {
               checked={ mode === id }
               onChange={ () => { setMode(id); setMessage(''); } }
             />
-            <span>{ label }</span>
+            <span>{ t(label) }</span>
           </label>
         )) }
       </div>

@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Page from '../Page';
@@ -18,8 +19,8 @@ function ExploreByIngredients({ apiType }) {
   }, [apiType, key]);
 
   return (
-    <Page title="Por ingrediente" apiType={ apiType }>
-      { !ingredients ? <p className="status">Carregando ingredientes...</p> : (
+    <Page title={ t('explore.byIngredient') } apiType={ apiType }>
+      { !ingredients ? <p className="status">{ t('explore.loadingIngredients') }</p> : (
         <section className="ingredient-grid">
           { ingredients.map((ingredient, index) => (
             <IngredientCard

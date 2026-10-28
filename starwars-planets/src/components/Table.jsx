@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/AppContext';
-import LABELS from './labels';
-
-const COLUMNS = Object.keys(LABELS);
+import label, { COLUMNS } from './labels';
+import { t } from '../i18n';
 const NUMERIC = ['rotation_period', 'orbital_period', 'diameter', 'surface_water', 'population', 'films'];
 
 // Planet swatch tinted by its climate and terrain, and sized by its diameter.
@@ -38,7 +37,7 @@ export default function Table() {
   const { planets, loading, error, clearFilters, setName } = useContext(AppContext);
 
   if (error) {
-    return <p className="state">Não foi possível carregar os planetas. Recarregue a página para tentar de novo.</p>;
+    return <p className="state">{ t('table.error') }</p>;
   }
 
   return (
@@ -49,7 +48,7 @@ export default function Table() {
             <tr>
               { COLUMNS.map((column) => (
                 <th key={ column } scope="col" className={ NUMERIC.includes(column) ? 'num' : '' }>
-                  { LABELS[column] }
+                  { label(column) }
                 </th>
               )) }
             </tr>
@@ -73,16 +72,16 @@ export default function Table() {
           </tbody>
         </table>
       </div>
-      { loading && <p className="state">Carregando planetas...</p> }
+      { loading && <p className="state">{ t('table.loading') }</p> }
       { !loading && planets.length === 0 && (
         <div className="state">
-          <p>Nenhum planeta atende a esses filtros.</p>
+          <p>{ t('table.empty') }</p>
           <button
             type="button"
             className="link-button"
             onClick={ () => { clearFilters(); setName(''); } }
           >
-            Limpar busca e filtros
+            { t('table.reset') }
           </button>
         </div>
       ) }

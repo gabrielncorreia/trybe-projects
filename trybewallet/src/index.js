@@ -5,12 +5,19 @@ import { HashRouter } from 'react-router-dom';
 import './index.css';
 import App from './App';
 import store from './store/index';
+import { useLanguage } from './i18n';
 import * as serviceWorker from './serviceWorker';
+
+// Remounts the app on a language change; the Redux store sits outside, so expenses survive.
+function Root() {
+  const language = useLanguage();
+  return <App key={ language } />;
+}
 
 ReactDOM.render(
   <HashRouter>
     <Provider store={ store }>
-      <App />
+      <Root />
     </Provider>
   </HashRouter>,
   document.getElementById('root'),

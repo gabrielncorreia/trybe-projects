@@ -1,0 +1,54 @@
+{
+  "document": { "title": "TrybeTunes" },
+  "loading": "Carregando…",
+  "login": {
+    "title": "Ouça prévias e guarde suas músicas favoritas",
+    "intro": "Busque qualquer artista do catálogo do iTunes.",
+    "name": "Como podemos te chamar?",
+    "namePlaceholder": "Seu nome",
+    "submit": "Entrar",
+    "submitting": "Entrando…",
+    "rule": "Use pelo menos 3 letras."
+  },
+  "nav": { "search": "Buscar", "favorites": "Favoritas", "profile": "Perfil" },
+  "search": {
+    "label": "Artista ou banda",
+    "placeholder": "Busque um artista ou banda",
+    "submit": "Buscar",
+    "results": "Álbuns de {artist}",
+    "notFound": "Nenhum álbum encontrado para \"{artist}\".",
+    "hint": "Digite o nome de um artista para ver os álbuns dele."
+  },
+  "album": {
+    "label": "Álbum",
+    "meta": "{year}, {count} faixas"
+  },
+  "track": {
+    "noAudio": "O seu navegador não toca as prévias de áudio.",
+    "favorite": "Favoritar {name}",
+    "unfavorite": "Remover {name} das favoritas"
+  },
+  "favorites": {
+    "title": "Músicas favoritas",
+    "empty": "Nenhuma música favorita ainda.",
+    "hint": "Toque no coração de uma faixa para guardá-la aqui.",
+    "search": "Buscar artistas"
+  },
+  "profile": {
+    "title": "Perfil",
+    "name": "Nome",
+    "email": "Email",
+    "emailPlaceholder": "voce@email.com",
+    "about": "Sobre você",
+    "aboutPlaceholder": "Seus gêneros favoritos, por exemplo",
+    "save": "Salvar perfil",
+    "saving": "Salvando…",
+    "saved": "Perfil salvo."
+  },
+  "notFound": {
+    "title": "Página não encontrada",
+    "text": "Esse endereço não existe.",
+    "back": "Voltar para busca"
+  },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

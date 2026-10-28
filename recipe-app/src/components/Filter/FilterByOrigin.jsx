@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import FiltersContext from '../../context/FiltersContext';
@@ -20,7 +21,7 @@ function FilterByOrigin({ originalData, apiType }) {
 
   return (
     <label htmlFor="Origin" className="field origin-field">
-      Cozinha
+      { t('filter.cuisine') }
       <select
         data-testid="explore-by-area-dropdown"
         name="Origin"
@@ -28,7 +29,7 @@ function FilterByOrigin({ originalData, apiType }) {
         disabled={ !areas.length }
         onChange={ handleChange }
       >
-        <option data-testid="All-option" value="All">Todas</option>
+        <option data-testid="All-option" value="All">{ t('filter.all') }</option>
         { areas.map((area) => (
           <option data-testid={ `${area}-option` } key={ area } value={ area }>{ area }</option>
         )) }

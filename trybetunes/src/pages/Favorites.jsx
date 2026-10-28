@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import MusicCard from '../components/MusicCard';
 import Loading from '../components/Loading';
 import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { t } from '../i18n';
 
 export default class Favorites extends Component {
   constructor(props) {
@@ -29,15 +30,15 @@ export default class Favorites extends Component {
     const { songs, loading } = this.state;
     return (
       <div data-testid="page-favorites" className="page">
-        <h1 className="page-title">Músicas favoritas</h1>
+        <h1 className="page-title">{ t('favorites.title') }</h1>
         { loading && <Loading /> }
         { !loading && songs.length === 0 && (
           <div className="empty">
-            <p>Nenhuma música favorita ainda.</p>
+            <p>{ t('favorites.empty') }</p>
             <p className="muted">
-              Toque no coração de uma faixa para guardá-la aqui.
+              { t('favorites.hint') }
               {' '}
-              <Link to="/search">Buscar artistas</Link>
+              <Link to="/search">{ t('favorites.search') }</Link>
             </p>
           </div>
         ) }

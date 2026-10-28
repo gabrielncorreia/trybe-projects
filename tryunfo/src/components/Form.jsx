@@ -1,147 +1,127 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { t } from '../i18n';
+import {
+  MAX_TOTAL, MAX_VALUE, RARITIES, attributeTotal, attributesInRange, hasRequiredText,
+} from '../rules';
+
+const ATTRIBUTES = [
+  { name: 'cardAttr1', label: 'form.power', testId: 'attr1-input' },
+  { name: 'cardAttr2', label: 'form.toughness', testId: 'attr2-input' },
+  { name: 'cardAttr3', label: 'form.mana', testId: 'attr3-input' },
+];
 
 class Form extends React.Component {
-  render() {
-    const { cardName,
-      cardDescription,
-      cardAttr1,
-      cardAttr2,
-      cardAttr3,
-      cardImage,
-      cardRare,
-      isSaveButtonDisabled,
-      onInputChange,
-      onSaveButtonClick
-    } = this.props;
-    return (
-      <form action="">
-        <fieldset className="fieldset-div">
-          <legend>Dados da Carta</legend>
+  budgetMessage() {
+    if (!attributesInRange(this.props)) return { text: t('form.outOfRange'), over: true };
+    const total = attributeTotal(this.props);
+    if (total > MAX_TOTAL) {
+      return { text: t('form.pointsOver', { points: total - MAX_TOTAL }), over: true };
+    }
+    return { text: t('form.pointsLeft', { points: MAX_TOTAL - total }), over: false };
+  }
 
-          <div className="input-container">
-            <span>Name</span>
+  render() {
+    const {
+      cardName, cardDescription, cardImage, cardRare,
+      isSaveButtonDisabled, onInputChange, onSaveButtonClick,
+    } = this.props;
+    const budget = this.budgetMessage();
+
+    return (
+      <form className="card-form" onSubmit={ onSaveButtonClick }>
+        <fieldset>
+          <legend>{ t('form.legend') }</legend>
+
+          <label className="field">
+            <span>{ t('form.name') }</span>
             <input
               type="text"
               name="cardName"
               data-testid="name-input"
-              id="name-input"
+              maxLength={ 40 }
               value={ cardName }
               onChange={ onInputChange }
             />
-          </div>
+          </label>
 
-          <div className="input-container">
-            <span>Text Box</span>
+          <label className="field">
+            <span>{ t('form.description') }</span>
             <textarea
               name="cardDescription"
               data-testid="description-input"
-              id="description-input"
+              rows={ 4 }
+              maxLength={ 280 }
               value={ cardDescription }
               onChange={ onInputChange }
             />
-          </div>
+          </label>
 
-          <div className="attr-container">
-            <span>Power</span>
-            <input
-              type="number"
-              name="cardAttr1"
-              data-testid="attr1-input"
-              id="attr1-input"
-              value={ cardAttr1 }
-              onChange={ onInputChange }
-            />
+          <div className="field-row">
+            { ATTRIBUTES.map(({ name, label, testId }) => (
+              <label className="field" key={ name }>
+                <span>{ t(label) }</span>
+                <input
+                  type="number"
+                  name={ name }
+                  data-testid={ testId }
+                  min={ 0 }
+                  max={ MAX_VALUE }
+                  inputMode="numeric"
+                  aria-describedby="attribute-budget"
+                  value={ this.props[name] }
+                  onChange={ onInputChange }
+                />
+              </label>
+            )) }
           </div>
+          <p
+            id="attribute-budget"
+            className={ `budget${budget.over ? ' budget-over' : ''}` }
+            aria-live="polite"
+          >
+            <strong>{ budget.text }</strong>
+            { ' ' }
+            { t('form.limits') }
+          </p>
 
-          <div className="attr-container">
-            <span>Toughness</span>
+          <label className="field">
+            <span>{ t('form.image') }</span>
             <input
-              type="number"
-              name="cardAttr2"
-              data-testid="attr2-input"
-              id="attr2-input"
-              value={ cardAttr2 }
-              onChange={ onInputChange }
-            />
-          </div>
-
-          <div className="attr-container">
-            <span>Mana Cost:</span>
-            <input
-              type="number"
-              name="cardAttr3"
-              data-testid="attr3-input"
-              id="attr3-input"
-              value={ cardAttr3 }
-              onChange={ onInputChange }
-            />
-          </div>
-
-          <div className="image-container">
-            <span>Image URL:</span>
-            <input
-              type="text"
-              src=""
-              alt=""
-              className="image-input"
-              data-testid="image-input"
-              id="imageSrc"
+              type="url"
               name="cardImage"
+              data-testid="image-input"
+              placeholder={ t('form.imagePlaceholder') }
               value={ cardImage }
               onChange={ onInputChange }
             />
-          </div>
+          </label>
 
-          <div className="input-container">
-            <span>Rarity:</span>
+          <label className="field">
+            <span>{ t('form.rarity') }</span>
             <select
               name="cardRare"
-              className="select-list"
               data-testid="rare-input"
-              id="rarity"
               value={ cardRare }
               onChange={ onInputChange }
             >
-              <option value="common">Common</option>
-              <option value="uncommon">Uncommon</option>
-              <option value="rare">Rare</option>
-              <option value="mythic rare">Mythic Rare</option>
+              { RARITIES.map((rarity) => (
+                <option key={ rarity } value={ rarity }>{ t(`rarity.${rarity}`) }</option>
+              )) }
             </select>
-          </div>
+          </label>
 
-          {/* { hasTrunfo ? (
-            <div className="input-container">
-              <span>You already has a Mythic Rare card in your deck!</span>
-            </div>
-          ) : (
-            <div>
-              <input
-                type="checkbox"
-                name="cardTrunfo"
-                className="checkbox-mythic-rare"
-                data-testid="trunfo-input"
-                id="mythic-rare"
-                checked={ cardTrunfo }
-                onChange={ onInputChange }
-              />
-              <span>Mythic Rare!</span>
-            </div>
-          )} */}
-
-          <div className="saveBtn-container">
+          <div className="form-footer">
             <button
               type="submit"
               className="save-btn"
               data-testid="save-button"
-              name="save-button"
               disabled={ isSaveButtonDisabled }
-              onClick={ onSaveButtonClick }
             >
-              Salvar
+              { t('form.save') }
             </button>
+            { !hasRequiredText(this.props) && <p className="form-hint">{ t('form.missing') }</p> }
           </div>
-
         </fieldset>
       </form>
     );
@@ -149,33 +129,16 @@ class Form extends React.Component {
 }
 
 Form.propTypes = {
-  cardName: PropTypes.string,
-  cardDescription: PropTypes.string,
-  cardAttr1: PropTypes.string,
-  cardAttr2: PropTypes.string,
-  cardAttr3: PropTypes.string,
-  cardImage: PropTypes.string,
-  cardRare: PropTypes.string,
-  cardTrunfo: PropTypes.bool,
-  hasTrunfo: PropTypes.bool,
-  isSaveButtonDisabled: PropTypes.bool,
-  onInputChange: PropTypes.func,
-  onSaveButtonClick: PropTypes.func,
-};
-
-Form.defaultProps = {
-  cardName: '',
-  cardDescription: '',
-  cardAttr1: 0,
-  cardAttr2: 0,
-  cardAttr3: 0,
-  cardImage: '',
-  cardRare: 'normal',
-  cardTrunfo: false,
-  hasTrunfo: false,
-  isSaveButtonDisabled: false,
-  onInputChange: () => {},
-  onSaveButtonClick: () => {},
+  cardName: PropTypes.string.isRequired,
+  cardDescription: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.string.isRequired,
+  cardAttr2: PropTypes.string.isRequired,
+  cardAttr3: PropTypes.string.isRequired,
+  cardImage: PropTypes.string.isRequired,
+  cardRare: PropTypes.string.isRequired,
+  isSaveButtonDisabled: PropTypes.bool.isRequired,
+  onInputChange: PropTypes.func.isRequired,
+  onSaveButtonClick: PropTypes.func.isRequired,
 };
 
 export default Form;

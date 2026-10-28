@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import loginImage from '../../images/login_bg.jpg';
@@ -26,35 +27,35 @@ export default function Login() {
       <div className="login-photo" style={ { backgroundImage: `url(${loginImage})` } } />
       <form className="login-form" onSubmit={ handleSubmit }>
         <p className="brand">Recipes App</p>
-        <h1>Receitas de comidas e drinks para o dia a dia</h1>
+        <h1>{ t('login.title') }</h1>
         <p className="muted">
-          Busque por nome, ingrediente ou cozinha, siga o passo a passo e guarde suas favoritas.
+          { t('login.intro') }
         </p>
         <label htmlFor="user" className="field">
-          Email
+          { t('login.email') }
           <input
             id="user"
             type="email"
             autoComplete="email"
-            placeholder="voce@email.com"
+            placeholder={ t('login.emailPlaceholder') }
             data-testid="email-input"
             value={ email }
             onChange={ ({ target }) => setEmail(target.value) }
           />
         </label>
         <label htmlFor="password" className="field">
-          Senha
+          { t('login.password') }
           <input
             id="password"
             type="password"
             autoComplete="current-password"
-            placeholder="Sua senha"
+            placeholder={ t('login.passwordPlaceholder') }
             data-testid="password-input"
             value={ password }
             onChange={ ({ target }) => setPassword(target.value) }
           />
           <span className={ `hint${passwordOk ? ' is-met' : ''}` }>
-            { `${passwordOk ? '✓ ' : ''}Mínimo de ${MIN_PASSWORD} caracteres` }
+            { `${passwordOk ? '✓ ' : ''}${t('login.passwordRule', { min: MIN_PASSWORD })}` }
           </span>
         </label>
         <button
@@ -63,10 +64,10 @@ export default function Login() {
           data-testid="login-submit-btn"
           disabled={ !isValid }
         >
-          Entrar
+          { t('login.submit') }
         </button>
         <p className="muted small credits">
-          Projeto em grupo da Trybe, por
+          { t('login.credits') }
           { ' ' }
           <a href="https://linktr.ee/testbreakers" target="_blank" rel="noopener noreferrer">TestBreakers</a>
         </p>

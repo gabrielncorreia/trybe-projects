@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import React, { useContext, useEffect, useState } from 'react';
 import Page from '../Page';
 import FilterByOrigin from '../Filter/FilterByOrigin';
@@ -21,9 +22,9 @@ function ExploreByOrigin() {
   }, []);
 
   return (
-    <Page title="Por cozinha" apiType={ apiType }>
+    <Page title={ t('explore.byCuisine') } apiType={ apiType }>
       <FilterByOrigin apiType={ apiType } originalData={ originalData } />
-      { isLoading ? <p className="status">Carregando receitas...</p> : (
+      { isLoading ? <p className="status">{ t('list.loading') }</p> : (
         <section className="recipe-grid">
           { (fetchedRecipes || []).map((recipe, index) => (
             <Card key={ recipe.idMeal } recipe={ recipe } apiType={ apiType } index={ index } />

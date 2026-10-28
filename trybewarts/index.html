@@ -2,158 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trybewarts
-  </title>
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
-  <link rel="stylesheet" href="css/bulma.css">
+  <meta name="theme-color" content="#32a791">
+  <title data-i18n="documentTitle">Trybewarts admission form</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="project-bar.css">
 </head>
 <body>
-  <!-- Requisito 1 -->
   <header class="header">
+    <a class="brand" href="./">
+      <img class="trybewarts-header-logo" src="images/trybewarts-header-logo.svg" alt="">
+      <span id="trybewarts-header-title">Trybewarts</span>
+    </a>
 
-    <!-- Requisito 2 -->
-    <img class="trybewarts-header-logo" src="images/trybewarts-header-logo.svg" alt="Logo Trybewarts">
-
-    <!-- Requisito 4 -->
-    <h1 id="trybewarts-header-title">Trybewarts</h1>
-
-    <!-- Requisito 3 -->
-    <form class="trybewarts-login">
-      <label for="">
-        <input type="email" name="email" placeholder="Email" id="email-login" class="input is-success">
-      </label>
-
-      <label for="">
-        <input type="password" name="password" placeholder="Senha" id="password-login" class="input is-success">
-      </label>
-      <button id="button-login" class="button is-link">Entrar</button>
+    <form class="trybewarts-login" novalidate>
+      <input type="email" name="email" id="email-login" autocomplete="username"
+        data-i18n-placeholder="login.email" data-i18n-aria="login.email" placeholder="Email">
+      <input type="password" name="password" id="password-login" autocomplete="current-password"
+        data-i18n-placeholder="login.password" data-i18n-aria="login.password" placeholder="Password">
+      <button type="submit" id="button-login" data-i18n="login.submit">Sign in</button>
+      <p class="login-status" id="login-status" role="status"></p>
     </form>
   </header>
 
-  <!-- Requisito 5 -->
-  <main>
-    <form action="" id="evaluation-form">
-      <!-- Requisito 10 -->
-      <section id="name-etc-container">
-        <div id="name-email-container">
-          <!-- Requisito 8 -->
-          <input type="text" id="input-name" name="nome" placeholder="Nome" class="input is-success">
-          <input type="text" id="input-email" name="email" placeholder="Email" class="input is-success">
+  <main class="page">
+    <div class="intro">
+      <h1 data-i18n="intro.title">Apply to Trybewarts</h1>
+      <p data-i18n="intro.text">Tell us who you are, pick your house and choose what you want to learn first.</p>
+    </div>
+
+    <form id="evaluation-form" class="letter" novalidate>
+      <fieldset class="section">
+        <legend data-i18n="about.title">About you</legend>
+        <div class="grid-2">
+          <label class="field">
+            <span data-i18n="about.firstName">First name</span>
+            <input type="text" id="input-name" name="firstName" autocomplete="given-name">
+          </label>
+          <label class="field">
+            <span data-i18n="about.lastName">Last name</span>
+            <input type="text" id="input-lastname" name="lastName" autocomplete="family-name">
+          </label>
+          <label class="field span-2">
+            <span data-i18n="about.email">Email</span>
+            <input type="email" id="input-email" name="email" autocomplete="email">
+          </label>
         </div>
-        <div id="lastname-house-container">
-          <input type="text" id="input-lastname" name="sobrenome" placeholder="Sobrenome" class="input is-success">
-          <!-- Requisito 9 -->
-          <div class="select is-success" id="div-house">
-            <label for="house" id="house-label">Casa:</label>
-            <select name="house" id="house">
-              <option value="Gitnória" text="Gitnória" id="gitnoria-house">Gitnória</option>
-              <option value="Reactpuff" text="Reactpuff" id="reactpuff-house">Reactpuff</option>
-              <option value="Corvinode" text="Corvinode" id="corvinode-house">Corvinode</option>
-              <option value="Pytherina" text="Pytherina" id="pytherina-house">Pytherina</option>
-            </select>
-          </div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend data-i18n="house.title">Your house</legend>
+        <div class="houses">
+          <label class="house house-git">
+            <input type="radio" name="house" value="Gitnória" checked>
+            <span class="house-name">Gitnória</span>
+          </label>
+          <label class="house house-react">
+            <input type="radio" name="house" value="Reactpuff">
+            <span class="house-name">Reactpuff</span>
+          </label>
+          <label class="house house-node">
+            <input type="radio" name="house" value="Corvinode">
+            <span class="house-name">Corvinode</span>
+          </label>
+          <label class="house house-python">
+            <input type="radio" name="house" value="Pytherina">
+            <span class="house-name">Pytherina</span>
+          </label>
         </div>
-      </section>
-      <hr>
-      <!-- Requisito 12 -->
-      <div id="radio-checkbox-container" class="control">
-        <section id="label-family-style">
-          <label for='family' id="label-family" class="control">Qual sua família?</label>
-            <div>
-              <label for="Frontend">Frontend</label>
-              <input type="radio" name="family" id="frontend" value="Frontend">
-            </div>
-            <div>
-              <label for="Backend">Backend</label>
-              <input type="radio" name="family" id="backend" value="Backend">
-            </div>
-            <div>
-              <label for="FullStack">FullStack</label>
-              <input type="radio" name="family" id="fullstack" value="FullStack">
-            </div>
-          </section>
-        <!-- Requisito 13 -->
-        <section id="label-content-style">
-          <label for="" id="label-content">Qual conteúdo você está com mais vontade de aprender?</label>
-            <div id="checkbox-container">
-                <div>
-                  <label for="HoFs" class="checkbox">HoFs</label>
-                  <input type="checkbox" name="HoFs" id="HoFs" value="HoFs" class="checkbox subject">
-                </div>
-                <div>
-                  <label for="Jest" class="checkbox">Jest</label>
-                  <input type="checkbox" name="Jest" id="Jest" value="Jest" class="checkbox subject">
-                </div>
-                <div>
-                  <label for="Promises" class="checkbox">Promises</label>
-                  <input type="checkbox" name="Promises" id="Promises" value="Promises" class="checkbox subject">
-                </div>
-                <div>
-                  <label for="React">React</label class="checkbox">
-                  <input type="checkbox" name="React" id="React" value="React" class="checkbox subject">
-                </div>
-                <div>
-                  <label for="SQL" class="checkbox">SQL</label>
-                  <input type="checkbox" name="SQL" id="SQL" value="SQL" class="checkbox subject">
-                </div>
-                <div>
-                  <label for="Python" class="checkbox">Python</label>
-                  <input type="checkbox" name="Python" id="Python" value="Python" class="checkbox subject">
-                </div>
-            </div>
-        </section>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend data-i18n="family.title">Your family</legend>
+        <div class="chips">
+          <label class="chip"><input type="radio" name="family" value="Frontend"><span>Frontend</span></label>
+          <label class="chip"><input type="radio" name="family" value="Backend"><span>Backend</span></label>
+          <label class="chip"><input type="radio" name="family" value="FullStack"><span>Full stack</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend data-i18n="subjects.title">What do you most want to learn?</legend>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" class="subject" value="HoFs"><span>HoFs</span></label>
+          <label class="chip"><input type="checkbox" class="subject" value="Jest"><span>Jest</span></label>
+          <label class="chip"><input type="checkbox" class="subject" value="Promises"><span>Promises</span></label>
+          <label class="chip"><input type="checkbox" class="subject" value="React"><span>React</span></label>
+          <label class="chip"><input type="checkbox" class="subject" value="SQL"><span>SQL</span></label>
+          <label class="chip"><input type="checkbox" class="subject" value="Python"><span>Python</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend data-i18n="rate.title">How would you rate Trybewarts?</legend>
+        <div class="rating" id="rating"></div>
+      </fieldset>
+
+      <fieldset class="section">
+        <legend data-i18n="comments.title">Comments</legend>
+        <label class="field">
+          <span class="visually-hidden" data-i18n="comments.title">Comments</span>
+          <textarea id="textarea" rows="5" maxlength="500" aria-describedby="counter"
+            data-i18n-placeholder="comments.placeholder"></textarea>
+        </label>
+        <p class="counter" id="counter" aria-live="polite"></p>
+      </fieldset>
+
+      <div class="submit-row">
+        <label class="agreement">
+          <input type="checkbox" id="agreement">
+          <span data-i18n="agreement">I agree to the use of the information above.</span>
+        </label>
+        <button type="submit" id="submit-btn" disabled data-i18n="submit">Send application</button>
       </div>
-
-      <hr>
-
-        <!-- Requisito 14 -->
-        <section id="label-rate-style">
-          <label for="rate" id="label-rate">Como você avalia a Trybewarts?</label>
-          <input type="radio" name="rate" value="1" class="rate-button"> 1
-          <input type="radio" name="rate" value="2" class="rate-button"> 2
-          <input type="radio" name="rate" value="3" class="rate-button"> 3
-          <input type="radio" name="rate" value="4" class="rate-button"> 4
-          <input type="radio" name="rate" value="5" class="rate-button"> 5
-          <input type="radio" name="rate" value="6" class="rate-button"> 6
-          <input type="radio" name="rate" value="7" class="rate-button"> 7
-          <input type="radio" name="rate" value="8" class="rate-button"> 8
-          <input type="radio" name="rate" value="9" class="rate-button"> 9
-          <input type="radio" name="rate" value="10" class="rate-button"> 10
-        </section>
-
-        <!-- Requisito 15 -->
-        <div id="div-comments" class="form-floating">
-          <label for="textarea" class="textarea">Deixe seu comentário:</label>
-          <textarea name="" id="textarea" cols="30" rows="5" maxlength="500" class="form-control" placeholder="(escreva seu comentario aqui)"></textarea>
-        </div>
-
-      <!-- Requisito 16 -->
-      <div id='accept'>
-        <input type='checkbox' id="agreement" required class="subject">
-        <label for="agreement" id="label-infos">Você concorda com o uso das informações acima?</label>
-      </div>
-
-    <!-- Requisito 17 -->
-    <button type="submit" id="submit-btn" class="button is-success" disabled>Enviar</button>
     </form>
 
-    <!-- Requisito 7 -->
-    <aside>
+    <aside class="crest">
       <img src="images/trybewarts-colored.svg" alt="" id="trybewarts-forms-logo">
     </aside>
-
   </main>
 
-  <!-- Requisito 19 -->
   <footer class="footer">
-    <div class="content has-text-centered" id="footer-div">
-      <h5>Direitos reservados à Trybewarts©</h5>
-    </div>
+    <p data-i18n="footer">Trybewarts, all rights reserved.</p>
   </footer>
+
+  <nav class="project-bar" data-i18n-aria="projectBar.label" aria-label="Trybe projects">
+    <a class="project-bar-home" href="../" data-i18n="projectBar.all">All projects</a>
+    <div class="project-bar-langs" role="group" data-i18n-aria="projectBar.language" aria-label="Language">
+      <button type="button" lang="en" title="English" data-lang="en">EN</button>
+      <button type="button" lang="pt" title="Português" data-lang="pt">PT</button>
+    </div>
+  </nav>
 
   <script src="script.js"></script>
 </body>

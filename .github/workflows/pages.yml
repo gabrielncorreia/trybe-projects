@@ -25,10 +25,12 @@ jobs:
       # Cypress is only for the original Trybe tests; the build does not need its binary.
       CYPRESS_INSTALL_BINARY: 0
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: 24
+      - name: Check the shared files are in sync
+        run: bash scripts/sync-shared.sh --check
       - name: Build the React apps
         run: |
           for app in movie-cards-library recipe-app starwars-planets trivia trybetunes trybewallet tryunfo; do
@@ -39,9 +41,9 @@ jobs:
       - name: Add the static project and the index page
         run: |
           mkdir -p _site/trybewarts
-          cp -r trybewarts/index.html trybewarts/style.css trybewarts/script.js trybewarts/css trybewarts/images _site/trybewarts/
-          cp index.html _site/
-      - uses: actions/upload-pages-artifact@v3
+          cp -r trybewarts/index.html trybewarts/style.css trybewarts/project-bar.css trybewarts/script.js trybewarts/images _site/trybewarts/
+          cp index.html landing.js _site/
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
 
@@ -53,4 +55,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

@@ -1,4 +1,6 @@
 :root {
+  /* Keeps the Trybe projects bar above the tab bar and the sticky recipe button. */
+  --project-bar-bottom: 96px;
   --bg: #f7f6f3;
   --surface: #fff;
   --ink: #23201c;

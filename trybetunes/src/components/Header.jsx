@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, NavLink, withRouter } from 'react-router-dom';
 import { getUser } from '../services/userAPI';
+import { t } from '../i18n';
 
 class Header extends Component {
   constructor(props) {
@@ -35,9 +36,9 @@ class Header extends Component {
       <header className="topbar" data-testid="header-component">
         <Link to="/search" className="brand">TrybeTunes</Link>
         <nav className="nav">
-          <NavLink to="/search" data-testid="link-to-search">Buscar</NavLink>
-          <NavLink to="/favorites" data-testid="link-to-favorites">Favoritas</NavLink>
-          <NavLink to="/profile" data-testid="link-to-profile">Perfil</NavLink>
+          <NavLink to="/search" data-testid="link-to-search">{ t('nav.search') }</NavLink>
+          <NavLink to="/favorites" data-testid="link-to-favorites">{ t('nav.favorites') }</NavLink>
+          <NavLink to="/profile" data-testid="link-to-profile">{ t('nav.profile') }</NavLink>
         </nav>
         <p className="user" data-testid="header-user-name">
           <span className="avatar" aria-hidden="true">{ userName.charAt(0) || '·' }</span>

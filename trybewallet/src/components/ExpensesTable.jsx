@@ -4,14 +4,17 @@ import { connect } from 'react-redux';
 import ExpensesTableHeader from './ExpensesTableHeader';
 import { removeExpense } from '../actions/index';
 import '../App.css';
+import { getLocale, t } from '../i18n';
 
 const money = (value) => Number(value)
-  .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  .toLocaleString(getLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
-// The API names each rate "Dólar Americano/Real Brasileiro"; keep the source currency.
-const currencyName = ({ currency, exchangeRates }) => (
-  exchangeRates[currency].name.split('/')[0]
-);
+// Intl names the currency in the current language; it echoes the code back for ones it
+// does not know (most crypto), so fall back to the API's Portuguese "Dólar Americano/Real Brasileiro".
+const currencyName = ({ currency, exchangeRates }) => {
+  const name = new Intl.DisplayNames([getLocale()], { type: 'currency' }).of(currency);
+  return name && name !== currency ? name : exchangeRates[currency].name.split('/')[0];
+};
 
 class ExpensesTable extends Component {
   render() {
@@ -19,8 +22,8 @@ class ExpensesTable extends Component {
     if (!getExpenses.length) {
       return (
         <section className="card empty">
-          <p>Nenhuma despesa ainda.</p>
-          <p className="muted">Adicione a primeira no formulário acima.</p>
+          <p>{ t('table.emptyTitle') }</p>
+          <p className="muted">{ t('table.emptyText') }</p>
         </section>
       );
     }
@@ -33,15 +36,17 @@ class ExpensesTable extends Component {
               const rate = exp.exchangeRates[exp.currency].ask;
               return (
                 <tr key={ exp.id }>
-                  <td data-label="Descrição">{ exp.description || '—' }</td>
-                  <td data-label="Categoria"><span className="tag">{ exp.tag }</span></td>
-                  <td data-label="Pagamento">{ exp.method }</td>
-                  <td data-label="Valor" className="num">
+                  <td data-label={ t('table.description') }>{ exp.description || '—' }</td>
+                  <td data-label={ t('table.tag') }>
+                    <span className="tag">{ t(`tags.${exp.tag}`) }</span>
+                  </td>
+                  <td data-label={ t('table.method') }>{ t(`methods.${exp.method}`) }</td>
+                  <td data-label={ t('table.value') } className="num">
                     { `${exp.currency} ${money(exp.value)}` }
                   </td>
-                  <td data-label="Moeda">{ currencyName(exp) }</td>
-                  <td data-label="Câmbio" className="num">{ money(rate) }</td>
-                  <td data-label="Em reais" className="num strong">
+                  <td data-label={ t('table.currency') }>{ currencyName(exp) }</td>
+                  <td data-label={ t('table.rate') } className="num">{ money(rate) }</td>
+                  <td data-label={ t('table.converted') } className="num strong">
                     { `R$ ${money(exp.value * rate)}` }
                   </td>
                   <td className="actions">
@@ -49,10 +54,10 @@ class ExpensesTable extends Component {
                       type="button"
                       className="button-delete"
                       data-testid="delete-btn"
-                      aria-label={ `Excluir ${exp.description || 'despesa'}` }
+                      aria-label={ t('table.deleteLabel', { name: exp.description || t('table.expense') }) }
                       onClick={ () => deleteExpense(exp.id) }
                     >
-                      Excluir
+                      { t('table.delete') }
                     </button>
                   </td>
                 </tr>

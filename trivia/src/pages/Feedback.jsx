@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { gravatarUrl } from '../components/Header';
+import { t } from '../i18n';
 
 class Feedback extends Component {
   feedbackMessage(assertions, total) {
     // Half or more right counts as a good round; 3 is the old fixed bar for 5 questions.
     const goal = total ? Math.ceil(total / 2) : 3;
-    return assertions >= goal ? 'Mandou bem!' : 'Podia ser melhor...';
+    return assertions >= goal ? t('feedback.good') : t('feedback.bad');
   }
 
   render() {
@@ -25,19 +26,19 @@ class Feedback extends Component {
           <div className="stats">
             <div>
               <p className="stat" data-testid="feedback-total-score">{ score }</p>
-              <p className="muted">pontos</p>
+              <p className="muted">{ t('feedback.points') }</p>
             </div>
             <div>
               <p className="stat">
                 <span data-testid="feedback-total-question">{ assertions }</span>
-                { total ? <span className="stat-of">{ ` de ${total}` }</span> : null }
+                { total ? <span className="stat-of">{ t('feedback.of', { total }) }</span> : null }
               </p>
-              <p className="muted">acertos</p>
+              <p className="muted">{ t('feedback.correct') }</p>
             </div>
           </div>
           <div className="result-actions">
-            <Link to="/" className="button-primary" data-testid="btn-play-again">Jogar de novo</Link>
-            <Link to="/ranking" className="button-secondary" data-testid="btn-ranking">Ver ranking</Link>
+            <Link to="/" className="button-primary" data-testid="btn-play-again">{ t('feedback.again') }</Link>
+            <Link to="/ranking" className="button-secondary" data-testid="btn-ranking">{ t('feedback.ranking') }</Link>
           </div>
         </section>
       </main>

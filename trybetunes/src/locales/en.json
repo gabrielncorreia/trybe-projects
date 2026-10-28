@@ -1,0 +1,54 @@
+{
+  "document": { "title": "TrybeTunes" },
+  "loading": "Loading…",
+  "login": {
+    "title": "Listen to previews and keep your favorite songs",
+    "intro": "Search any artist in the iTunes catalog.",
+    "name": "What should we call you?",
+    "namePlaceholder": "Your name",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "rule": "Use at least 3 letters."
+  },
+  "nav": { "search": "Search", "favorites": "Favorites", "profile": "Profile" },
+  "search": {
+    "label": "Artist or band",
+    "placeholder": "Search for an artist or band",
+    "submit": "Search",
+    "results": "Albums by {artist}",
+    "notFound": "No albums found for \"{artist}\".",
+    "hint": "Type an artist's name to see their albums."
+  },
+  "album": {
+    "label": "Album",
+    "meta": "{year}, {count} tracks"
+  },
+  "track": {
+    "noAudio": "Your browser can't play audio previews.",
+    "favorite": "Add {name} to favorites",
+    "unfavorite": "Remove {name} from favorites"
+  },
+  "favorites": {
+    "title": "Favorite songs",
+    "empty": "No favorite songs yet.",
+    "hint": "Tap the heart on a track to keep it here.",
+    "search": "Search artists"
+  },
+  "profile": {
+    "title": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "about": "About you",
+    "aboutPlaceholder": "Your favorite genres, for example",
+    "save": "Save profile",
+    "saving": "Saving…",
+    "saved": "Profile saved."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This address doesn't exist.",
+    "back": "Back to search"
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

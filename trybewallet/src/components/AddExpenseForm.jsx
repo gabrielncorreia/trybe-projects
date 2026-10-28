@@ -6,6 +6,7 @@ import PaymentMethod from './PaymentMethod';
 import Tags from './Tags';
 import Currency from './Currency';
 import '../App.css';
+import { t } from '../i18n';
 
 const initialState = {
   value: '',
@@ -53,10 +54,10 @@ class AddExpenseForm extends Component {
     const { value, description, saving } = this.state;
     return (
       <form className="card expense-form" onSubmit={ this.saveExpenses }>
-        <h2>Nova despesa</h2>
+        <h2>{ t('form.title') }</h2>
         <div className="expense-fields">
           <label htmlFor="value">
-            Valor
+            { t('form.value') }
             <input
               type="number"
               id="value"
@@ -64,7 +65,7 @@ class AddExpenseForm extends Component {
               min="0"
               step="0.01"
               inputMode="decimal"
-              placeholder="0,00"
+              placeholder={ t('form.valuePlaceholder') }
               required
               value={ value }
               data-testid="value-input"
@@ -75,12 +76,12 @@ class AddExpenseForm extends Component {
           <PaymentMethod handleChange={ this.handleChange } />
           <Tags handleChange={ this.handleChange } />
           <label htmlFor="description" className="wide">
-            Descrição
+            { t('form.description') }
             <input
               type="text"
               id="description"
               name="description"
-              placeholder="Ex.: almoço com clientes"
+              placeholder={ t('form.descriptionPlaceholder') }
               value={ description }
               data-testid="description-input"
               onChange={ this.handleChange }
@@ -88,7 +89,7 @@ class AddExpenseForm extends Component {
           </label>
         </div>
         <button type="submit" className="button-primary" disabled={ saving }>
-          { saving ? 'Buscando cotação...' : 'Adicionar despesa' }
+          { saving ? t('form.saving') : t('form.submit') }
         </button>
       </form>
     );

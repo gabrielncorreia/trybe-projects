@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import FiltersContext from '../../context/FiltersContext';
@@ -27,14 +28,14 @@ function FilterByCategory({ apiType, originalData }) {
   };
 
   return (
-    <div className="chips" aria-label="Categorias">
+    <div className="chips" aria-label={ t('filter.categories') }>
       <button
         type="button"
         data-testid="All-category-filter"
         aria-pressed={ active === '' }
         onClick={ () => select('') }
       >
-        Todas
+        { t('filter.all') }
       </button>
       { categories.map((category) => (
         <button

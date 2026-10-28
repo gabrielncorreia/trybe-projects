@@ -23,10 +23,7 @@
     "swiper": "^6.8.4",
     "websocket-extensions": ">=0.1.4"
   },
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "cy": "cypress run",
+  "scripts": {    "cy": "cypress run",
     "cy:open": "cypress open",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",

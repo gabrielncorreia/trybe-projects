@@ -1,0 +1,98 @@
+{
+  "document": { "title": "Recipes App" },
+  "kinds": { "meal": "Comidas", "cocktail": "Bebidas", "mealLower": "comidas", "cocktailLower": "bebidas" },
+  "login": {
+    "title": "Receitas de comidas e drinks para o dia a dia",
+    "intro": "Busque por nome, ingrediente ou cozinha, siga o passo a passo e guarde suas favoritas.",
+    "email": "Email",
+    "emailPlaceholder": "voce@email.com",
+    "password": "Senha",
+    "passwordPlaceholder": "Sua senha",
+    "passwordRule": "Mínimo de {min} caracteres",
+    "submit": "Entrar",
+    "credits": "Projeto em grupo da Trybe, por"
+  },
+  "nav": { "sections": "Seções", "meals": "Comidas", "drinks": "Bebidas", "explore": "Explorar" },
+  "header": { "search": "Buscar receitas", "profile": "Perfil" },
+  "search": {
+    "label": "Buscar",
+    "placeholder": "O que você quer preparar?",
+    "ingredientPlaceholder": "Ex.: chicken",
+    "submit": "Buscar",
+    "by": "Buscar por",
+    "name": "Nome",
+    "ingredient": "Ingrediente",
+    "letter": "Primeira letra",
+    "oneLetter": "Na busca por primeira letra, use só uma letra.",
+    "notFound": "Nenhuma receita encontrada para \"{term}\"."
+  },
+  "filter": { "categories": "Categorias", "all": "Todas", "cuisine": "Cozinha" },
+  "list": { "loading": "Carregando receitas…" },
+  "details": {
+    "notFound": "Receita não encontrada",
+    "see": "Ver {kind}",
+    "loading": "Carregando receita…",
+    "start": "Começar receita",
+    "continue": "Continuar receita",
+    "again": "Fazer de novo",
+    "back": "Voltar para {kind}",
+    "ingredients": "Ingredientes ({count})",
+    "steps": "Modo de preparo",
+    "video": "Vídeo",
+    "videoTitle": "Vídeo: {name}",
+    "pairMeal": "Para beber junto",
+    "pairDrink": "Para comer junto"
+  },
+  "progress": {
+    "back": "Voltar para a receita",
+    "ingredients": "Ingredientes",
+    "count": "{done} de {total} separados",
+    "hint": "Marque todos os ingredientes para finalizar.",
+    "finish": "Finalizar receita"
+  },
+  "actions": {
+    "share": "Compartilhar",
+    "copied": "Link copiado!",
+    "favorite": "Favoritar",
+    "favorited": "Favoritada"
+  },
+  "explore": {
+    "title": "Explorar",
+    "mealsHint": "Por ingrediente, cozinha ou uma surpresa",
+    "drinksHint": "Por ingrediente ou uma surpresa",
+    "kindTitle": "Explorar {kind}",
+    "byIngredient": "Por ingrediente",
+    "byIngredientHint": "Escolha o que você tem em casa",
+    "byCuisine": "Por cozinha",
+    "byCuisineHint": "Italiana, japonesa, mexicana…",
+    "surprise": "Me surpreenda",
+    "surprising": "Sorteando…",
+    "surpriseHint": "Uma receita aleatória",
+    "loadingIngredients": "Carregando ingredientes…"
+  },
+  "profile": {
+    "title": "Perfil",
+    "guest": "Visitante",
+    "done": "Receitas feitas",
+    "favorites": "Receitas favoritas",
+    "logout": "Sair"
+  },
+  "saved": {
+    "done": "Receitas feitas",
+    "favorites": "Receitas favoritas",
+    "all": "Todas",
+    "meals": "Comidas",
+    "drinks": "Bebidas",
+    "emptyDone": "Nenhuma receita feita ainda.",
+    "emptyFavorites": "Nenhuma receita favorita ainda.",
+    "hintDone": "Ao finalizar uma receita, ela aparece aqui.",
+    "hintFavorites": "Toque em Favoritar em qualquer receita para guardá-la aqui.",
+    "browse": "Ver receitas",
+    "madeOn": "Feita em {date}",
+    "copy": "Copiar link de {name}",
+    "unfavorite": "Remover {name} das favoritas",
+    "copied": "Link copiado!"
+  },
+  "notFound": { "title": "Página não encontrada", "text": "Esse endereço não existe.", "browse": "Ver receitas" },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

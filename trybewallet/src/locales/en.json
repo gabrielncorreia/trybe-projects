@@ -1,0 +1,58 @@
+{
+  "document": { "title": "TrybeWallet" },
+  "login": {
+    "title": "Track your spending in any currency",
+    "intro": "Log expenses in dollars, euros or bitcoin and see the total in Brazilian reais at today's rate.",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "passwordPlaceholder": "Your password",
+    "passwordRule": "At least {min} characters",
+    "submit": "Sign in"
+  },
+  "wallet": {
+    "total": "Total spent",
+    "countOne": "1 expense logged",
+    "countOther": "{count} expenses logged"
+  },
+  "form": {
+    "title": "New expense",
+    "value": "Amount",
+    "valuePlaceholder": "0.00",
+    "currency": "Currency",
+    "method": "Payment",
+    "tag": "Category",
+    "description": "Description",
+    "descriptionPlaceholder": "e.g. lunch with clients",
+    "submit": "Add expense",
+    "saving": "Getting the exchange rate…"
+  },
+  "methods": {
+    "Dinheiro": "Cash",
+    "Cartão de crédito": "Credit card",
+    "Cartão de débito": "Debit card"
+  },
+  "tags": {
+    "Alimentação": "Food",
+    "Lazer": "Leisure",
+    "Trabalho": "Work",
+    "Transporte": "Transport",
+    "Saúde": "Health"
+  },
+  "table": {
+    "emptyTitle": "No expenses yet.",
+    "emptyText": "Add the first one with the form above.",
+    "description": "Description",
+    "tag": "Category",
+    "method": "Payment",
+    "value": "Amount",
+    "currency": "Currency",
+    "rate": "Rate",
+    "converted": "In reais",
+    "actions": "Actions",
+    "delete": "Delete",
+    "deleteLabel": "Delete {name}",
+    "expense": "expense"
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

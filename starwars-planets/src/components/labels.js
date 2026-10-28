@@ -1,19 +1,12 @@
-// Display labels for the API's column keys. Options keep the raw key as their text
-// (the tests read it) and show these through the `label` attribute.
-const LABELS = {
-  name: 'Nome',
-  rotation_period: 'Rotação (h)',
-  orbital_period: 'Órbita (dias)',
-  diameter: 'Diâmetro (km)',
-  climate: 'Clima',
-  gravity: 'Gravidade',
-  terrain: 'Terreno',
-  surface_water: 'Água (%)',
-  population: 'População',
-  films: 'Filmes',
-  created: 'Criado',
-  edited: 'Editado',
-  url: 'Fonte',
-};
+import { t } from '../i18n';
 
-export default LABELS;
+// The API's column keys, in table order. Options keep the raw key as their text
+// (the tests read it) and show the translated label through the `label` attribute.
+export const COLUMNS = [
+  'name', 'rotation_period', 'orbital_period', 'diameter', 'climate', 'gravity', 'terrain',
+  'surface_water', 'population', 'films', 'created', 'edited', 'url',
+];
+
+export default function label(column) {
+  return t(`columns.${column}`);
+}

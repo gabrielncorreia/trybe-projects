@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import '../App.css';
 import AddExpenseForm from '../components/AddExpenseForm';
 import ExpensesTable from '../components/ExpensesTable';
+import { getLocale, t } from '../i18n';
 
 const brl = (value) => Number(value)
-  .toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  .toLocaleString(getLocale(), { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 class Wallet extends React.Component {
   constructor(props) {
@@ -37,15 +38,15 @@ class Wallet extends React.Component {
 
         <main className="wallet-main">
           <section className="summary">
-            <p className="muted">Total gasto</p>
+            <p className="muted">{ t('wallet.total') }</p>
             <p className="total">
               <span data-testid="header-currency-field">BRL</span>
               <span data-testid="total-field">{ brl(this.sumExpenses()) }</span>
             </p>
             <p className="muted">
               { userExpenses.length === 1
-                ? '1 despesa registrada'
-                : `${userExpenses.length} despesas registradas` }
+                ? t('wallet.countOne')
+                : t('wallet.countOther', { count: userExpenses.length }) }
             </p>
           </section>
 

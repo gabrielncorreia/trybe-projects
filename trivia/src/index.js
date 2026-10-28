@@ -6,11 +6,18 @@ import { Provider } from 'react-redux';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import store from './redux/store';
+import { useLanguage } from './i18n';
+
+// Remounts the app on a language change; the Redux store sits outside it.
+function Root() {
+  const language = useLanguage();
+  return <App key={ language } />;
+}
 
 ReactDOM.render(
   <HashRouter>
     <Provider store={ store }>
-      <App />
+      <Root />
     </Provider>
   </HashRouter>,
   document.getElementById('root'),

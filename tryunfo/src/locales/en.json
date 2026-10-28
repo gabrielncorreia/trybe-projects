@@ -1,0 +1,47 @@
+{
+  "document": { "title": "Tryunfo: Magic Edition" },
+  "header": {
+    "title": "Build a Magic card",
+    "intro": "Fill in the details and watch the card take shape. Save it to add it to your deck."
+  },
+  "form": {
+    "legend": "Card details",
+    "name": "Name",
+    "description": "Rules text",
+    "power": "Power",
+    "toughness": "Toughness",
+    "mana": "Mana cost",
+    "image": "Image URL",
+    "imagePlaceholder": "https://…",
+    "rarity": "Rarity",
+    "save": "Save to deck",
+    "limits": "Power, toughness and mana cost go from 0 to 90 each, and can add up to 210.",
+    "pointsLeft": "{points} points left",
+    "pointsOver": "{points} points over the limit",
+    "outOfRange": "Each value must be between 0 and 90.",
+    "missing": "Add a name, rules text and an image URL to save the card."
+  },
+  "rarity": {
+    "common": "Common",
+    "uncommon": "Uncommon",
+    "rare": "Rare",
+    "mythic rare": "Mythic rare"
+  },
+  "card": {
+    "imageHint": "Paste an image URL to add art",
+    "untitled": "Untitled card"
+  },
+  "deck": {
+    "title": "Your deck",
+    "countOne": "1 card",
+    "countOther": "{count} cards",
+    "search": "Search by name",
+    "rarity": "Rarity",
+    "all": "All rarities",
+    "empty": "Your deck is empty. Save a card to add it here.",
+    "noMatch": "No cards match these filters.",
+    "remove": "Remove",
+    "removeLabel": "Remove {name} from the deck"
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

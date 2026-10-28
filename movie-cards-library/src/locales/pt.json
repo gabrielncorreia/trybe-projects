@@ -1,0 +1,16 @@
+{
+  "document": { "title": "Biblioteca de filmes" },
+  "header": {
+    "title": "Biblioteca de filmes",
+    "intro": "Cinco filmes de ficção científica feitos em computação gráfica, cada um com nota de 0 a 5."
+  },
+  "rating": "Nota {rating} de 5",
+  "movies": {
+    "kingsglaive": "O rei Regis, que governa a terra de Lucis, comanda seu exército para proteger o reino do império de Niflheim, que planeja roubar o cristal sagrado.",
+    "spiritsWithin": "Uma cientista faz uma última resistência na Terra, com a ajuda de um grupo improvável de soldados, contra uma invasão de fantasmas alienígenas.",
+    "ghostInTheShell": "Um hacker conhecido como Mestre dos Fantoches é caçado por uma policial ciborgue e seu parceiro. Este filme é uma versão revisada de Ghost in the Shell (1995).",
+    "appleseedAlpha": "A jovem soldado Deunan e seu parceiro ciborgue Briareos sobrevivem em uma Nova York devastada pela Terceira Guerra Mundial, em busca da última esperança da humanidade: a lendária cidade de Olympus.",
+    "residentEvil": "Chris Redfield chama Leon S. Kennedy e Rebecca Chambers para impedir que um traficante de armas vingativo espalhe um vírus mortal em Nova York."
+  },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

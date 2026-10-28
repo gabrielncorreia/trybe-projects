@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import shareIcon from '../../images/shareIcon.svg';
@@ -21,7 +22,7 @@ function RecipeActions({ recipe }) {
     <div className="recipe-actions">
       <button type="button" className="button-ghost" onClick={ share }>
         <img data-testid="share-btn" src={ shareIcon } alt="" />
-        <span role="status">{ copied ? 'Link copiado!' : 'Compartilhar' }</span>
+        <span role="status">{ t(copied ? 'actions.copied' : 'actions.share') }</span>
       </button>
       <button
         type="button"
@@ -34,7 +35,7 @@ function RecipeActions({ recipe }) {
           src={ favorite ? blackHeartIcon : whiteHeartIcon }
           alt=""
         />
-        { favorite ? 'Favoritada' : 'Favoritar' }
+        { t(favorite ? 'actions.favorited' : 'actions.favorite') }
       </button>
     </div>
   );

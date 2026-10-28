@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import Counter from './Counter';
 import AnswerButtons from './AnswerButtons';
-
-const DIFFICULTY_LABEL = { easy: 'Fácil', medium: 'Média', hard: 'Difícil' };
+import { t } from '../i18n';
 
 class Question extends Component {
   constructor(props) {
@@ -66,7 +65,7 @@ class Question extends Component {
       <section className="panel question-panel">
         <div className="question-meta">
           <p data-testid="question-category">{ category }</p>
-          <span className={ `difficulty is-${difficulty}` }>{ DIFFICULTY_LABEL[difficulty] }</span>
+          <span className={ `difficulty is-${difficulty}` }>{ t(`difficulty.${difficulty}`) }</span>
         </div>
         <Counter showResults={ this.showResults } isRunning={ !answered } />
         <h1 className="question-text" data-testid="question-text">{ question }</h1>
@@ -81,11 +80,11 @@ class Question extends Component {
         { answered && (
           <div className="next-row">
             <p className="muted" role="status">
-              { timedOut ? 'O tempo acabou.' : '' }
+              { timedOut ? t('game.timeUp') : '' }
             </p>
             {/* eslint-disable-next-line jsx-a11y/no-autofocus */}
             <button type="button" className="button-primary" onClick={ this.nextButton } data-testid="btn-next" autoFocus>
-              { isLast ? 'Ver resultado' : 'Próxima pergunta' }
+              { isLast ? t('game.result') : t('game.next') }
             </button>
           </div>
         ) }

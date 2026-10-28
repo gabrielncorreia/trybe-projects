@@ -18,10 +18,7 @@
     "redux-thunk": "^2.3.0",
     "underscore": "^1.13.1"
   },
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "cy": "cypress run",
+  "scripts": {    "cy": "cypress run",
     "cy:open": "cypress open",
     "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts --openssl-legacy-provider build",

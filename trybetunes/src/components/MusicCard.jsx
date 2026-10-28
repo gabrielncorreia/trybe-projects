@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { addSong, removeSong } from '../services/favoriteSongsAPI';
+import { t } from '../i18n';
 
 const duration = (ms) => {
   if (!ms) return '';
@@ -47,9 +48,7 @@ export default class MusicCard extends Component {
         </div>
         <audio data-testid="audio-component" src={ previewUrl } controls preload="none">
           <track kind="captions" />
-          O seu navegador não suporta o elemento
-          <code>audio</code>
-          .
+          { t('track.noAudio') }
         </audio>
         <label className="fav" htmlFor={ `checkbox-music-${trackId}` }>
           <input
@@ -64,7 +63,7 @@ export default class MusicCard extends Component {
             <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.5 3 5 6.5 5c2 0 3.6 1.1 4.5 2.6.9-1.5 2.5-2.6 4.5-2.6C19 5 21.1 8.5 21.6 11.8 19.5 16.4 12 21 12 21z" />
           </svg>
           <span className="visually-hidden">
-            { favorite ? `Remover ${trackName} das favoritas` : `Favoritar ${trackName}` }
+            { t(favorite ? 'track.unfavorite' : 'track.favorite', { name: trackName }) }
           </span>
         </label>
       </li>

@@ -1,13 +1,14 @@
+import { t } from '../../i18n';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Page from '../Page';
 
 function NotFound() {
   return (
-    <Page title="Página não encontrada">
+    <Page title={ t('notFound.title') }>
       <div className="empty">
-        <p className="muted">Esse endereço não existe.</p>
-        <Link to="/comidas">Ver receitas</Link>
+        <p className="muted">{ t('notFound.text') }</p>
+        <Link to="/comidas">{ t('notFound.browse') }</Link>
       </div>
     </Page>
   );

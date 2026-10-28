@@ -5,6 +5,7 @@ import artwork from '../services/artwork';
 import MusicCard from '../components/MusicCard';
 import Loading from '../components/Loading';
 import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { t } from '../i18n';
 
 export default class Album extends Component {
   constructor(props) {
@@ -47,11 +48,14 @@ export default class Album extends Component {
             <header className="album-hero">
               <img src={ artwork(album.artworkUrl100, 600) } alt="" />
               <div>
-                <p className="muted small">Álbum</p>
+                <p className="muted small">{ t('album.label') }</p>
                 <h1 data-testid="album-name">{ album.collectionCensoredName }</h1>
                 <p data-testid="artist-name" className="album-artist">{ album.artistName }</p>
                 <p className="muted">
-                  { `${new Date(album.releaseDate).getFullYear()}, ${songs.length} faixas` }
+                  { t('album.meta', {
+                    year: new Date(album.releaseDate).getFullYear(),
+                    count: songs.length,
+                  }) }
                 </p>
               </div>
             </header>

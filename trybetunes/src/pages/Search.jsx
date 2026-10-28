@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import artwork from '../services/artwork';
 import Loading from '../components/Loading';
+import { t } from '../i18n';
 
 export default class Search extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export default class Search extends Component {
 
     return (
       <section className="results">
-        <h2>{`Álbuns de ${artist}`}</h2>
+        <h2>{ t('search.results', { artist }) }</h2>
         <div className="album-grid">
           {albums.map(({ artistName,
             artworkUrl100,
@@ -88,14 +89,14 @@ export default class Search extends Component {
     return (
       <div data-testid="page-search" className="page">
         <form className="search" onSubmit={ this.onButtonClick }>
-          <label htmlFor="search-artist" className="visually-hidden">Artista ou banda</label>
+          <label htmlFor="search-artist" className="visually-hidden">{ t('search.label') }</label>
           <input
             type="search"
             name="searchInput"
             id="search-artist"
             value={ searchInput }
             onChange={ this.searchChangeHandler }
-            placeholder="Busque um artista ou banda"
+            placeholder={ t('search.placeholder') }
             data-testid="search-artist-input"
           />
           <button
@@ -104,17 +105,17 @@ export default class Search extends Component {
             data-testid="search-artist-button"
             disabled={ isButtonDisabled }
           >
-            Buscar
+            { t('search.submit') }
           </button>
         </form>
 
         { loading && <Loading /> }
         { !loading && notFound && (
-          <p className="empty">{ `Nenhum álbum encontrado para "${artist}".` }</p>
+          <p className="empty">{ t('search.notFound', { artist }) }</p>
         ) }
         { !loading && albums.length > 0 && this.renderAlbums() }
         { !loading && !notFound && albums.length === 0 && (
-          <p className="empty muted">Digite o nome de um artista para ver os álbuns dele.</p>
+          <p className="empty muted">{ t('search.hint') }</p>
         ) }
       </div>
     );

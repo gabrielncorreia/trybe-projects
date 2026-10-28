@@ -1,0 +1,47 @@
+{
+  "document": { "title": "Tryunfo: Edição Magic" },
+  "header": {
+    "title": "Crie uma carta de Magic",
+    "intro": "Preencha os detalhes e veja a carta tomar forma. Salve para adicioná-la ao seu deck."
+  },
+  "form": {
+    "legend": "Dados da carta",
+    "name": "Nome",
+    "description": "Texto de regras",
+    "power": "Poder",
+    "toughness": "Resistência",
+    "mana": "Custo de mana",
+    "image": "URL da imagem",
+    "imagePlaceholder": "https://…",
+    "rarity": "Raridade",
+    "save": "Salvar no deck",
+    "limits": "Poder, resistência e custo de mana vão de 0 a 90 cada, e somam no máximo 210.",
+    "pointsLeft": "Restam {points} pontos",
+    "pointsOver": "{points} pontos acima do limite",
+    "outOfRange": "Cada valor precisa estar entre 0 e 90.",
+    "missing": "Adicione um nome, um texto de regras e uma URL de imagem para salvar a carta."
+  },
+  "rarity": {
+    "common": "Comum",
+    "uncommon": "Incomum",
+    "rare": "Rara",
+    "mythic rare": "Mítica rara"
+  },
+  "card": {
+    "imageHint": "Cole uma URL de imagem para adicionar a arte",
+    "untitled": "Carta sem nome"
+  },
+  "deck": {
+    "title": "Seu deck",
+    "countOne": "1 carta",
+    "countOther": "{count} cartas",
+    "search": "Buscar pelo nome",
+    "rarity": "Raridade",
+    "all": "Todas as raridades",
+    "empty": "Seu deck está vazio. Salve uma carta para adicioná-la aqui.",
+    "noMatch": "Nenhuma carta corresponde a esses filtros.",
+    "remove": "Remover",
+    "removeLabel": "Remover {name} do deck"
+  },
+  "projectBar": { "label": "Projetos da Trybe", "all": "Todos os projetos", "language": "Idioma" }
+}

@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,9 +10,9 @@ import {
 } from '../../services/recipes';
 
 const FILTERS = [
-  { value: 'all', label: 'Todas', testid: 'filter-by-all-btn' },
-  { value: 'comida', label: 'Comidas', testid: 'filter-by-food-btn' },
-  { value: 'bebida', label: 'Bebidas', testid: 'filter-by-drink-btn' },
+  { value: 'all', label: 'saved.all', testid: 'filter-by-all-btn' },
+  { value: 'comida', label: 'saved.meals', testid: 'filter-by-food-btn' },
+  { value: 'bebida', label: 'saved.drinks', testid: 'filter-by-drink-btn' },
 ];
 
 const toPath = (recipe) => `/${recipe.type === 'bebida' ? 'bebidas' : 'comidas'}/${recipe.id}`;
@@ -35,7 +36,7 @@ function SavedRecipes({ kind }) {
   };
 
   return (
-    <Page title={ isDone ? 'Receitas feitas' : 'Receitas favoritas' }>
+    <Page title={ t(isDone ? 'saved.done' : 'saved.favorites') }>
       <div className="chips">
         { FILTERS.map(({ value, label, testid }) => (
           <button
@@ -45,20 +46,20 @@ function SavedRecipes({ kind }) {
             aria-pressed={ filter === value }
             onClick={ () => setFilter(value) }
           >
-            { label }
+            { t(label) }
           </button>
         )) }
       </div>
 
       { shown.length === 0 && (
         <div className="empty">
-          <p>{ isDone ? 'Nenhuma receita feita ainda.' : 'Nenhuma receita favorita ainda.' }</p>
+          <p>{ t(isDone ? 'saved.emptyDone' : 'saved.emptyFavorites') }</p>
           <p className="muted">
             { isDone
-              ? 'Ao finalizar uma receita, ela aparece aqui.'
-              : 'Toque em Favoritar em qualquer receita para guardá-la aqui.' }
+              ? t('saved.hintDone')
+              : t('saved.hintFavorites') }
             { ' ' }
-            <Link to="/comidas">Ver receitas</Link>
+            <Link to="/comidas">{ t('saved.browse') }</Link>
           </p>
         </div>
       ) }
@@ -80,7 +81,7 @@ function SavedRecipes({ kind }) {
               </Link>
               { isDone && (
                 <p className="muted small" data-testid={ `${index}-horizontal-done-date` }>
-                  { `Feita em ${recipe.doneDate}` }
+                  { t('saved.madeOn', { date: recipe.doneDate }) }
                 </p>
               ) }
               { isDone && Array.isArray(recipe.tags) && recipe.tags.length > 0 && (
@@ -92,16 +93,16 @@ function SavedRecipes({ kind }) {
               ) }
             </div>
             <div className="saved-actions">
-              <button type="button" className="icon-button" aria-label={ `Copiar link de ${recipe.name}` } onClick={ () => share(recipe) }>
+              <button type="button" className="icon-button" aria-label={ t('saved.copy', { name: recipe.name }) } onClick={ () => share(recipe) }>
                 <img src={ shareIcon } alt="" data-testid={ `${index}-horizontal-share-btn` } />
               </button>
               { !isDone && (
-                <button type="button" className="icon-button" aria-label={ `Remover ${recipe.name} das favoritas` } onClick={ () => unfavorite(recipe.id) }>
+                <button type="button" className="icon-button" aria-label={ t('saved.unfavorite', { name: recipe.name }) } onClick={ () => unfavorite(recipe.id) }>
                   <img src={ blackHeartIcon } alt="" data-testid={ `${index}-horizontal-favorite-btn` } />
                 </button>
               ) }
             </div>
-            { copiedId === recipe.id && <p className="copied small" role="status">Link copiado!</p> }
+            { copiedId === recipe.id && <p className="copied small" role="status">{ t('saved.copied') }</p> }
           </li>
         )) }
       </ul>

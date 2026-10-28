@@ -1,3 +1,4 @@
+import { t } from '../../i18n';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
@@ -19,13 +20,13 @@ export default function Header({ name, search, apiType }) {
               type="button"
               className={ `icon-button${renderBar ? ' is-active' : ''}` }
               aria-expanded={ renderBar }
-              aria-label="Buscar receitas"
+              aria-label={ t('header.search') }
               onClick={ () => setRenderBar((open) => !open) }
             >
               <img data-testid="search-top-btn" src={ SearchIcon } alt="" />
             </button>
           ) }
-          <Link to="/perfil" className="icon-button" aria-label="Perfil">
+          <Link to="/perfil" className="icon-button" aria-label={ t('header.profile') }>
             <img data-testid="profile-top-btn" src={ ProfileIcon } alt="" />
           </Link>
         </div>

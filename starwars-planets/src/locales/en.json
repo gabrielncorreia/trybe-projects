@@ -1,0 +1,55 @@
+{
+  "document": { "title": "Star Wars Planets" },
+  "header": {
+    "eyebrow": "Galactic archive",
+    "title": "Star Wars Planets",
+    "loading": "Loading planets…",
+    "count": "{shown} of {total} planets",
+    "search": "Search planets by name"
+  },
+  "columns": {
+    "name": "Name",
+    "rotation_period": "Rotation (h)",
+    "orbital_period": "Orbit (days)",
+    "diameter": "Diameter (km)",
+    "climate": "Climate",
+    "gravity": "Gravity",
+    "terrain": "Terrain",
+    "surface_water": "Water (%)",
+    "population": "Population",
+    "films": "Films",
+    "created": "Created",
+    "edited": "Edited",
+    "url": "Source"
+  },
+  "filter": {
+    "region": "Filters and sorting",
+    "title": "Filter by number",
+    "column": "Column",
+    "comparison": "Condition",
+    "value": "Value",
+    "submit": "Filter",
+    "remove": "Remove the {column} filter",
+    "clear": "Clear filters",
+    "comparisons": { "maior que": "greater than", "menor que": "less than", "igual a": "equal to" }
+  },
+  "sort": {
+    "title": "Sort",
+    "column": "Column",
+    "direction": "Direction",
+    "asc": "Ascending",
+    "desc": "Descending",
+    "submit": "Sort",
+    "current": "{column}, {direction}",
+    "ascLower": "ascending",
+    "descLower": "descending",
+    "reset": "Back to alphabetical order"
+  },
+  "table": {
+    "error": "The planets could not be loaded. Reload the page to try again.",
+    "loading": "Loading planets…",
+    "empty": "No planets match these filters.",
+    "reset": "Clear search and filters"
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

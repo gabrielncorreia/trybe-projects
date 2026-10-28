@@ -1,0 +1,48 @@
+{
+  "document": { "title": "Trivia" },
+  "difficulty": { "": "Any", "easy": "Easy", "medium": "Medium", "hard": "Hard" },
+  "start": {
+    "title": "How many can you get right, with 30 seconds each?",
+    "name": "Name",
+    "namePlaceholder": "As it shows in the ranking",
+    "email": "Gravatar email",
+    "emailPlaceholder": "Only used for your picture",
+    "options": "Game",
+    "questions": "Questions",
+    "difficulty": "Difficulty",
+    "category": "Category",
+    "allCategories": "All",
+    "noResults": "There aren't enough questions for these options. Try another category or fewer questions.",
+    "loadError": "The questions could not be loaded. Try again in a few seconds.",
+    "loading": "Loading questions…",
+    "play": "Play"
+  },
+  "game": {
+    "progress": "Question {current} of {total}",
+    "points": "{score} pts",
+    "timeUp": "Time's up.",
+    "next": "Next question",
+    "result": "See result",
+    "secondsLeft": "{count} seconds left"
+  },
+  "feedback": {
+    "good": "Well done!",
+    "bad": "Could be better…",
+    "points": "points",
+    "correct": "correct",
+    "of": " of {total}",
+    "again": "Play again",
+    "ranking": "See ranking"
+  },
+  "ranking": {
+    "title": "Ranking",
+    "empty": "No games yet. Play one to show up here.",
+    "play": "Play"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "text": "This address doesn't exist.",
+    "home": "Back to the start"
+  },
+  "projectBar": { "label": "Trybe projects", "all": "All projects", "language": "Language" }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "trybe-projects",
+  "private": true,
+  "scripts": {
+    "deploy": "node scripts/deploy.mjs"
+  }
+}

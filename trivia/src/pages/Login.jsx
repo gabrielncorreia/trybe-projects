@@ -4,18 +4,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { requestToken, getQuestions, getCategories } from '../services/api';
 import actions from '../redux/actions';
+import { t } from '../i18n';
 
 // Open Trivia DB response codes.
 const NO_RESULTS = 1; // not enough questions for these options
 const TOKEN_NOT_FOUND = 3; // token expired/unknown
 const TOKEN_EMPTY = 4; // token has already served every question
 
-const DIFFICULTIES = [
-  { value: '', label: 'Qualquer' },
-  { value: 'easy', label: 'Fácil' },
-  { value: 'medium', label: 'Média' },
-  { value: 'hard', label: 'Difícil' },
-];
+const DIFFICULTIES = ['', 'easy', 'medium', 'hard'];
 
 class Login extends Component {
   constructor(props) {
@@ -62,8 +58,8 @@ class Login extends Component {
       this.setState({
         loading: false,
         error: questions.response_code === NO_RESULTS
-          ? 'Não há perguntas suficientes com essas opções. Tente outra categoria ou menos perguntas.'
-          : 'Não foi possível carregar as perguntas. Tente de novo em alguns segundos.',
+          ? t('start.noResults')
+          : t('start.loadError'),
       });
       return;
     }
@@ -93,14 +89,14 @@ class Login extends Component {
       <main className="stage start">
         <form className="panel start-panel" onSubmit={ this.handleLogin }>
           <p className="wordmark">Trivia</p>
-          <h1>Quantas você acerta em 30 segundos cada?</h1>
+          <h1>{ t('start.title') }</h1>
 
           <div className="fields">
             <label htmlFor="name" className="field">
-              Nome
+              { t('start.name') }
               <input
                 type="text"
-                placeholder="Como aparece no ranking"
+                placeholder={ t('start.namePlaceholder') }
                 name="name"
                 id="name"
                 autoComplete="nickname"
@@ -109,12 +105,12 @@ class Login extends Component {
               />
             </label>
             <label htmlFor="email" className="field">
-              Email do Gravatar
+              { t('start.email') }
               <input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="Usado só para a sua foto"
+                placeholder={ t('start.emailPlaceholder') }
                 autoComplete="email"
                 data-testid="input-gravatar-email"
                 onChange={ this.handleChange }
@@ -123,25 +119,25 @@ class Login extends Component {
           </div>
 
           <fieldset className="options" data-testid="settings-title">
-            <legend>Partida</legend>
+            <legend>{ t('start.options') }</legend>
             <label htmlFor="numberOfQuestions" className="field">
-              Perguntas
+              { t('start.questions') }
               <select id="numberOfQuestions" name="numberOfQuestions" value={ numQuestions } onChange={ this.handleOption }>
                 { [5, 10, 15].map((n) => <option key={ n } value={ n }>{ n }</option>) }
               </select>
             </label>
             <label htmlFor="difficulty" className="field">
-              Dificuldade
+              { t('start.difficulty') }
               <select id="difficulty" name="difficulty" value={ difficulty } onChange={ this.handleOption }>
-                { DIFFICULTIES.map(({ value, label }) => (
-                  <option key={ value } value={ value }>{ label }</option>
+                { DIFFICULTIES.map((value) => (
+                  <option key={ value } value={ value }>{ t(`difficulty.${value}`) }</option>
                 )) }
               </select>
             </label>
             <label htmlFor="category" className="field wide">
-              Categoria
+              { t('start.category') }
               <select id="category" name="category" value={ category } onChange={ this.handleOption }>
-                <option value="">Todas</option>
+                <option value="">{ t('start.allCategories') }</option>
                 { categories.map(({ id, name }) => (
                   <option key={ id } value={ id }>{ name }</option>
                 )) }
@@ -157,7 +153,7 @@ class Login extends Component {
             data-testid="btn-play"
             disabled={ isButtonDisabled || loading }
           >
-            { loading ? 'Carregando perguntas...' : 'Jogar' }
+            { loading ? t('start.loading') : t('start.play') }
           </button>
         </form>
       </main>

@@ -1,128 +1,246 @@
-const email = document.querySelector('#email-login');
-const password = document.querySelector('#password-login');
-const buttonLogin = document.querySelector('#button-login');
-// const header = document.querySelector('.header');
+const STRINGS = {
+  en: {
+    documentTitle: 'Trybewarts admission form',
+    login: {
+      email: 'Email',
+      password: 'Password',
+      submit: 'Sign in',
+      welcome: 'Hello, Tryber!',
+      invalid: 'Wrong email or password.',
+    },
+    intro: {
+      title: 'Apply to Trybewarts',
+      text: 'Tell us who you are, pick your house and choose what you want to learn first.',
+    },
+    about: { title: 'About you', firstName: 'First name', lastName: 'Last name', email: 'Email' },
+    house: { title: 'Your house' },
+    family: { title: 'Your family' },
+    subjects: { title: 'What do you most want to learn?' },
+    rate: { title: 'How would you rate Trybewarts?', option: '{value} out of 10' },
+    comments: {
+      title: 'Comments',
+      placeholder: 'Anything else you want us to know?',
+      left: '{count} characters left',
+    },
+    agreement: 'I agree to the use of the information above.',
+    submit: 'Send application',
+    summary: {
+      title: 'Application sent',
+      text: 'Here is what you sent us.',
+      name: 'Name',
+      email: 'Email',
+      house: 'House',
+      family: 'Family',
+      subjects: 'Subjects',
+      rating: 'Rating',
+      comments: 'Comments',
+      none: 'Not given',
+      edit: 'Start a new application',
+    },
+    footer: 'Trybewarts, all rights reserved.',
+    projectBar: { label: 'Trybe projects', all: 'All projects', language: 'Language' },
+  },
+  pt: {
+    documentTitle: 'Formulário de admissão da Trybewarts',
+    login: {
+      email: 'Email',
+      password: 'Senha',
+      submit: 'Entrar',
+      welcome: 'Olá, Tryber!',
+      invalid: 'Email ou senha inválidos.',
+    },
+    intro: {
+      title: 'Candidate-se à Trybewarts',
+      text: 'Conte quem você é, escolha sua casa e o que quer aprender primeiro.',
+    },
+    about: { title: 'Sobre você', firstName: 'Nome', lastName: 'Sobrenome', email: 'Email' },
+    house: { title: 'Sua casa' },
+    family: { title: 'Sua família' },
+    subjects: { title: 'O que você está com mais vontade de aprender?' },
+    rate: { title: 'Como você avalia a Trybewarts?', option: '{value} de 10' },
+    comments: {
+      title: 'Comentários',
+      placeholder: 'Mais alguma coisa que você queira contar?',
+      left: 'Restam {count} caracteres',
+    },
+    agreement: 'Concordo com o uso das informações acima.',
+    submit: 'Enviar candidatura',
+    summary: {
+      title: 'Candidatura enviada',
+      text: 'Isto é o que você nos enviou.',
+      name: 'Nome',
+      email: 'Email',
+      house: 'Casa',
+      family: 'Família',
+      subjects: 'Matérias',
+      rating: 'Avaliação',
+      comments: 'Comentários',
+      none: 'Não informado',
+      edit: 'Começar uma nova candidatura',
+    },
+    footer: 'Trybewarts, todos os direitos reservados.',
+    projectBar: { label: 'Projetos da Trybe', all: 'Todos os projetos', language: 'Idioma' },
+  },
+};
 
-// // Requisito 2
-// function Logo() {
-//   const imgLogo = document.createElement('img');
-//   imgLogo.className = 'trybewarts-header-logo';
-//   imgLogo.src = 'images/trybewarts-header-logo.svg';
-//   header.appendChild(imgLogo);
-// }Logo();
+// Same key as the portfolio and the other apps, so one choice carries across the site.
+const STORAGE_KEY = 'lang';
+const MAX_COMMENT = 500;
 
-// Requisito 3
-buttonLogin.addEventListener('click', () => {
-  if (email.value === 'tryber@teste.com' && password.value === '123456') {
-    alert('Olá, Tryber!');
-  } else {
-    alert('Email ou senha inválidos.');
+function savedLanguage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved in STRINGS ? saved : 'en';
+  } catch {
+    return 'en';
   }
-});
+}
 
-window.addEventListener('click', (event) => {
-  console.log(event);
-});
+let language = savedLanguage();
 
-const checkbox = document.querySelector('#agreement');
-const submit = document.querySelector('#submit-btn');
-checkbox.addEventListener('click', () => {
-  if (checkbox.checked === true) {
-    submit.disabled = false;
-  } else {
-    submit.disabled = true;
-  }
-});
+function t(key, values = {}) {
+  const text = key.split('.').reduce((node, part) => (node == null ? node : node[part]), STRINGS[language]);
+  if (typeof text !== 'string') return key;
+  return text.replace(/\{(\w+)\}/g, (match, name) => (name in values ? values[name] : match));
+}
 
-// Requisito 20:
-function counterTextAreaValue() {
-  const counter = document.createElement('span');
-  counter.id = 'counter';
-  counter.innerText = 500;
-  document.getElementById('div-comments').appendChild(counter);
-
-  const targetText = document.getElementById('textarea');
-
-  targetText.addEventListener('keyup', () => {
-    const caractersInputed = targetText.value.length;
-
-    if (counter.innerText <= 500) {
-      counter.innerText = 500 - caractersInputed;
-    }
-  });
-}counterTextAreaValue();
-
-// Requisito 21:
 const form = document.querySelector('#evaluation-form');
+const submit = document.querySelector('#submit-btn');
+const agreement = document.querySelector('#agreement');
+const comments = document.querySelector('#textarea');
+const counter = document.querySelector('#counter');
+const rating = document.querySelector('#rating');
+const loginStatus = document.querySelector('#login-status');
 
-// Pegar o valor da Família
-function gettingFamilyValues() {
-  const frontend = document.querySelector('#frontend');
-  const backend = document.querySelector('#backend');
-  const fullstack = document.querySelector('#fullstack');
-  let familyValue = '';
-  if (frontend.checked === true) {
-    familyValue = document.querySelector('#frontend').value;
-  } else if (backend.checked === true) {
-    familyValue = document.querySelector('#backend').value;
-  } else if (fullstack.checked === true) {
-    familyValue = document.querySelector('#fullstack').value;
+function updateCounter() {
+  counter.textContent = t('comments.left', { count: MAX_COMMENT - comments.value.length });
+}
+
+function buildRating() {
+  for (let value = 1; value <= 10; value += 1) {
+    const label = document.createElement('label');
+    label.className = 'rate';
+    label.innerHTML = `<input type="radio" name="rate" value="${value}" class="rate-button"><span>${value}</span>`;
+    rating.appendChild(label);
   }
-  return familyValue;
 }
 
-// Pegar o valor da tech:
-function gettingTechValues() {
-  const techs = document.querySelectorAll('.checkbox');
-  let techsChecked = '';
-  for (let index = 0; index < techs.length; index += 1) {
-    if (techs[index].checked === true) {
-      techsChecked += `${techs[index].value}, `;
-    }
+function applyLanguage() {
+  document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+    el.placeholder = t(el.dataset.i18nPlaceholder);
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
+    el.setAttribute('aria-label', t(el.dataset.i18nAria));
+  });
+  document.querySelectorAll('.rate-button').forEach((input) => {
+    input.setAttribute('aria-label', t('rate.option', { value: input.value }));
+  });
+  document.querySelectorAll('[data-lang]').forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.lang === language));
+  });
+  if (loginStatus.dataset.key) loginStatus.textContent = t(loginStatus.dataset.key);
+  if (counter) updateCounter();
+}
+
+function setLanguage(next) {
+  language = next;
+  try {
+    localStorage.setItem(STORAGE_KEY, next);
+  } catch {
+    // The choice just won't persist.
   }
-  return techsChecked;
+  applyLanguage();
+  const summary = document.querySelector('.summary');
+  if (summary) summary.replaceWith(renderSummary(JSON.parse(summary.dataset.values)));
 }
 
-// Pegar o valor da avaliação:
-function gettingRatingValue() {
-  const ratingButtons = document.querySelectorAll('.rate-button');
-  let ratingValue = '';
-  for (let index = 0; index < ratingButtons.length; index += 1) {
-    if (ratingButtons[index].checked === true) {
-      ratingValue = ratingButtons[index].value;
-    }
-  }
-  return ratingValue;
-}
+document.querySelectorAll('[data-lang]').forEach((button) => {
+  button.addEventListener('click', () => setLanguage(button.dataset.lang));
+});
 
-// Colocar todos os valores em um objeto:
-function gettingValues() {
-  const name = document.querySelector('#input-name');
-  const lastName = document.querySelector('#input-lastname');
-  const allValues = {
-    Nome: `${name.value} ${lastName.value}`,
-    Email: `${document.querySelector('#input-email').value}`,
-    Casa: `${document.querySelector('#house').value}`,
-    Família: `${gettingFamilyValues()}`,
-    Matérias: `${gettingTechValues()}`,
-    Avaliação: `${gettingRatingValue()}`,
-    Observações: `${document.querySelector('#textarea').value}`,
-  };
-  return allValues;
-}
-// Remover o form e adicionar uma section com os valores do objeto:
-// source: https://www.w3schools.com/jsref/met_element_remove.asp
-function addformsContent(event) {
+document.querySelector('.trybewarts-login').addEventListener('submit', (event) => {
   event.preventDefault();
-  const section = document.createElement('section');
-  const allValues = gettingValues();
-  form.innerHTML = '';
-  form.appendChild(section);
-  for (let index = 0; index < 7; index += 1) {
-    const p = document.createElement('p');
-    p.innerText = `${Object.keys(allValues)[index]}: ${Object.values(allValues)[index]}`;
-    section.appendChild(p);
-  }
+  const email = document.querySelector('#email-login').value;
+  const password = document.querySelector('#password-login').value;
+  const ok = email === 'tryber@teste.com' && password === '123456';
+  loginStatus.dataset.key = ok ? 'login.welcome' : 'login.invalid';
+  loginStatus.classList.toggle('is-error', !ok);
+  loginStatus.textContent = t(loginStatus.dataset.key);
+});
+
+agreement.addEventListener('change', () => {
+  submit.disabled = !agreement.checked;
+});
+
+comments.addEventListener('input', updateCounter);
+
+function collectValues() {
+  const checked = (selector) => document.querySelector(`${selector}:checked`)?.value || '';
+  return {
+    name: `${form.firstName.value} ${form.lastName.value}`.trim(),
+    email: form.email.value.trim(),
+    house: checked('[name="house"]'),
+    family: checked('[name="family"]'),
+    subjects: [...document.querySelectorAll('.subject:checked')].map((input) => input.value),
+    rating: checked('[name="rate"]'),
+    comments: comments.value.trim(),
+  };
 }
 
-submit.addEventListener('click', addformsContent);
+function renderSummary(values) {
+  const section = document.createElement('section');
+  section.className = 'summary letter';
+  section.dataset.values = JSON.stringify(values);
+  section.setAttribute('aria-labelledby', 'summary-title');
+
+  const title = document.createElement('h2');
+  title.id = 'summary-title';
+  title.textContent = t('summary.title');
+  title.tabIndex = -1;
+  const text = document.createElement('p');
+  text.textContent = t('summary.text');
+
+  const list = document.createElement('dl');
+  const rows = [
+    ['name', values.name],
+    ['email', values.email],
+    ['house', values.house],
+    ['family', values.family],
+    ['subjects', values.subjects.join(', ')],
+    ['rating', values.rating && `${values.rating} / 10`],
+    ['comments', values.comments],
+  ];
+  rows.forEach(([key, value]) => {
+    const dt = document.createElement('dt');
+    dt.textContent = t(`summary.${key}`);
+    const dd = document.createElement('dd');
+    dd.textContent = value || t('summary.none');
+    list.append(dt, dd);
+  });
+
+  const again = document.createElement('button');
+  again.type = 'button';
+  again.textContent = t('summary.edit');
+  again.addEventListener('click', () => {
+    form.reset();
+    submit.disabled = true;
+    updateCounter();
+    section.replaceWith(form);
+  });
+
+  section.append(title, text, list, again);
+  return section;
+}
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  if (!agreement.checked) return;
+  const summary = renderSummary(collectValues());
+  form.replaceWith(summary);
+  summary.querySelector('h2').focus({ preventScroll: true });
+});
+
+buildRating();
+applyLanguage();

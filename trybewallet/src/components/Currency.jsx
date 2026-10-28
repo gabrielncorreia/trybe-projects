@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { currencyAPI } from '../actions/index';
+import { t } from '../i18n';
 
 class Currency extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Currency extends Component {
     // console.log(currencies);
     return (
       <label htmlFor="currency">
-        Moeda
+        { t('form.currency') }
         <select
           id="currency"
           data-testid="currency-input"

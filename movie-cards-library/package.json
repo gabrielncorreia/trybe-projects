@@ -12,10 +12,7 @@
     "react-scripts": "3.2.0",
     "serialize-javascript": ">=2.1.1"
   },
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+  "scripts": {    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --verbose=true",
     "eject": "react-scripts eject",

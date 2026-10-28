@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import Question from '../components/Question';
+import { t } from '../i18n';
 
 const readPlayer = () => (JSON.parse(localStorage.getItem('state')) || {}).player;
 
@@ -46,7 +47,7 @@ class Trivia extends Component {
           email={ player.gravatarEmail }
           playerName={ player.name }
           score={ player.score }
-          progress={ `Pergunta ${idQuestion + 1} de ${questions.length}` }
+          progress={ t('game.progress', { current: idQuestion + 1, total: questions.length }) }
         />
         <Question
           question={ question }

@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Meals from './components/Meals';
 import Drinks from './components/Drinks';
 // import Comidas from './components/Comidas';
+import ProjectBar from './components/ProjectBar';
 import NotFound from './components/NotFound';
 import './App.css';
 import Profile from './components/Profile';
@@ -75,6 +76,7 @@ function App() {
           <Route exact path="/explorar/bebidas/random" component={ Details } /> */}
           <Route path="*" component={ NotFound } />
         </Switch>
+        <ProjectBar />
       </FilterProvider>
     </RecipesProvider>
   );

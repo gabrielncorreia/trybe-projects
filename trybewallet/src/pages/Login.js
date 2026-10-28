@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { addUserEmail } from '../actions';
 import '../App.css';
+import { t } from '../i18n';
 
 const MIN_PASSWORD = 6;
 
@@ -54,40 +55,37 @@ class Login extends React.Component {
           } }
         >
           <p className="brand">TrybeWallet</p>
-          <h1>Controle seus gastos em qualquer moeda</h1>
-          <p className="muted">
-            Registre despesas em dólar, euro ou bitcoin e veja o total em reais,
-            com a cotação do momento.
-          </p>
+          <h1>{ t('login.title') }</h1>
+          <p className="muted">{ t('login.intro') }</p>
           <label htmlFor="email" className="field">
-            Email
+            { t('login.email') }
             <input
               type="email"
               id="email"
               name="email"
-              placeholder="voce@email.com"
+              placeholder={ t('login.emailPlaceholder') }
               autoComplete="email"
               data-testid="email-input"
               onChange={ this.handleChange }
             />
           </label>
           <label htmlFor="password" className="field">
-            Senha
+            { t('login.password') }
             <input
               type="password"
               id="password"
               name="password"
-              placeholder="Sua senha"
+              placeholder={ t('login.passwordPlaceholder') }
               autoComplete="current-password"
               data-testid="password-input"
               onChange={ this.handleChange }
             />
             <span className={ `hint${passwordOk ? ' is-met' : ''}` }>
-              { `${passwordOk ? '✓ ' : ''}Mínimo de ${MIN_PASSWORD} caracteres` }
+              { `${passwordOk ? '✓ ' : ''}${t('login.passwordRule', { min: MIN_PASSWORD })}` }
             </span>
           </label>
           <button type="submit" className="button-primary" disabled={ isButtonDisabled }>
-            Entrar
+            { t('login.submit') }
           </button>
         </form>
         { redirect ? <Redirect to="/carteira" /> : null}

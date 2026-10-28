@@ -1,28 +1,30 @@
-// implement MovieCard component here
 import React from 'react';
 import PropTypes from 'prop-types';
 import Rating from './Rating';
+import { t } from '../i18n';
 
 class MovieCard extends React.Component {
   render() {
-    const { movie: { title, subtitle, storyline, imagePath, rating } } = this.props;
+    const { movie: { id, title, subtitle, imagePath, rating } } = this.props;
     return (
-      <div className="movie-card">
+      <article className="movie-card">
         <img src={ imagePath } alt="" className="movie-card-image" />
-        <h4 className="movie-card-title">{ title }</h4>
-        <h5 className="movie-card-subtitle">{ subtitle }</h5>
-        <p className="movie-card-storyline">{ storyline }</p>
+        <div className="movie-card-body">
+          <h2 className="movie-card-title">{ title }</h2>
+          { subtitle !== title && <p className="movie-card-subtitle">{ subtitle }</p> }
+          <p className="movie-card-storyline">{ t(`movies.${id}`) }</p>
+        </div>
         <Rating rating={ rating } />
-      </div>
+      </article>
     );
   }
 }
 
 MovieCard.propTypes = {
   movie: PropTypes.shape({
+    id: PropTypes.string,
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    storyline: PropTypes.string,
     rating: PropTypes.number,
     imagePath: PropTypes.string,
   }).isRequired,
